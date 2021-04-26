@@ -7,8 +7,61 @@
     <title>Health Tracker App</title>
 
     <link rel="stylesheet" type="text/css" href="./styles/dist/main.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+      integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body>
-    <!-- Custom page content goes here -->
+  <body class="bg-light">
+    <div class="Body-Wrapper">
+      <header class="Header">
+        <nav class="Header-Navbar navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <a href="#" class="navbar-brand">Health Tracker App</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarToggler"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a href="#" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Marathon</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Stats</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Friends</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Settings</a>
+                </li>
+              </ul>
+              <div class="text-end">
+                <button class="btn btn-dark" type="button">Add a record</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main role="main" class="Main container bg-white p-4">
+        <!-- Custom page content goes here -->
+      </main>
+    </div>
+
+    <footer class="Body-Footer bg-light">
+      <div class="container my-3 text-end">
+        <span>&copy; Artjoms Travkovs & Alina Voronko - 2021</span>
+      </div>
+    </footer>
   </body>
 </html>

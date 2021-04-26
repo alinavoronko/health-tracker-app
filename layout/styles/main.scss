@@ -1,2 +1,28 @@
+@import "variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.Body-Footer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.Header {
+  &-Navbar {
+    background-color: #D2D2D2;
+  }
+}
+
+.Main {
+  min-height: 100%;
+}
 
