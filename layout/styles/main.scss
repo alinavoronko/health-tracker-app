@@ -11,6 +11,10 @@ body {
   grid-template-rows: 1fr auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 .Body-Footer {
   grid-row-start: 2;
   grid-row-end: 3;
@@ -24,5 +28,14 @@ body {
 
 .Main {
   min-height: 100%;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
+.Form {
+  max-width: 400px;
+
+  &__wide {
+    max-width: 800px;
+  }
+}
