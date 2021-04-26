@@ -20,6 +20,30 @@ a {
   grid-row-end: 3;
 }
 
+
+.Chart {
+  position: relative;
+  width: 400px;
+  height: 250px;
+}
+
+.DashboardSection {
+  border-bottom: 1px solid $gray-400;
+  padding-bottom: 2rem;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.Form {
+  max-width: 400px;
+
+  &__wide {
+    max-width: 800px;
+  }
+}
+
 .Header {
   &-Navbar {
     background-color: #D2D2D2;
@@ -32,10 +56,15 @@ a {
   padding-bottom: 5rem;
 }
 
-.Form {
-  max-width: 400px;
+.SeparateLine {
+  @include media-breakpoint-down(lg) {
+    display: block;
+  }
+}
 
-  &__wide {
-    max-width: 800px;
+.Welcome {
+  &-Avatar {
+    width: 5rem;
+    height: 5rem;
   }
 }
