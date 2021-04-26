@@ -1,0 +1,22 @@
+{
+  "name": "health-tracker-app",
+  "version": "0.1.0",
+  "description": "Health Tracker App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Artjoms Travkovs <atravkovs@gmail.com>",
+  "contributors": [
+    {
+      "name": "Alina Voronko"
+    },
+    {
+      "name": "Artjoms Travkovs"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.6.0"
+  }
+}
