@@ -1,12 +1,11 @@
 package org.xapik.records.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.xapik.records.database.model.Record;
 import org.xapik.records.service.RecordService;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("user/{userId}/record")
@@ -22,4 +21,10 @@ public class RecordController {
     public Flux<Record> getUserRecords(@PathVariable int userId) {
         return recordService.getAllUserRecords(userId);
     }
+
+    @PostMapping
+    public Mono<Record> addUserRecord(@RequestBody Record _record) {
+        return recordService.addUserRecord(_record);
+    }
+
 }
