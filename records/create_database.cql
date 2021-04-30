@@ -4,10 +4,10 @@ CREATE TABLE healthtracker.record (
   user_id int,
   type int,
   until_time timestamp,
-  value float,
   from_time timestamp,
+  value float,
   data_source text,
-  PRIMARY KEY (user_id, type, until_time)
+  PRIMARY KEY (user_id, type, until_time, from_time)
 );
 
 

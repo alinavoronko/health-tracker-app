@@ -9,25 +9,33 @@ import org.xapik.records.RecordType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Table
 public class Record {
+
     @NotNull(message = "UserID is mandatory")
     @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private int userId;
+
     @NotNull(message = "Record type is mandatory")
     @PrimaryKeyColumn(name = "type", ordinal = 1)
     @CassandraType(type = CassandraType.Name.INT)
     private RecordType type;
+
     @NotNull(message = "Until time is mandatory")
     @PrimaryKeyColumn(name = "until_time", ordinal = 2)
     private LocalDateTime untilTime;
+
     private float value;
+
     @Column("from_time")
     @NotNull(message = "From time is mandatory")
+    @PastOrPresent(message = "From time must not be in future")
     private LocalDateTime fromTime;
+
     @Column("data_source")
     @NotBlank(message = "Data source is mandatory")
     private String dataSource;
