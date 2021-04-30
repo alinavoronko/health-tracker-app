@@ -31,8 +31,8 @@ public class Record {
 
     private float value;
 
-    @Column("from_time")
     @NotNull(message = "From time is mandatory")
+    @PrimaryKeyColumn(name = "from_time", ordinal = 3)
     @PastOrPresent(message = "From time must not be in future")
     private LocalDateTime fromTime;
 

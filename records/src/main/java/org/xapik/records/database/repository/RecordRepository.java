@@ -23,5 +23,6 @@ public interface RecordRepository extends ReactiveCassandraRepository<Record, In
 
     @AllowFiltering
     Flux<Record> findByUserIdAndUntilTimeLessThanEqualAndFromTimeGreaterThanEqual(int userId, LocalDateTime untilTime, LocalDateTime fromTime);
+    @AllowFiltering
     Flux<Record> findByUserIdAndTypeAndUntilTimeLessThanEqualAndFromTimeGreaterThanEqual(int userId, RecordType type, LocalDateTime untilTime, LocalDateTime fromTime);
 }
