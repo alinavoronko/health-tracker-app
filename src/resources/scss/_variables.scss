@@ -1,4 +1,3 @@
-
 $btn-border-radius: 0;
 // $light: #D2D2D2;
 $navbar-light-color: rgba(0, 0, 0, 0.75);
@@ -14,15 +13,16 @@ $navbar-light-color: rgba(0, 0, 0, 0.75);
 
 
 $theme-colors: (
-  "primary":    $primary,
+  "primary":    #b4dfe5,
   "secondary":  $secondary,
   "success":    $success,
   "info":       $info,
   "warning":    #fbe8a6,
-  "danger":     $danger,
+  "danger":     #f4976c,
   "light":      $light,
   "dark":       $dark,
-  "oceanblue":  #303c6c
+  "oceanblue":  #303c6c,
+  "lightblue":  #b4dfe5,
 );
 
 
