@@ -9,7 +9,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,5 +72,22 @@ public class RecordService {
 
     public Mono<Record> addUserRecord(Record userRecord) {
         return recordRepository.save(userRecord);
+    }
+
+    public Mono<Map<String, Double>> getTimeline(int userId, RecordType recordType, LocalDateTime fromDate, LocalDateTime toDate) {
+        // 1. Retrieve all records from fromDate to toDate
+        // 2. Based on period return aggregated values by Day
+
+        var records = this.getAllUserRecordsByType(userId, recordType, fromDate, toDate);
+
+        return records.collectMultimap(
+                userRecord -> userRecord.getUntilTime().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                Record::getValue).map(
+                map -> map.entrySet().stream().collect(
+                        Collectors.toMap(
+                                Map.Entry::getKey,
+                                entry -> entry.getValue().stream().mapToDouble(a -> a).sum()
+                        )
+                ));
     }
 }
