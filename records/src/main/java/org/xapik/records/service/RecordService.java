@@ -9,6 +9,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Service
 public class RecordService {
@@ -21,16 +23,30 @@ public class RecordService {
     }
 
     public Flux<Record> getAllUserRecords(int userId, LocalDateTime fromDate, LocalDateTime toDate) {
+        var recordTypeStream = Arrays.stream(RecordType.values());
+
         if (fromDate != null && toDate != null) {
-            return recordRepository.findByUserIdAndUntilTimeLessThanEqualAndFromTimeGreaterThanEqual(userId, toDate, fromDate);
+            var records = recordTypeStream.map(
+                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqualAndUntilTimeGreaterThanEqual(userId, recordType, toDate, fromDate)
+            ).collect(Collectors.toList());
+
+            return Flux.merge(records);
         }
 
         if (fromDate != null) {
-            return recordRepository.findByUserIdAndFromTimeGreaterThanEqual(userId, fromDate);
+            var records = recordTypeStream.map(
+                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeGreaterThanEqual(userId, recordType, fromDate)
+            ).collect(Collectors.toList());
+
+            return Flux.merge(records);
         }
 
         if (toDate != null) {
-            return recordRepository.findByUserIdAndUntilTimeLessThanEqual(userId, toDate);
+            var records = recordTypeStream.map(
+                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqual(userId, recordType, toDate)
+            ).collect(Collectors.toList());
+
+            return Flux.merge(records);
         }
 
         return recordRepository.findByUserId(userId);
@@ -38,11 +54,11 @@ public class RecordService {
 
     public Flux<Record> getAllUserRecordsByType(int userId, RecordType recordType, LocalDateTime fromDate, LocalDateTime toDate) {
         if (fromDate != null && toDate != null) {
-            return recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqualAndFromTimeGreaterThanEqual(userId, recordType, toDate, fromDate);
+            return recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqualAndUntilTimeGreaterThanEqual(userId, recordType, toDate, fromDate);
         }
 
         if (fromDate != null) {
-            return recordRepository.findByUserIdAndTypeAndFromTimeGreaterThanEqual(userId, recordType, fromDate);
+            return recordRepository.findByUserIdAndTypeAndUntilTimeGreaterThanEqual(userId, recordType, fromDate);
         }
 
         if (toDate != null) {
