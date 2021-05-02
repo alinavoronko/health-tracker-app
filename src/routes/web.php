@@ -12,36 +12,35 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\MarathonController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\ActivityController;
+Route::get('/dashboard', [ActivityController::class, 'show']);
+
+
+
+Route::resource('marathons', MarathonController::class);
+
+Route::resource('friends', FriendController::class)->only([
+    'index'
+]);
+
 
 
 /*temporary routes; should be changed after creating resources*/
 Route::get('/', function () {
-    return view('home');
+    return view('login');
 });
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/marathon/edit', function () {
-    return view('edit_marathon');
-});
-Route::get('/friends', function () {
-    return view('friends');
-});
+
 
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/marathon', function () {
-    return view('marathon');
-});
-Route::get('/marathons', function () {
-    return view('marathons');
-});
 
-Route::get('/marathon/new', function () {
-    return view('new_marathon');
-});
 
 Route::get('/signup', function () {
     return view('signup');

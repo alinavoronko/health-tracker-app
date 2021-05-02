@@ -23,6 +23,8 @@ integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZi
 crossorigin="anonymous"></script>
 @endsection
 @section('button-text', 'Add friends')
+<!--button need to redirect-->
+<!-- wrap it into <a> and use url() e.g. example  href="{{ url('/problems/' . $problem->id . '/edit') }}"-->
 @section('content')
 
 
@@ -69,6 +71,8 @@ crossorigin="anonymous"></script>
                 <th scope="col">Remove</th>
               </tr>
             </thead>
+            <!--use blade for loop to loop over friends get a list of them from db-->
+          
             <tbody>
               <tr>
                 <th scope="row">1</th>
