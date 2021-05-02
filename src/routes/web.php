@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarathonController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
-Route::get('/dashboard', [ActivityController::class, 'show']);
+Route::get('/dashboard', [ActivityController::class, 'index']);
 
 
 
@@ -30,9 +30,6 @@ Route::resource('friends', FriendController::class)->only([
 /*temporary routes; should be changed after creating resources*/
 Route::get('/', function () {
     return view('login');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard');
 });
 
 
