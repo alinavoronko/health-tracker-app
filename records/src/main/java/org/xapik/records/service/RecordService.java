@@ -25,33 +25,17 @@ public class RecordService {
     }
 
     public Flux<Record> getAllUserRecords(int userId, LocalDateTime fromDate, LocalDateTime toDate) {
+        if (fromDate == null && toDate == null) {
+            return recordRepository.findByUserId(userId);
+        }
+
         var recordTypeStream = Arrays.stream(RecordType.values());
 
-        if (fromDate != null && toDate != null) {
-            var records = recordTypeStream.map(
-                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqualAndUntilTimeGreaterThanEqual(userId, recordType, toDate, fromDate)
-            ).collect(Collectors.toList());
+        var records = recordTypeStream.map(
+                recordType -> this.getAllUserRecordsByType(userId, recordType, fromDate, toDate)
+        ).collect(Collectors.toList());
 
-            return Flux.merge(records);
-        }
-
-        if (fromDate != null) {
-            var records = recordTypeStream.map(
-                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeGreaterThanEqual(userId, recordType, fromDate)
-            ).collect(Collectors.toList());
-
-            return Flux.merge(records);
-        }
-
-        if (toDate != null) {
-            var records = recordTypeStream.map(
-                    recordType -> recordRepository.findByUserIdAndTypeAndUntilTimeLessThanEqual(userId, recordType, toDate)
-            ).collect(Collectors.toList());
-
-            return Flux.merge(records);
-        }
-
-        return recordRepository.findByUserId(userId);
+        return Flux.merge(records);
     }
 
     public Flux<Record> getAllUserRecordsByType(int userId, RecordType recordType, LocalDateTime fromDate, LocalDateTime toDate) {
