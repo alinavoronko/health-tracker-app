@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "marathon": {
+    "MarathonService": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

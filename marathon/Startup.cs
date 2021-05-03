@@ -11,8 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MarathonService.Database.Context;
+using Microsoft.EntityFrameworkCore;
 
-namespace Marathon
+namespace MarathonService
 {
     public class Startup
     {
@@ -26,11 +28,14 @@ namespace Marathon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<MarathonContext>(opt => opt.UseMySql(
+                Configuration.GetConnectionString("MarathonDbContextConnection"),
+                Microsoft.EntityFrameworkCore.ServerVersion.FromString("8.0.23-mysql")
+            ));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "marathon", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marathon", Version = "v1" });
             });
         }
 
@@ -41,7 +46,7 @@ namespace Marathon
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "marathon v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marathon v1"));
             }
 
             app.UseHttpsRedirection();
