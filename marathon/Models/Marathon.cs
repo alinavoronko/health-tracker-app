@@ -1,8 +1,14 @@
+using System;
+using System.Collections.Generic;
 
 namespace MarathonService.Models
 {
-  public class Marathon
+  public class Marathon : BaseEntity
   {
-    public long Id { get; set; }
+    public DateTime StartDate { get; set; }
+    public float Goal { get; set; }
+    public long CreatorId { get; set; }
+
+    public virtual ICollection<MarathonParticipant> Participants { get; set; }
   }
 }
