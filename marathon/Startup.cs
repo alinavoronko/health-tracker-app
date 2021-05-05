@@ -13,52 +13,57 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MarathonService.Database.Context;
 using Microsoft.EntityFrameworkCore;
+using MarathonService.Models;
+using MarathonService.Services;
 
 namespace MarathonService
 {
-    public class Startup
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<MarathonContext>(opt => opt.UseMySql(
-                Configuration.GetConnectionString("MarathonDbContextConnection"),
-                Microsoft.EntityFrameworkCore.ServerVersion.FromString("8.0.23-mysql")
-            ));
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marathon", Version = "v1" });
-            });
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marathon v1"));
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+      Configuration = configuration;
     }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.Configure<FriendServiceOptions>(Configuration.GetSection(FriendServiceOptions.FriendService));
+      services.AddScoped<IFriendService, FriendService>();
+
+      services.AddDbContext<MarathonContext>(opt => opt.UseMySql(
+          Configuration.GetConnectionString("MarathonDbContextConnection"),
+          Microsoft.EntityFrameworkCore.ServerVersion.FromString("8.0.23-mysql")
+      ));
+      services.AddControllers();
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marathon", Version = "v1" });
+      });
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marathon v1"));
+      }
+
+      app.UseHttpsRedirection();
+
+      app.UseRouting();
+
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
+    }
+  }
 }
