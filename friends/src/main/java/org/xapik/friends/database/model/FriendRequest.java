@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 
+import org.xapik.friends.database.model.FriendIdentity;
+
 @Data
 @Entity
 @NoArgsConstructor

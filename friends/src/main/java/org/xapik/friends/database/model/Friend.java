@@ -12,6 +12,8 @@ import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.xapik.friends.database.model.FriendIdentity;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -32,12 +34,10 @@ public class Friend implements Serializable {
     @ColumnDefault("0")
     private Boolean isTrainer = false;
 
-    @Null
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Null
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
