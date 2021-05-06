@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Health Tracker App</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <script src="/js/scripts.js"></script>
     <script
@@ -86,10 +86,10 @@
               </div>
               <div class="mt-2 text-center">
                 <div>
-                  <span>Don't have an account? <a href="#">Sign Up</a></span>
+                  <span>Don't have an account? <a href="{{ route('register') }}">Sign Up</a></span>
                 </div>
                 <div>
-                  <a href="#">Forgot password?</a>
+                  <a href="{{ route('password.request') }}">Forgot password?</a>
                 </div>
               </div>
             </form>

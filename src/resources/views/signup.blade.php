@@ -1,15 +1,23 @@
 
-@extends('layout')
-@section('title', 'Singup')
-@section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"
-></script>
-@endsection
-@section('button-text', 'Sign in')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <script src="/js/scripts.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+      integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-light">
+
+
+    <div class="Body-Wrapper">
 <!--make the signup form fit to page-->
       <main role="main" class="Main container bg-white px-4">
         <div class="SignUp">
@@ -171,10 +179,10 @@ crossorigin="anonymous"
               </div>
               <div class="mt-2 text-center col-md-12">
                 <div>
-                  <span>Already have an account? <a href="#">Sign In</a></span>
+                  <span>Already have an account? <a href="{{ route('login') }}">Sign In</a></span>
                 </div>
                 <div>
-                  <a href="#">Forgot password?</a>
+                  <a href="{{ route('password.request') }}">Forgot password?</a>
                 </div>
               </div>
             </form>
@@ -182,4 +190,8 @@ crossorigin="anonymous"
         </div>
       </main>
 
-@endsection
+    </div>
+
+
+  </body>
+</html>
