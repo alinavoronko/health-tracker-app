@@ -26,7 +26,8 @@
             *input fields on the right side-->
           <div class="Form mx-auto border rounded py-4 px-5 text-center vertical-center">
             <h3 class="mb-3">Login</h3>
-            <form action="#" method="post">
+              <form method="POST" action="{{ route('login') }}">
+                @csrf
               <div class="input-group mb-3">
                 <span class="input-group-text" id="at-addon">
                   <svg
@@ -81,12 +82,12 @@
               </div>
               <div class="d-grid mt-3">
                 <button type="submit" class="btn btn-primary mb-3">
-                  Login
+                  {{__('Login')}}
                 </button>
               </div>
               <div class="mt-2 text-center">
                 <div>
-                  <span>Don't have an account? <a href="{{ route('register') }}">Sign Up</a></span>
+                  <span>{{__("Don't have an account?")}} <a href="{{ route('register') }}">{{__('Sign Up')}}</a></span>
                 </div>
                 <div>
                   <a href="{{ route('password.request') }}">Forgot password?</a>

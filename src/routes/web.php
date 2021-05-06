@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarathonController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
-Route::get('/dashboard', [ActivityController::class, 'index']);
+//Route::get('/dashboard', [ActivityController::class, 'index']);
 
 
 
@@ -32,9 +32,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [ActivityController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 

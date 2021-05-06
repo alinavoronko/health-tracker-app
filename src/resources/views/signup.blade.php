@@ -15,7 +15,16 @@
     ></script>
   </head>
   <body class="bg-light">
-
+ <!--added for debugging purposes-->   
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="Body-Wrapper">
 <!--make the signup form fit to page-->
@@ -23,7 +32,8 @@
         <div class="SignUp">
           <div class="Form Form__wide mx-auto border rounded py-4 px-5">
             <h3 class="mb-3">Sign up</h3>
-            <form class="row" action="#" method="post">
+            <form class="row" method="POST" action="{{ route('register') }}">
+              @csrf
               <div class="col-md-6 mb-3">
                 <label for="inputName" class="form-label">Name</label>
                 <input
@@ -126,7 +136,7 @@
                   <input
                     required
                     type="password"
-                    name="confirmPassword"
+                    name="password_confirmation"
                     id="confirmPassword"
                     class="form-control"
                     placeholder="Confirm Password"
@@ -142,6 +152,7 @@
                 <input
                   required
                   type="date"
+                  name="dob"
                   id="dateOfBirth"
                   class="form-control"
                   placeholder="mm/dd/yyyy"
@@ -155,6 +166,7 @@
                     required
                     type="number"
                     id="dateOfBirth"
+                    name="height"
                     class="form-control"
                     placeholder="100"
                     aria-label="Height"
@@ -167,8 +179,9 @@
                 <select name="city" id="city" class="form-select">
                   <option selected disabled>Choose city</option>
                   <optgroup label="Latvia">
-                    <option value="0">Riga</option>
-                    <option value="1">Daugavpils</option>
+                    <option value="1">Riga</option>
+                    <option value="2">Daugavpils</option>
+                    <!--Add blade variables - get data grom the database-->
                   </optgroup>
                 </select>
               </div>
@@ -178,6 +191,7 @@
                 </button>
               </div>
               <div class="mt-2 text-center col-md-12">
+                <div>{{__('auth.failed')}}</div>
                 <div>
                   <span>Already have an account? <a href="{{ route('login') }}">Sign In</a></span>
                 </div>
