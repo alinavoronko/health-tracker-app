@@ -27,16 +27,27 @@ Route::resource('friends', FriendController::class)->only([
 
 
 
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+
+
+
+
 /*temporary routes; should be changed after creating resources*/
 Route::get('/', function () {
-    return view('login');
+    return redirect()->route('login');
+    
 });
 
-
-
-Route::get('/login', function () {
-    return view('login');
-});
 
 
 Route::get('/signup', function () {
