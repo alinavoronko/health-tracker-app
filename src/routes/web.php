@@ -59,8 +59,8 @@ Route::get('/password/recover', function () {
 
 Route::get('/settings', function () {
     return view('settings');
-});
+})->middleware(['auth'])->name('settings');
 
 Route::get('/stats', function () {
     return view('stats');
-});
+})->middleware(['auth'])->name('stats');

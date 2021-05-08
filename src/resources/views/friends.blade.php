@@ -4,16 +4,16 @@
 @section('title', 'Friends')
 @section('optional')
 <li class="nav-item">
-  <a href="#" class="nav-link">Marathon</a>
+  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">Stats</a>
+  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">Friends</a>
-</li>
+  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
+</li>  
 <li class="nav-item">
-  <a href="#" class="nav-link">Settings</a>
+  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -24,7 +24,7 @@ crossorigin="anonymous"></script>
 @endsection
 @section('button-text', 'Add friends')
 <!--button need to redirect-->
-<!-- wrap it into <a> and use url() e.g. example  href="{{ url('/problems/' . $problem->id . '/edit') }}"-->
+<!-- wrap it into <a> and use url() -->
 @section('content')
 
 

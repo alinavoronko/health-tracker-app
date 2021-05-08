@@ -27,11 +27,18 @@
           <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a href="#" class="nav-link active">Home</a>
+                <a href="{{ route('dashboard') }}" class="nav-link active">Home</a>
               </li>
               @yield('optional', '')
 
             </ul>
+<div class="nav-item">
+            <i class="flag flag-uk"></i>
+</div>
+<div class="nav-item">
+  <i class="flag flag-lv"></i>
+</div>
+            
             <form method="POST" action="{{ route('logout') }}" >
               @csrf
 
