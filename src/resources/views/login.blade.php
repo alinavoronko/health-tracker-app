@@ -20,6 +20,7 @@
       
 
       <main role="main" class="Main container bg-white px-4">
+        
         <div class="Login h-100"> <!--need to center the form vertically, 
             as well as split the form into 2 parts: 
             *logo and our moto on the left side,
@@ -90,7 +91,7 @@
                   <span>{{__("Don't have an account?")}} <a href="{{ route('register') }}">{{__('Sign Up')}}</a></span>
                 </div>
                 <div>
-                  <a href="{{ route('password.request') }}">Forgot password?</a>
+                  <a href="{{ route('password.request') }}">{{__('Forgot password?')}}</a>
                 </div>
               </div>
             </form>

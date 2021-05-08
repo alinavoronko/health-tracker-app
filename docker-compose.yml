@@ -25,6 +25,8 @@ services:
                         - "3306:3306"
                 env_file:
                         - mysql.env
+                volumes:
+                        - mysql-data:/var/lib/mysql
                 networks: 
                         - laravel
         php:
@@ -50,4 +52,6 @@ services:
                   - mysql
                 networks:
                   - laravel
+volumes:
+        mysql-data:
               

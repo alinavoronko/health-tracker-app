@@ -181,22 +181,23 @@
                   <optgroup label="Latvia">
                     <option value="1">Riga</option>
                     <option value="2">Daugavpils</option>
-                    <!--Add blade variables - get data grom the database-->
+                    <!--Add blade variables - get data from the database-->
                   </optgroup>
                 </select>
               </div>
               <div class="d-grid mt-3 col-md-12">
                 <button type="submit" class="btn btn-primary mb-3">
-                  Register
+                  {{__('Sign Up')}} 
                 </button>
               </div>
               <div class="mt-2 text-center col-md-12">
                 <div>{{__('auth.failed')}}</div>
                 <div>
-                  <span>Already have an account? <a href="{{ route('login') }}">Sign In</a></span>
+               
+                  <span> {{__('Already have an account?')}} <a href="{{ route('login') }}">{{__('Login')}}</a></span>
                 </div>
                 <div>
-                  <a href="{{ route('password.request') }}">Forgot password?</a>
+                  <a href="{{ route('password.request') }}">{{__('Forgot password?')}}</a>
                 </div>
               </div>
             </form>

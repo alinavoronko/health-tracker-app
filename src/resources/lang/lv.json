@@ -1,6 +1,8 @@
 {
     "Login": "Pieslēgties",
     "Don't have an account?":"Nav konta?",
-    "Sign Up": "Reģistrēties"
+    "Sign Up": "Reģistrēties",
+    "Already have an account?": "Jau ir konts?",
+    "Forgot password?":"Aizmirsi paroli?"
 
   }
