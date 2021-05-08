@@ -32,6 +32,17 @@
               @yield('optional', '')
 
             </ul>
+            <form method="POST" action="{{ route('logout') }}" >
+              @csrf
+
+              <x-dropdown-link :href="route('logout')"
+                      onclick="event.preventDefault();
+                                  this.closest('form').submit();"  class="nav-link active text-white">
+                  {{ __('Log out') }}
+              </x-dropdown-link>
+          </form>
+
+
             <div class="text-end">
               <button class="btn btn-warning" type="button">@yield('button-text')</button>
             </div>

@@ -25,7 +25,7 @@
             class="rounded-circle Welcome-Avatar me-3"
           />
           <h1 class="display-4">
-            Welcome, <span class="SeparateLine">&lt;Name Surname&gt;</span>
+            Welcome, {{ Auth::user()->name }} {{ Auth::user()->surname }}!
           </h1>
         </div>
 
