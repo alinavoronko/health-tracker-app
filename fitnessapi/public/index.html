@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request access to google resources</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button id="authorize">Authorize</button>
+
+    <button id="retrieve">Get activities</button>
+
+    <ul id="activityList"></ul>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        const authorize = document.querySelector("#authorize");
+        const retrieve = document.querySelector("#retrieve");
+        const activityList = document.querySelector("#activityList");
+
+        authorize.addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          const { data: { authUrl } } = await axios.get("/google-url?user=admin");
+          window.location.href = authUrl;
+        });
+
+        retrieve.addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          const { data } = await axios.get(
+            "/steps?user=admin&from=1619470800000&to=1619557200000"
+          );
+          console.log(data);
+        });
+      });
+    </script>
+  </body>
+</html>
