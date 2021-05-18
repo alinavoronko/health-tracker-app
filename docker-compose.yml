@@ -1,7 +1,8 @@
 version: '3'
 
 networks:
-        laravel:
+        main:
+
 services:
         nginx:
                 image: nginx:1.20.0-alpine
@@ -15,7 +16,8 @@ services:
                         - php
                         - mysql
                 networks:
-                        - laravel
+                        - main
+
         mysql:
                 image: mysql:latest
                 container_name: mysql
@@ -28,7 +30,8 @@ services:
                 volumes:
                         - mysql-data:/var/lib/mysql
                 networks:
-                        - laravel
+                        - main
+
         php:
                 build:
                         context: .
@@ -39,18 +42,20 @@ services:
                 ports:
                         - "9000:9000"
                 networks:
-                        - laravel
+                        - main
 
         # PhpMyAdmin Service
         phpmyadmin:
                 image: phpmyadmin/phpmyadmin:5
                 ports:
-                  - "8081:80"
+                        - "8081:80"
                 environment:
-                  PMA_HOST: mysql
+                        PMA_HOST: mysql
                 depends_on:
-                  - mysql
+                        - mysql
                 networks:
-                  - laravel
+                        - main
+
+
 volumes:
         mysql-data:
