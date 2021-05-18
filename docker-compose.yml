@@ -27,12 +27,12 @@ services:
                         - mysql.env
                 volumes:
                         - mysql-data:/var/lib/mysql
-                networks: 
+                networks:
                         - laravel
         php:
                 build:
                         context: .
-                        dockerfile: Dockerfile
+                        dockerfile: ./src/Dockerfile
                 container_name: php
                 volumes:
                         - ./src:/var/www
@@ -54,4 +54,3 @@ services:
                   - laravel
 volumes:
         mysql-data:
-              
