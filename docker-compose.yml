@@ -56,6 +56,33 @@ services:
                 networks:
                         - main
 
+        friends:
+                build:
+                        context: ./friends
+                        dockerfile: Dockerfile
+                ports:
+                        - "8083:8080"
+                env_file:
+                        - mysql.env
+                environment:
+                        - MYSQL_HOST=mysql
+                networks:
+                        - main
+                depends_on:
+                        - mysql
+
+        marathon:
+                build:
+                        context: ./marathon
+                        dockerfile: Dockerfile
+                ports:
+                        - "8084:80"
+                networks:
+                        - main
+                depends_on:
+                        - friends
+                        - mysql
+
 
 volumes:
         mysql-data:
