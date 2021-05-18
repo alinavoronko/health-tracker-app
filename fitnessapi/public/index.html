@@ -11,6 +11,7 @@
     <button id="authorize">Authorize</button>
 
     <button id="retrieve">Get activities</button>
+    <button id="retrieve2">Get sleep</button>
 
     <ul id="activityList"></ul>
 
@@ -18,6 +19,7 @@
       window.addEventListener("DOMContentLoaded", (event) => {
         const authorize = document.querySelector("#authorize");
         const retrieve = document.querySelector("#retrieve");
+        const retrieve2 = document.querySelector("#retrieve2");
         const activityList = document.querySelector("#activityList");
 
         authorize.addEventListener("click", async (event) => {
@@ -31,10 +33,21 @@
           event.preventDefault();
 
           const { data } = await axios.get(
-            "/steps?user=admin&from=1619470800000&to=1619557200000"
+            "/steps?user=admin&from=1619470800000&to=1621285200000"
           );
           console.log(data);
         });
+
+
+        retrieve2.addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          const { data } = await axios.get(
+            "/sleep?user=admin&from=1619470800000&to=1621285200000"
+          );
+          console.log(data);
+        });
+
       });
     </script>
   </body>

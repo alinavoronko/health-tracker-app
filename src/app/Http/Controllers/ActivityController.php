@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +26,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        //
+        return view('createRecord');
     }
 
     /**

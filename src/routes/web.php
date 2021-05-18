@@ -20,6 +20,7 @@ use App\Http\Controllers\ActivityController;
 
 
 Route::resource('marathons', MarathonController::class);
+Route::resource('activities', ActivityController::class);
 
 Route::resource('friends', FriendController::class)->only([
     'index'
@@ -28,19 +29,28 @@ Route::resource('friends', FriendController::class)->only([
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', [ActivityController::class, 'index'])->middleware(['auth'])->name('dashboard');
+ Route::get('/dashboard', [ActivityController::class, 'index'])->middleware(['auth'])->name('dashboard');
+
+
+// Route::get('/dashboard', function () {
+//     //return view('dashboard');
+//     return 'Hello friend!';
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
 
 
+// Route::get('/oops', function () {
+//     return view('oops');
+// })->name['oops'];
 
 
-/*temporary routes; should be changed after creating resources*/
+
 Route::get('/', function () {
     return redirect()->route('login');
     

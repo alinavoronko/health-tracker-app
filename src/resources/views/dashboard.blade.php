@@ -14,7 +14,13 @@
   <a href="{{ route('settings') }}" class="nav-link">Settings</a>
 </li>
 @endsection
-@section('button-text', 'Add records')
+{{-- @section('button-link', 'activity.create')
+@section('button-text', 'Add records') --}}
+@section('button')
+<x-named-route route="activities.create">
+  Add records
+</x-named-route>
+@endsection
 @section('content')
 
       <main role="main" class="Main container bg-white px-4">

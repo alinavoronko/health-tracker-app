@@ -27,7 +27,7 @@
             *input fields on the right side-->
           <div class="Form mx-auto border rounded py-4 px-5 text-center vertical-center">
             <h3 class="mb-3">Login</h3>
-              <form method="POST" action="{{ route('login') }}">
+              <form method="POST" action="{{ route('login.post') }}">
                 @csrf
               <div class="input-group mb-3">
                 <span class="input-group-text" id="at-addon">

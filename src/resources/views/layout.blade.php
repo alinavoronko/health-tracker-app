@@ -32,12 +32,12 @@
               @yield('optional', '')
 
             </ul>
-<div class="nav-item">
+<!--<div class="nav-item">
             <i class="flag flag-uk"></i>
 </div>
 <div class="nav-item">
   <i class="flag flag-lv"></i>
-</div>
+</div>-->
             
             <form method="POST" action="{{ route('logout') }}" >
               @csrf
@@ -51,7 +51,9 @@
 
 
             <div class="text-end">
-              <button class="btn btn-warning" type="button">@yield('button-text')</button>
+              @yield('button')
+
+
             </div>
           </div>
         </div>
