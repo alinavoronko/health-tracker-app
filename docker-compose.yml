@@ -57,9 +57,7 @@ services:
                         - main
 
         friends:
-                build:
-                        context: ./friends
-                        dockerfile: Dockerfile
+                image: public.ecr.aws/z6p0g0b4/hta-friends:latest
                 ports:
                         - "8083:8080"
                 env_file:
