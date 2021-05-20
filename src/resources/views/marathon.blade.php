@@ -2,16 +2,16 @@
 @section('title', 'Join Marathon')
 @section('optional')
 <li class="nav-item">
-  <a href="#" class="nav-link">Marathon</a>
+  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">Stats</a>
+  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">Friends</a>
-</li>
+  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
+</li>  
 <li class="nav-item">
-  <a href="#" class="nav-link">Settings</a>
+  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -21,7 +21,11 @@ integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZi
 crossorigin="anonymous"
 ></script>
 @endsection
-@section('button-text', 'Join marathon')
+{{-- @section('button')
+<x-named-route route="#">
+  Join marathon
+</x-named-route>
+@endsection --}}
 @section('content')
 
 

@@ -21,7 +21,11 @@ integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZi
 crossorigin="anonymous"
 ></script>
 @endsection
-@section('button-text', 'Add records')
+@section('button')
+<x-named-route route="activities.create">
+  Add records
+</x-named-route>
+@endsection
 @section('content')
 
 

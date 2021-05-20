@@ -22,8 +22,13 @@ integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZi
 crossorigin="anonymous"
 ></script>
 @endsection
-@section('button-link', 'marathons.create')
-@section('button-text', 'Create new')
+
+@section('button')
+<x-named-route route="marathons.create">
+  Create new
+</x-named-route>
+@endsection
+
 @section('content')
 
  

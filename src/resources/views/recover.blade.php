@@ -8,6 +8,11 @@ crossorigin="anonymous"
 ></script>
 @endsection
 @section('button-text', 'Sign in')
+@section('button')
+<x-named-route route="login">
+  Sign in
+</x-named-route>
+@endsection
 @section('content')
 
       <main role="main" class="Main container bg-white px-4">
