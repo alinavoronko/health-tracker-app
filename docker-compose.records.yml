@@ -6,9 +6,7 @@ networks:
 
 services:
   records:
-    build:
-      context: ./records
-      dockerfile: Dockerfile
+    image: public.ecr.aws/z6p0g0b4/hta-records:latest
     ports:
       - "8082:8080"
     networks:
