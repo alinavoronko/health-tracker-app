@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Gate;
 
 class User extends Authenticatable
 {
@@ -44,4 +46,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    // block-unblock functionality
+    public function blockUser()
+    {
+        if (Gate::allows('is-admin')) {
+        $this->isBlocked = 1; }
+    }
+
+    public function unblockUser()
+    {
+        if (Gate::allows('is-admin'))  {
+        $this->isBlocked = 0;
+        }
+    }
+    public function isAdmin(){
+        return $this->is_admin;
+
+    }
+
 }

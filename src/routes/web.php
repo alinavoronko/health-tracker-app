@@ -15,18 +15,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarathonController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdminController;
+
 //Route::get('/dashboard', [ActivityController::class, 'index']);
 
 
 
 Route::resource('marathons', MarathonController::class);
+Route::resource('admin', AdminController::class);
 Route::resource('activities', ActivityController::class);
 
 Route::resource('friends', FriendController::class)->only([
     'index'
 ]);
 
+Route::get('/goal/create', [ ActivityController::class, 'createGoal']);
+//store goal ADD ROUTE
 
+Route::post('/block',[ AdminController::class, 'block']);
 
 
 // Route::get('/', function () {

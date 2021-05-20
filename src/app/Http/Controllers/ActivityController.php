@@ -84,4 +84,13 @@ class ActivityController extends Controller
     {
         //
     }
+
+    public function createGoal(){
+
+    }
+
+    public function storeGoal(){
+        
+    }
+
 }
