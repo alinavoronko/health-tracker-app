@@ -1,0 +1,12 @@
+version: '3'
+
+networks:
+        main:
+
+services:
+  redis:
+    image: redis:6.2
+    expose:
+            - 6379
+    networks:
+            - main

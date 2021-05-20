@@ -1,7 +1,8 @@
 version: '3'
 
 networks:
-        laravel:
+        main:
+
 services:
         nginx:
                 image: nginx:1.20.0-alpine
@@ -15,7 +16,8 @@ services:
                         - php
                         - mysql
                 networks:
-                        - laravel
+                        - main
+
         mysql:
                 image: mysql:latest
                 container_name: mysql
@@ -27,31 +29,60 @@ services:
                         - mysql.env
                 volumes:
                         - mysql-data:/var/lib/mysql
-                networks: 
-                        - laravel
+                networks:
+                        - main
+
         php:
                 build:
                         context: .
-                        dockerfile: Dockerfile
+                        dockerfile: ./src/Dockerfile
                 container_name: php
                 volumes:
                         - ./src:/var/www
                 ports:
                         - "9000:9000"
                 networks:
-                        - laravel
+                        - main
 
         # PhpMyAdmin Service
         phpmyadmin:
                 image: phpmyadmin/phpmyadmin:5
                 ports:
-                  - "8081:80"
+                        - "8081:80"
                 environment:
-                  PMA_HOST: mysql
+                        PMA_HOST: mysql
                 depends_on:
-                  - mysql
+                        - mysql
                 networks:
-                  - laravel
+                        - main
+
+        friends:
+                build:
+                        context: ./friends
+                        dockerfile: Dockerfile
+                ports:
+                        - "8083:8080"
+                env_file:
+                        - mysql.env
+                environment:
+                        - MYSQL_HOST=mysql
+                networks:
+                        - main
+                depends_on:
+                        - mysql
+
+        marathon:
+                build:
+                        context: ./marathon
+                        dockerfile: Dockerfile
+                ports:
+                        - "8084:80"
+                networks:
+                        - main
+                depends_on:
+                        - friends
+                        - mysql
+
+
 volumes:
         mysql-data:
-              
