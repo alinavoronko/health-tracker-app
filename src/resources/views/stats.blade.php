@@ -39,32 +39,34 @@ crossorigin="anonymous"
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="weekChart" width="400" height="250"></canvas>
             </div>
+            <div class="Chart p-2 border col-sm-5 mb-3">
+              <canvas id="monthChart" width="400" height="250"></canvas>
+            </div>
           </div>
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-warning">Set step goal</button>
+        </div>
         </div>
 
         <div class="mb-3 DashboardSection">
           <h1 class="display-4 text-center mb-3">Sleep</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
+              <canvas id="todaySleepChart" width="400" height="250"></canvas>
+            </div>
+            <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="weekSleepChart" width="400" height="250"></canvas>
             </div>
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="monthSleepChart" width="400" height="250"></canvas>
             </div>
+            <div class="col-md-12 text-center">
+              <button type="button" class="btn btn-primary">Set sleep goal</button>
+          </div>
+
           </div>
         </div>
 
-        <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Blood</h1>
-          <div class="row justify-content-around">
-            <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="bloodPressureChart" width="400" height="250"></canvas>
-            </div>
-            <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="pulseChart" width="400" height="250"></canvas>
-            </div>
-          </div>
-        </div>
 
         <div class="mb-3 DashboardSection">
           <h1 class="display-4 text-center mb-3">Weight</h1>
@@ -75,10 +77,20 @@ crossorigin="anonymous"
             <div class="col-sm-5 mb-3 Chart border p-2">
               <canvas id="weightChart" width="400" height="250"></canvas>
             </div>
+            <div class="col-sm-5 mb-3 Chart border p-2">
+              <canvas id="weightChart" width="400" height="250"></canvas>
+            </div>
           </div>
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-danger">Set weight goal</button>
+        </div>
+  
         </div>
       </main>
      <script>
+       const todaySleepCtx =document.getElementById('todaySleepChart').getContext('2d');
+
+
       const todayStepsCtx = document
         .getElementById("todayChart")
         .getContext("2d");
@@ -91,12 +103,7 @@ crossorigin="anonymous"
       const monthSleepCtx = document
         .getElementById("monthSleepChart")
         .getContext("2d");
-      const bloodPressureCtx = document
-        .getElementById("bloodPressureChart")
-        .getContext("2d");
-      const pulseCtx = document
-        .getElementById("pulseChart")
-        .getContext("2d");
+
       const weightCtx = document.getElementById("weightChart").getContext("2d");
 
       const todayChart = new Chart(todayStepsCtx, {
@@ -122,6 +129,62 @@ crossorigin="anonymous"
           ],
         },
       });
+
+
+
+  
+const todaySleep=new Chart(todaySleepCtx, {
+
+      
+  type: 'gauge',
+  data: {
+    //labels: ['Success', 'Warning', 'Warning', 'Error'],
+    datasets: [{
+      data: [100,200,300,400]],
+      // value: value, //????????????
+      backgroundColor: ['green', 'yellow', 'orange', 'red'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    title: {
+      display: true,
+      text: 'Gauge chart'
+    },
+    layout: {
+      padding: {
+        bottom: 30
+      }
+    },
+    needle: {
+      // Needle circle radius as the percentage of the chart area width
+      radiusPercentage: 2,
+      // Needle width as the percentage of the chart area width
+      widthPercentage: 3.2,
+      // Needle length as the percentage of the interval between inner radius (0%) and outer radius (100%) of the arc
+      lengthPercentage: 80,
+      // The color of the needle
+      color: 'rgba(0, 0, 0, 1)'
+    },
+    valueLabel: {
+      formatter: Math.round
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       const weekChart = new Chart(weekStepsCtx, {
         type: "bar",
@@ -242,66 +305,7 @@ crossorigin="anonymous"
         },
       });
 
-      const pulseChart = new Chart(pulseCtx, {
-        type: "line",
-        data: {
-          labels: [
-            "10:00","10:15","10:30","10:45",
-            "11:00","11:15","11:30","11:45",
-            "12:00","12:15","12:30","12:45",
-            "13:00","13:15","13:30","13:45",
-            "14:00","14:15","14:30","14:45",
-            "15:00","15:15","15:30","15:45",
-            "16:00","16:15","16:30","16:45",
-            "17:00","17:15","17:30","17:45",
-            "18:00","18:15","18:30","18:45",
-          ],
-          datasets: [
-            {
-              label: "Pulse",
-              data: [
-                80.0,
-                80.5,
-                81,
-                81.5,
-                82,
-                82.5,
-                83,
-                83.5,
-                84.0,
-                85,
-                86.0,
-                86.5,
-                87,
-                87.5,
-                88,
-                88.5,
-                89,
-                89.5,
-                90.0,
-                91,
-                92.0,
-                92.5,
-                93,
-                93.5,
-                94,
-                94.5,
-                95,
-                95.5,
-                96.0,
-                97,
-                94,
-                94.5,
-                95,
-                95.5,
-                96.0,
-                97,
-              ],
-            },
-          ],
-        },
-      });
-
+      
       const monthSleepChart = new Chart(monthSleepCtx, {
         type: "bar",
         data: {
