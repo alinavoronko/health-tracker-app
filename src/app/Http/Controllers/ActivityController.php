@@ -28,8 +28,6 @@ class ActivityController extends Controller
         $users=User::whereIn('id', $ids)->get();
 
         $frs = $friend->getFriends(Auth::user()->id);
-        //TO FIX: getFriends() not working properly
-        dd($frs);
         $friendIds=$frs->map(function ($rec) {
             return($rec->friendId);
         })->all();
