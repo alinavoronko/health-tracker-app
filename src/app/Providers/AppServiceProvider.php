@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\FriendService;
 use App\Services\MapperService;
+use App\Services\RecordService;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(FriendService::class, function ($app) {
             return new FriendService($app->make(MapperService::class));
+        });
+
+        $this->app->singleton(RecordService::class, function ($app) {
+            return new RecordService($app->make(MapperService::class));
         });
     }
 

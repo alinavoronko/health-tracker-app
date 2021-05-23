@@ -17,6 +17,7 @@ use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
 use App\Services\FriendService;
+use App\Services\RecordService;
 use Illuminate\Support\Facades\Http;
 
 //Route::get('/dashboard', [ActivityController::class, 'index']);
@@ -70,13 +71,31 @@ Route::get('/test/friends', function (FriendService $friendService) {
 
     // dd($friends->json());
 
-    $addFriend = $friendService->addFriend(2, 4);
+    //$addFriend = $friendService->addFriend(2, 4);
 
-    dd($addFriend);
+    // $friendService->acceptFriendRequest(4, 2);
+
+    // $friendRequests = $friendService->getFriendRequests(4);
+    $friends = $friendService->getFriends(2);
+
+    dd($friends[0]->createdAt);
+
+    // dd([$friendRequests, $friends]);
 
     return 'hi';
 });
 
+Route::get('/test/records', function (RecordService $recordService) {
+    // $records = Http::get('http://records:8080/api/goal-list');
+    // dd($records->json());
+
+    $goal = $recordService->addUserGoal(5, 1, 1000.0);
+
+    dd($goal);
+
+
+    return 'hi';
+});
 
 Route::get('/signup', function () {
     return view('signup');
