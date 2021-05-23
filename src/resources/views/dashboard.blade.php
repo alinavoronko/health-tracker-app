@@ -107,18 +107,13 @@
                 <h3 class="text-center mb-3">Friends</h3>
 
                 <ul class="list-group">
+                  @foreach($friends as $friend)
                   <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 1</span>
-                    <span>-2700</span>
+                    <span>{{$friend->name}} {{$friend->surname}}</span>
+                    <span>{{$friend->email}}</span>
+                 
                   </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 2</span>
-                    <span>+500</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 3</span>
-                    <span>+1000</span>
-                  </li>
+                  @endforeach
                 </ul>
               </div>
             {{-- </div> --}}

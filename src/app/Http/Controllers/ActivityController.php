@@ -26,8 +26,17 @@ class ActivityController extends Controller
         })->all();
         //all transforms laravel collection into an array
         $users=User::whereIn('id', $ids)->get();
+
+        $frs = $friend->getFriends(Auth::user()->id);
+        //TO FIX: getFriends() not working properly
+        dd($frs);
+        $friendIds=$frs->map(function ($rec) {
+            return($rec->friendId);
+        })->all();
+        $friends=User::whereIn('id', $friendIds)->get();
+        
         //SQL: select <> from table where column_name in <>
-        return view('dashboard', compact('users'));
+        return view('dashboard', compact('users', 'friends'));
     }
 
     /**
