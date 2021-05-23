@@ -34,6 +34,8 @@ public class Goal {
 
     private float value;
 
+    public Goal() {}
+
     public Goal(int userId, int creatorId, @NotNull(message = "Goal type is mandatory") RecordType type, LocalDateTime createdAt, @NotNull(message = "Time Period is mandatory") PeriodType timePeriod, float value) {
         this.userId = userId;
         this.creatorId = creatorId;
