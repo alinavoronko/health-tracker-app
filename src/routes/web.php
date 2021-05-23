@@ -41,8 +41,8 @@ Route::post('/block',[ AdminController::class, 'block']);
 
  Route::get('/dashboard', [ActivityController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-
-// Route::get('/dashboard', function () {
+ Route::get('/goals/create', function (){return(view('setGoal'));})->middleware(['auth'])->name('goals.create');
+// Route::get('/dashboard', fun ction () {
 //     //return view('dashboard');
 //     return 'Hello friend!';
 // })->middleware(['auth'])->name('dashboard');

@@ -31,6 +31,7 @@ crossorigin="anonymous"
         </div>
 
         <div class="Form Form__wide mx-auto px-5">
+          {{-- SET THE ACCTION! --}}
           <form action="#" class="row" method="POST">
 
             {{-- <div class="col-md-12 mb-3">
@@ -38,16 +39,16 @@ crossorigin="anonymous"
             <input type="checkbox" id="isGoal" name="isGoal">
             </div> --}}
 
-            <div class="form-check">
+            {{-- <div class="form-check">
                 <label class="form-check-label" for="isGoal">
                     Set as a goal
                   </label>
                 <input class="form-check-input" type="checkbox" id="isGoal" name="isGoal">
 
-              </div>
+              </div> --}}
 
 
-<script>
+{{-- <script>
 const checkbox = document.getElementById('isGoal')
 
 checkbox.addEventListener('change', (event) => {
@@ -64,7 +65,7 @@ checkbox.addEventListener('change', (event) => {
       go.style.display = "none";
   }
 })
-    </script>
+    </script> --}}
 
 
 {{-- For goals only those with isGoal==1 should be --}}
@@ -106,7 +107,7 @@ checkbox.addEventListener('change', (event) => {
             </div>
 
 
-            <div class="col-md-12 text-end">
+            <div class="col-md-12 text-center">
               <button type="submit" class="btn btn-primary mb-3">Submit</button>
             </div>
           </form>

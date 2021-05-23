@@ -36,7 +36,7 @@
         </div>
 
         <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Steps</h1>
+          <h1 class="display-4 text-center mb-3">Overview</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="todayChart" width="400" height="250"></canvas>
@@ -48,15 +48,17 @@
         </div>
 
         <div class="mb-3 DashboardSection">
-          <div class="row justify-content-between mx-5">
-            <div class="col-sm-5 mb-3">
-              <div class="Chart border p-2">
+         
+          {{-- <div class="row justify-content-between mx-5"> --}}
+            <div class="row justify-content-around">
+            {{-- <div class="col-sm-5 mb-3"> --}}
+              <div class="Chart border p-2 col-sm-5 mb-3">
                 <canvas id="weightChart" width="400" height="250"></canvas>
               </div>
-            </div>
+            {{-- </div> --}}
 
-            <div class="col-sm-5 mb-3 p-2">
-              <div class="Chart">
+            {{-- <div class="col-lg-5 mb-3 p-2"> --}}
+              <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Friends</h3>
 
                 <ul class="list-group">
@@ -74,10 +76,10 @@
                   </li>
                 </ul>
               </div>
-            </div>
+            {{-- </div> --}}
 
-            <div class="col-sm-5 mb-3 p-2">
-              <div class="Chart">
+            {{-- <div class="col-lg-5 mb-3 p-2"> --}}
+              <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Goals</h3>
 
                 <ul class="list-group">
@@ -95,10 +97,10 @@
                   </li>
                 </ul>
               </div>
-            </div>
-
-            <div class="col-sm-5 mb-3 p-2">
-              <div class="Chart">
+            {{-- </div> --}}
+{{-- 
+            <div class="col-lg-5 mb-3 p-2"> --}}
+              <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Marathons</h3>
 
                 <ul class="list-group">
@@ -118,7 +120,7 @@
               </div>
             </div>
           </div>
-        </div>
+        {{-- </div> --}}
       </main>
     
 
