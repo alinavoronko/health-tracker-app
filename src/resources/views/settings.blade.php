@@ -315,5 +315,6 @@ crossorigin="anonymous"
             </div>
           </div>
         </div>
+        
       </main>
 @endsection
