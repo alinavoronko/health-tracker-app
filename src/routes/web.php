@@ -16,6 +16,8 @@ use App\Http\Controllers\MarathonController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
+use App\Services\FriendService;
+use Illuminate\Support\Facades\Http;
 
 //Route::get('/dashboard', [ActivityController::class, 'index']);
 
@@ -59,9 +61,21 @@ require __DIR__.'/auth.php';
 
 Route::get('/', function () {
     return redirect()->route('login');
-    
 });
 
+
+Route::get('/test/friends', function (FriendService $friendService) {
+    // Get user with id 0 friends
+    // $friends = Http::get('http://friends:8080/api/user/3/friend/request?requestState=RECEIVED');
+
+    // dd($friends->json());
+
+    $addFriend = $friendService->addFriend(2, 4);
+
+    dd($addFriend);
+
+    return 'hi';
+});
 
 
 Route::get('/signup', function () {
