@@ -29,7 +29,7 @@ Route::resource('admin', AdminController::class);
 Route::resource('activities', ActivityController::class);
 
 Route::resource('friends', FriendController::class)->only([
-    'index'
+    'index', 'store'
 ]);
 
 Route::get('/goal/create', [ ActivityController::class, 'createGoal']);

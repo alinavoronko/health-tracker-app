@@ -53,27 +53,67 @@
             <div class="row justify-content-around">
             {{-- <div class="col-sm-5 mb-3"> --}}
               <div class="Chart border p-2 col-sm-5 mb-3">
-                <canvas id="weightChart" width="400" height="250"></canvas>
+               
+                {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
+                  @csrf
+                <div class="form-group">
+             
+                  <label for="friendMail">Friend's e-mail address</label>
+                  <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <button type="submit" id="submitFReq" class="btn btn-primary">Submit</button>
+                <script>
+                  document.addEventListener('DOMContentLoaded', () => {
+                      let inp = document.getElementById('friendMail');
+                      let sub = document.getElementById('submitFReq');
+                      let _csrf=document.querySelector('input[name="_token"]').value;
+                      sub.addEventListener('click', (e)=>{
+                        e.preventDefault();
+                        let email=inp.value;
+                        //fetch() send a request to the server
+                        fetch("{{ route('friends.store') }}", {
+                          method: "POST",
+                          headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRF-Token": _csrf
+                                   },
+                          body: JSON.stringify({email}),
+                          credentials: "same-origin"
+                          }) //fetch
+                        .then((response)=>{
+                          if(response.status==200){
+                          alert('Request to '+email+' has been sent!');
+                        }
+                          else {alert('No user with this e-mail!');}  
+                         
+                     
+                      }); //then
+
+
+                  });//evList
+                });
+
+                 
+                  </script>
+                {{-- </form> --}}
               </div>
-            {{-- </div> --}}
+  
 
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Friends</h3>
 
                 <ul class="list-group">
+                  @foreach($friends as $friend)
                   <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 1</span>
-                    <span>-2700</span>
+                    <span>{{$friend->name}} {{$friend->surname}}</span>
+                    <span>{{$friend->email}}</span>
+                 
                   </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 2</span>
-                    <span>+500</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Friend 3</span>
-                    <span>+1000</span>
-                  </li>
+                  @endforeach
                 </ul>
               </div>
             {{-- </div> --}}
@@ -101,7 +141,7 @@
 {{-- 
             <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">Marathons</h3>
+                {{-- <h3 class="text-center mb-3">Marathons</h3>
 
                 <ul class="list-group">
                   <li class="list-group-item d-flex justify-content-between">
@@ -116,8 +156,22 @@
                     <span>Goal 3</span>
                     <span>+1000</span>
                   </li>
+                </ul> --}}
+
+                <h3 class="text-center mb-3">Friend Requests</h3>
+                
+                <ul class="list-group">
+                  @foreach($users as $user)
+                  <li class="list-group-item d-flex justify-content-between">
+                    <span>{{$user->name}} {{$user->surname}}</span>
+                    <span><button type="submit" id="acceptFReq" class="btn btn-primary">Accept</button></span>
+                    <span><button type="submit" id="rejectFReq" class="btn btn-primary">Reject</button></span>
+                  </li>
+                  @endforeach
                 </ul>
               </div>
+
+
             </div>
           </div>
         {{-- </div> --}}

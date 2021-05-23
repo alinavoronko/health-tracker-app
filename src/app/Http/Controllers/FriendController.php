@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\FriendService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FriendController extends Controller
 {
@@ -35,9 +38,13 @@ class FriendController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, FriendService $friend)
     {
-        //
+        $isOK=json_decode($request->getContent(), true);
+
+        $tba=User::where('email', '=', $isOK['email'])->firstOrFail();
+        $friend->addFriend(Auth::user()->id, $tba->id);
+        return response('ok');  
     }
 
     /**

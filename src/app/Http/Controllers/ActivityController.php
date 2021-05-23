@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\FriendService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
@@ -14,9 +17,26 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FriendService $friend)
     {
-        return view('dashboard');
+        $reqs=$friend->getFriendRequests(Auth::user()->id);
+        $ids=$reqs->map(function ($rec) {
+            //friendID in camelCase as in the service
+            return($rec->friendId);
+        })->all();
+        //all transforms laravel collection into an array
+        $users=User::whereIn('id', $ids)->get();
+
+        $frs = $friend->getFriends(Auth::user()->id);
+        //TO FIX: getFriends() not working properly
+        dd($frs);
+        $friendIds=$frs->map(function ($rec) {
+            return($rec->friendId);
+        })->all();
+        $friends=User::whereIn('id', $friendIds)->get();
+        
+        //SQL: select <> from table where column_name in <>
+        return view('dashboard', compact('users', 'friends'));
     }
 
     /**
