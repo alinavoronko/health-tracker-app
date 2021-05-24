@@ -65,9 +65,11 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, MarathonService $mar)
     {
-        return view('marathon');
+        $marathon= $mar->getMarathon($id);
+        dd($marathon);
+        return view('marathon', compact('marathon'));
     }
 
     /**

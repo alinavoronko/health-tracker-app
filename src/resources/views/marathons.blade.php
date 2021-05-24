@@ -65,8 +65,8 @@ crossorigin="anonymous"
                 <td>{{$mar->goal}}</td>
                 <td>{{$mar->startDate}}</td>
                 <td>{{$mar->endDate}}</td>
-                <td><a href="#">See more</a></td>
-
+                <td><a href="{{ route('marathons.show', $mar->id) }}">View</a></td>
+              
               </tr>
              
               @endforeach

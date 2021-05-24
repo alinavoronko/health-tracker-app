@@ -41,7 +41,7 @@ crossorigin="anonymous"
           <table class="table">
             <thead>
               <tr>
-                <th>#</th>
+                {{$marathon->id}}
                 <th>Name</th>
                 <th>Step Count</th>
               </tr>

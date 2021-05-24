@@ -28,7 +28,7 @@ class MarathonService
     {
         $marathon = Http::get($this->getMarathonUrl() . '/' . $marathonId);
 
-        return $this->mapper($marathon->json(), Marathon::class);
+        return $this->mapper(Marathon::class, $marathon->json());
     }
 
     public function createMarathon($creatorId, $goal, DateTime $startDate = null)
@@ -44,7 +44,7 @@ class MarathonService
 
         $marathon = Http::post($this->getMarathonUrl(), compact('startDate', 'goal', 'creatorId'));
 
-        return $this->mapper($marathon->json(), Marathon::class);
+        return $this->mapper(Marathon::class, $marathon->json());
     }
 
     public function joinMarathon($marathonId, $participantId)
