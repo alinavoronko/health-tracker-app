@@ -37,6 +37,8 @@ class RegisteredUserController extends Controller
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'dob' => 'date_format:Y-m-d|before:today|required',
+            "height"=> 'required|min:50|max:250'
             //Add constraints!!!
         ]);
 

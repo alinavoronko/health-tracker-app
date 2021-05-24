@@ -13,7 +13,7 @@
   <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
 </li>  
 <li class="nav-item">
-  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')

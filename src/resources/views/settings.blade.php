@@ -11,7 +11,7 @@
   <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
 </li>  
 <li class="nav-item">
-  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -94,7 +94,14 @@ crossorigin="anonymous"
               aria-labelledby="settings-menu-profile-tab"
             >
               <h4>Profile settings</h4>
-              <form class="row" action="#" method="post">
+              @if ($errors->any())
+              @foreach ($errors->all() as $error)
+                  <div>{{$error}}</div>
+              @endforeach
+          @endif
+              <form class="row" action="{{ route('settings.store') }}" method="post">
+                
+                @csrf
                 <div class="col-md-12 mb-3">
                   <label for="inputName" class="form-label">Name</label>
                   <input
@@ -124,6 +131,7 @@ crossorigin="anonymous"
                   <input
                     required
                     type="date"
+                    name="dob"
                     id="dateOfBirth"
                     class="form-control"
                     placeholder="mm/dd/yyyy"
@@ -136,7 +144,8 @@ crossorigin="anonymous"
                     <input
                       required
                       type="number"
-                      id="dateOfBirth"
+                      name="height"
+                      id="Height"
                       class="form-control"
                       placeholder="100"
                       aria-label="Height"
@@ -149,8 +158,8 @@ crossorigin="anonymous"
                   <select name="city" id="city" class="form-select">
                     <option selected disabled>Choose city</option>
                     <optgroup label="Latvia">
-                      <option value="0">Riga</option>
-                      <option value="1">Daugavpils</option>
+                      <option value="1">Riga</option>
+                      <option value="2">Daugavpils</option>
                     </optgroup>
                   </select>
                 </div>
