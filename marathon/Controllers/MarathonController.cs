@@ -26,9 +26,9 @@ namespace MarathonService.Controllers
 
     // GET: api/Marathon
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Marathon>>> GetMarathons()
+    public async Task<IEnumerable<Marathon>> GetMarathons()
     {
-      return await _context.Marathons.ToListAsync();
+      return await _context.Marathons.Include(m => m.Participants).ToListAsync();
     }
 
     // GET: api/Marahon/Friend/0
@@ -38,14 +38,14 @@ namespace MarathonService.Controllers
       var friends = await _friendService.GetFriends(userId);
       var ids = friends.Select(friend => friend.FriendId).Append(userId);
 
-      return _context.Marathons.Where(marathon => ids.Contains(marathon.CreatorId));
+      return await _context.Marathons.Where(marathon => ids.Contains(marathon.CreatorId)).Include(m => m.Participants).ToListAsync();
     }
 
     // GET: api/Marathon/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Marathon>> GetMarathon(long id)
     {
-      var marathon = await _context.Marathons.FindAsync(id);
+      var marathon = await _context.Marathons.Where(m => m.Id == id).Include(m => m.Participants).FirstAsync();
 
       if (marathon == null)
       {

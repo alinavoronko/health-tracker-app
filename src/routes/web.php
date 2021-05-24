@@ -18,6 +18,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
 use App\Services\FriendService;
+use App\Services\MarathonService;
 use App\Services\RecordService;
 use Illuminate\Support\Facades\Http;
 
@@ -95,6 +96,14 @@ Route::get('/test/records', function (RecordService $recordService) {
 
     dd($goal);
 
+
+    return 'hi';
+});
+
+Route::get('/test/marathon', function (MarathonService $marathonService) {
+    $marathons = $marathonService->getMarathons();
+
+    dd($marathons);
 
     return 'hi';
 });

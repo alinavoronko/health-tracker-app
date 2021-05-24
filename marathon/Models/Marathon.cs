@@ -9,6 +9,6 @@ namespace MarathonService.Models
     public float Goal { get; set; }
     public long CreatorId { get; set; }
 
-    public virtual ICollection<MarathonParticipant> Participants { get; set; }
+    public ICollection<MarathonParticipant> Participants { get; set; }
   }
 }
