@@ -80,7 +80,7 @@ class MarathonService
         $friendRequest = new $model();
 
         foreach ($entry as $key => $value) {
-            if ($key == 'participants') {
+            if ($key == 'participants'&&$value) {
                 $friendRequest->$key = array_map(function ($entry) {
                     return $entry['participantId'];
                 }, $value);

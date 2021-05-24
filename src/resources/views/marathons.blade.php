@@ -32,26 +32,46 @@ crossorigin="anonymous"
 @section('content')
 
  
-
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="text-center">My Marathons</h1>
         </div>
-
+ 
         <div class="table-responsive">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
+
                 <th scope="col">Author</th>
                 <th scope="col">Goal</th>
+                <th scope="col">Start date </th>
                 <th scope="col">Due date</th>
                 <th scope="col">Details</th>
               </tr>
             </thead>
             <tbody>
+              {{-- [
+                "startDate" => "2021-05-19T18:38:03"
+                "goal" => 10000
+                "creatorId" => 3
+                "participants" => null
+                "id" => 3
+                "createdAt" => "2021-05-24T18:38:03"
+                "updatedAt" => "2021-05-24T18:38:03"
+              ] --}}
+              @foreach($usrMar as $mar)
               <tr>
+                <td>{{$mar->authName}} {{$mar->authSurname}}</td>
+                <td>{{$mar->goal}}</td>
+                <td>{{$mar->startDate}}</td>
+                <td>{{$mar->endDate}}</td>
+                <td><a href="#">See more</a></td>
+
+              </tr>
+             
+              @endforeach
+              
+              {{-- <tr>
                 <th scope="row">1</th>
                 <td>Test marathon 1</td>
                 <td>Artjoms</td>
@@ -60,6 +80,8 @@ crossorigin="anonymous"
                 <td><a href="#">Details</a></td>
               </tr>
               <tr>
+
+                
                 <th scope="row">2</th>
                 <td>Test marathon 2</td>
                 <td>Artjoms</td>
@@ -90,7 +112,7 @@ crossorigin="anonymous"
                 <td>10 000</td>
                 <td>24-06-2021</td>
                 <td><a href="#">Details</a></td>
-              </tr>
+              </tr> --}}
             </tbody>
           </table>
         </div>
