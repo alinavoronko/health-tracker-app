@@ -99,7 +99,7 @@ crossorigin="anonymous"
                   <div>{{$error}}</div>
               @endforeach
           @endif
-              <form class="row" action="{{ route('settings.store') }}" method="post">
+              <form class="row" action="{{ route('settings.store', ['lang' => App::getLocale()]) }}" method="post">
 
                 @csrf
                 <div class="col-md-12 mb-3">
