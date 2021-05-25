@@ -3,16 +3,16 @@
 @section('title', 'My Marathons')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -31,7 +31,7 @@ crossorigin="anonymous"
 
 @section('content')
 
- 
+
 
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
@@ -95,5 +95,5 @@ crossorigin="anonymous"
           </table>
         </div>
       </main>
-   
+
 @endsection

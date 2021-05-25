@@ -1,10 +1,10 @@
 {
     "Login": "Pieslēgties",
-    "Don't have an account?":"Nav konta?",
+    "Don't have an account?": "Nav konta?",
     "Sign Up": "Reģistrēties",
     "Already have an account?": "Jau ir konts?",
-    "Forgot password?":"Aizmirsi paroli?",
-    "Log out":"Atslēgties",
+    "Forgot password?": "Aizmirsi paroli?",
+    "Log out": "Atslēgties",
     "Home": "Sākums",
     "Stats": "Statistika",
     "Friends": "Draugi",
@@ -13,8 +13,5 @@
     "Add records": "Pievienot ierakstu",
     "Welcome, ": "Sveiki, ",
     "Steps": "Soļi",
-    "Goals": "Mērķi",
-    
-
-
-  }
+    "Goals": "Mērķi"
+}

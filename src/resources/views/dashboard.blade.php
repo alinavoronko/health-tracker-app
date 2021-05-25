@@ -2,16 +2,16 @@
 @section('title', 'Dashboard')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 {{-- @section('button-link', 'activity.create')
@@ -48,16 +48,16 @@
         </div>
 
         <div class="mb-3 DashboardSection">
-         
+
           {{-- <div class="row justify-content-between mx-5"> --}}
             <div class="row justify-content-around">
             {{-- <div class="col-sm-5 mb-3"> --}}
               <div class="Chart border p-2 col-sm-5 mb-3">
-               
+
                 {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
                   @csrf
                 <div class="form-group">
-             
+
                   <label for="friendMail">Friend's e-mail address</label>
                   <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -72,7 +72,7 @@
                         e.preventDefault();
                         let email=inp.value;
                         //fetch() send a request to the server
-                        fetch("{{ route('friends.store') }}", {
+                        fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
                           method: "POST",
                           headers: {
                                 "Content-Type": "application/json",
@@ -87,20 +87,20 @@
                           if(response.status==200){
                           alert('Request to '+email+' has been sent!');
                         }
-                          else {alert('No user with this e-mail!');}  
-                         
-                     
+                          else {alert('No user with this e-mail!');}
+
+
                       }); //then
 
 
                   });//evList
                 });
 
-                 
+
                   </script>
                 {{-- </form> --}}
               </div>
-  
+
 
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
@@ -111,7 +111,7 @@
                   <li class="list-group-item d-flex justify-content-between">
                     <span>{{$friend->name}} {{$friend->surname}}</span>
                     <span>{{$friend->email}}</span>
-                 
+
                   </li>
                   @endforeach
                 </ul>
@@ -138,7 +138,7 @@
                 </ul>
               </div>
             {{-- </div> --}}
-{{-- 
+{{--
             <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 {{-- <h3 class="text-center mb-3">Marathons</h3>
@@ -159,7 +159,7 @@
                 </ul> --}}
 
                 <h3 class="text-center mb-3">Friend Requests</h3>
-                
+
                 <ul class="list-group">
                   @foreach($users as $user)
                   <li class="list-group-item d-flex justify-content-between">
@@ -176,8 +176,7 @@
           </div>
         {{-- </div> --}}
       </main>
-    
+
 
  @endsection
 
- 

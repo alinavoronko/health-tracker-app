@@ -15,7 +15,7 @@
     ></script>
   </head>
   <body class="bg-light">
- <!--added for debugging purposes-->   
+ <!--added for debugging purposes-->
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -32,7 +32,7 @@
         <div class="SignUp">
           <div class="Form Form__wide mx-auto border rounded py-4 px-5">
             <h3 class="mb-3">Sign up</h3>
-            <form class="row" method="POST" action="{{ route('register') }}">
+            <form class="row" method="POST" action="{{ route('register', ['lang' => App::getLocale()]) }}">
               @csrf
               <div class="col-md-6 mb-3">
                 <label for="inputName" class="form-label">Name</label>
@@ -187,17 +187,17 @@
               </div>
               <div class="d-grid mt-3 col-md-12">
                 <button type="submit" class="btn btn-primary mb-3">
-                  {{__('Sign Up')}} 
+                  {{__('Sign Up')}}
                 </button>
               </div>
               <div class="mt-2 text-center col-md-12">
                 <div>{{__('auth.failed')}}</div>
                 <div>
-               
-                  <span> {{__('Already have an account?')}} <a href="{{ route('login') }}">{{__('Login')}}</a></span>
+
+                  <span> {{__('Already have an account?')}} <a href="{{ route('login', ['lang' => App::getLocale()]) }}">{{__('Login')}}</a></span>
                 </div>
                 <div>
-                  <a href="{{ route('password.request') }}">{{__('Forgot password?')}}</a>
+                  <a href="{{ route('password.request', ['lang' => App::getLocale()]) }}">{{__('Forgot password?')}}</a>
                 </div>
               </div>
             </form>

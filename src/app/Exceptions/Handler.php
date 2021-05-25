@@ -12,7 +12,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    
+
     protected $dontReport = [
         //
     ];
@@ -36,8 +36,8 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            // return redirect()->route('oops');
+            // return redirect()->route('oops', ['lang' => App::getLocale()]);
         });
     }
-    
+
 }

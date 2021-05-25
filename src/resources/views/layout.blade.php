@@ -27,7 +27,7 @@
           <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link active">Home</a>
+                <a href="{{ route('dashboard', ['lang' => App::getLocale()]) }}" class="nav-link active">Home</a>
               </li>
               @yield('optional', '')
 
@@ -38,11 +38,11 @@
 <div class="nav-item">
   <i class="flag flag-lv"></i>
 </div>-->
-            
-            <form method="POST" action="{{ route('logout') }}" >
+
+            <form method="POST" action="{{ route('logout', ['lang' => App::getLocale()]) }}" >
               @csrf
 
-              <x-dropdown-link :href="route('logout')"
+              <x-dropdown-link :href="route('logout', ['lang' => App::getLocale()])"
                       onclick="event.preventDefault();
                                   this.closest('form').submit();"  class="nav-link active text-white">
                   {{ __('Log out') }}
@@ -60,7 +60,7 @@
       </nav>
     </header>
 
-  
+
     @yield('content')
 </div>
 <footer class="Body-Footer bg-light">

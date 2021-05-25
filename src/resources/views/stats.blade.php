@@ -2,16 +2,16 @@
 @section('title', 'Statistics')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -84,7 +84,7 @@ crossorigin="anonymous"
           <div class="col-md-12 text-center">
             <button type="button" class="btn btn-danger">Set weight goal</button>
         </div>
-  
+
         </div>
       </main>
      <script>
@@ -132,10 +132,10 @@ crossorigin="anonymous"
 
 
 
-  
+
 const todaySleep=new Chart(todaySleepCtx, {
 
-      
+
   type: 'gauge',
   data: {
     //labels: ['Success', 'Warning', 'Warning', 'Error'],
@@ -305,7 +305,7 @@ const todaySleep=new Chart(todaySleepCtx, {
         },
       });
 
-      
+
       const monthSleepChart = new Chart(monthSleepCtx, {
         type: "bar",
         data: {
