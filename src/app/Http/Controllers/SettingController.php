@@ -3,43 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Services\FriendService;
-use App\Services\RecordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ActivityController extends Controller
+use function PHPUnit\Framework\isNull;
+
+class SettingController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(FriendService $friend, RecordService $rec)
+    public function index()
     {
-        $reqs=$friend->getFriendRequests(Auth::user()->id);
-        $ids=$reqs->map(function ($rec) {
-            //friendID in camelCase as in the service
-            return($rec->friendId);
-        })->all();
-        //all transforms laravel collection into an array
-        $users=User::whereIn('id', $ids)->get();
-
-
-        $frs = $friend->getFriends(Auth::user()->id);
-        $friendIds=$frs->map(function ($rec) {
-            return($rec->friendId);
-        })->all();
-        $friends=User::whereIn('id', $friendIds)->get();
-
-        // $gls=$rec->getGoalList();
-        
-        
-        //SQL: select <> from table where column_name in <>
-        return view('dashboard', compact('users', 'friends'));
+        return view('settings');
     }
 
     /**
@@ -49,7 +27,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('createRecord');
+        //
     }
 
     /**
@@ -60,7 +38,25 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usr = User::find(Auth::user()->id);
+       
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'dob' => 'date_format:Y-m-d|before:today|required',
+            "height"=> 'required|numeric|min:50|max:250',
+            // "city"=>??
+            //Add city constraint?
+        ]);
+        $usr->name=$request->name;
+        $usr->surname=$request->surname;
+        $usr->dob=$request->dob;
+        $usr->height=$request->height;
+        $usr->city_id=$request->city;
+        $usr->save();
+        return redirect()->back();
+
     }
 
     /**
@@ -107,13 +103,4 @@ class ActivityController extends Controller
     {
         //
     }
-
-    public function createGoal(){
-
-    }
-
-    public function storeGoal(){
-        
-    }
-
 }

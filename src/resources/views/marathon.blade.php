@@ -11,7 +11,7 @@
   <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('settings', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -41,7 +41,7 @@ crossorigin="anonymous"
           <table class="table">
             <thead>
               <tr>
-                <th>#</th>
+                {{$marathon->id}}
                 <th>Name</th>
                 <th>Step Count</th>
               </tr>

@@ -28,7 +28,7 @@ class MarathonService
     {
         $marathon = Http::get($this->getMarathonUrl() . '/' . $marathonId);
 
-        return $this->mapper($marathon->json(), Marathon::class);
+        return $this->mapper(Marathon::class, $marathon->json());
     }
 
     public function createMarathon($creatorId, $goal, DateTime $startDate = null)
@@ -44,7 +44,7 @@ class MarathonService
 
         $marathon = Http::post($this->getMarathonUrl(), compact('startDate', 'goal', 'creatorId'));
 
-        return $this->mapper($marathon->json(), Marathon::class);
+        return $this->mapper(Marathon::class, $marathon->json());
     }
 
     public function joinMarathon($marathonId, $participantId)
@@ -80,7 +80,7 @@ class MarathonService
         $friendRequest = new $model();
 
         foreach ($entry as $key => $value) {
-            if ($key == 'participants') {
+            if ($key == 'participants'&&$value) {
                 $friendRequest->$key = array_map(function ($entry) {
                     return $entry['participantId'];
                 }, $value);

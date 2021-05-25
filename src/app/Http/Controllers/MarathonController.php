@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\MarathonService;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarathonController extends Controller
 {
@@ -14,9 +19,23 @@ class MarathonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MarathonService $mar)
     {
-        return view('marathons');
+        $usrMar=$mar->getUsersMarathons(Auth::user()->id);
+        
+        foreach ($usrMar as $mar) {
+            $author = User::findOrFail($mar->creatorId); 
+            $mar->authName = $author->name; 
+            $mar->authSurname=$author->surname;
+            $date = new DateTime($mar->startDate);
+            $mar->startDate=$date->format('d-m-Y');
+            $date->add(new DateInterval('P7D'));
+           
+            $mar->endDate=$date->format('d-m-Y');
+    }
+
+        
+        return view('marathons',compact('usrMar'));
     }
 
     /**
@@ -46,9 +65,11 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, MarathonService $mar)
     {
-        return view('marathon');
+        $marathon= $mar->getMarathon($id);
+        dd($marathon);
+        return view('marathon', compact('marathon'));
     }
 
     /**

@@ -16,6 +16,7 @@ use App\Http\Controllers\MarathonController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SettingController;
 use App\Services\FriendService;
 use App\Services\MarathonService;
 use App\Services\RecordService;
@@ -29,9 +30,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}'])->group(function () {
+
     Route::resource('marathons', MarathonController::class);
     Route::resource('admin', AdminController::class);
     Route::resource('activities', ActivityController::class);
+    Route::resource('settings', SettingController::class);
 
     Route::resource('friends', FriendController::class)->only([
         'index', 'store'
@@ -122,9 +125,9 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     });
 
 
-    Route::get('/settings', function () {
-        return view('settings');
-    })->middleware(['auth'])->name('settings');
+    // Route::get('/settings', function () {
+    //     return view('settings');
+    // })->middleware(['auth'])->name('settings');
 
     Route::get('/stats', function () {
         return view('stats');
