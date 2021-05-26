@@ -41,22 +41,48 @@ class ActivityController extends Controller
 
         // $gls=$rec->getGoalList();
 
+        $statistics = $this->getStatistics($rec, $userId);
+
+        //SQL: select <> from table where column_name in <>
+        return view('dashboard', array_merge(compact('users', 'friends'), $statistics));
+    }
+
+    public function stats(RecordService $rec) {
+        $userId = Auth::user()->id;
+
+        $statistics = [
+            'day' => $this->getStatistics($rec, $userId, 'day'),
+            'week' => $this->getStatistics($rec, $userId, 'week'),
+            'month' => $this->getStatistics($rec, $userId, 'month'),
+        ];
+
+        $stepsGoal = $rec->getUserGoals($userId, 'STEPS');
+
+        return view('stats', compact('statistics', 'stepsGoal'));
+    }
+
+    private function getStatistics(RecordService $rec, $userId, $period = 'month') {
+        $unit = '1M';
+
+        if ($period === 'day') $unit = '1D';
+        if ($period === 'week') $unit = '7D';
+
         $to = new DateTime();
         $from = new DateTime();
-        $month = new DateInterval('P1M');
+        $interval = new DateInterval('P' . $unit);
 
-        $from->sub($month);
-
-        $sleep = $rec->getTimeline($userId, $from, $to)->toJson();
-        $steps = $rec->getTimeline($userId, $from, $to, 'STEPS')->toJson();
+        $from->sub($interval);
 
         $dates = [
             'to' => $to->format('Y-m-d\TH:i:s.u') . 'Z',
             'from' => $from->format('Y-m-d\TH:i:s.u') . 'Z',
         ];
 
-        //SQL: select <> from table where column_name in <>
-        return view('dashboard', compact('users', 'friends', 'sleep', 'steps', 'dates'));
+        $sleep = $rec->getTimeline($userId, $from, $to)->toJson();
+        $steps = $rec->getTimeline($userId, $from, $to, 'STEPS')->toJson();
+        $weight = $rec->getTimeline($userId, $from, $to, 'WEIGHT')->toJson();
+
+        return compact('dates', 'sleep', 'steps', 'weight');
     }
 
     /**

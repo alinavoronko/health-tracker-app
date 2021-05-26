@@ -129,7 +129,5 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     //     return view('settings');
     // })->middleware(['auth'])->name('settings');
 
-    Route::get('/stats', function () {
-        return view('stats');
-    })->middleware(['auth'])->name('stats');
+    Route::get('/stats', [ActivityController::class, 'stats'])->middleware(['auth'])->name('stats');
 });

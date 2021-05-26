@@ -47,6 +47,9 @@
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="stepsChart" width="400" height="250"></canvas>
             </div>
+            <div class="Chart p-2 border col-sm-5 mb-3">
+              <canvas id="weightChart" width="400" height="250"></canvas>
+            </div>
           </div>
         </div>
 
@@ -184,6 +187,7 @@
     <script>
         const sleep = JSON.parse(`{!! $sleep !!}`);
         const steps = JSON.parse(`{!! $steps !!}`);
+        const weight = JSON.parse(`{!! $weight !!}`);
         const dates = {
             to: new Date(`{!! $dates['to'] !!}`),
             from: new Date(`{!! $dates['from'] !!}`),
@@ -208,12 +212,9 @@
             const stepsChartCtx = document
                 .getElementById("stepsChart")
                 .getContext("2d");
-            // const weekStepsCtx = document
-            //     .getElementById("weekChart")
-            //     .getContext("2d");
-            // const weightCtx = document.getElementById("weightChart").getContext("2d");
-
-            // console.log(dateList.map(date => date.getDate()));
+            const weightChartCtx = document
+                .getElementById("weightChart")
+                .getContext("2d");
 
             const sleepChart = new Chart(sleepChartCtx, {
                 type: "bar",
@@ -237,6 +238,20 @@
                     {
                     label: "Steps",
                     data: dateList.map(date => steps[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+
+            const weightChart = new Chart(weightChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Weight",
+                    data: dateList.map(date => weight[date.toISOString().split('T')[0]] || 0),
                     borderWidth: 1,
                     },
                 ],
