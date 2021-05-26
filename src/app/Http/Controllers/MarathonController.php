@@ -22,19 +22,19 @@ class MarathonController extends Controller
     public function index(MarathonService $mar)
     {
         $usrMar=$mar->getUsersMarathons(Auth::user()->id);
-        
+
         foreach ($usrMar as $mar) {
-            $author = User::findOrFail($mar->creatorId); 
-            $mar->authName = $author->name; 
+            $author = User::findOrFail($mar->creatorId);
+            $mar->authName = $author->name;
             $mar->authSurname=$author->surname;
             $date = new DateTime($mar->startDate);
             $mar->startDate=$date->format('d-m-Y');
             $date->add(new DateInterval('P7D'));
-           
+
             $mar->endDate=$date->format('d-m-Y');
     }
 
-        
+
         return view('marathons',compact('usrMar'));
     }
 
@@ -65,7 +65,7 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, MarathonService $mar)
+    public function show($_lang, $id, MarathonService $mar)
     {
         $marathon= $mar->getMarathon($id);
         dd($marathon);
@@ -78,7 +78,7 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($_lang, $id)
     {
        return view('edit_marathon');
     }
@@ -90,9 +90,9 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $_lang, $id)
     {
-       
+
     }
 
     /**
@@ -101,7 +101,7 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($_lang, $id)
     {
         //
     }

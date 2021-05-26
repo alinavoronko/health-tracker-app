@@ -1,5 +1,8 @@
 @extends('layout')
 @section('title', 'Dashboard')
+@section('additional_script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
+@endsection
 @section('optional')
 <li class="nav-item">
   <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
@@ -39,10 +42,10 @@
           <h1 class="display-4 text-center mb-3">Overview</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="todayChart" width="400" height="250"></canvas>
+              <canvas id="sleepChart" width="400" height="250"></canvas>
             </div>
             <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="weekChart" width="400" height="250"></canvas>
+              <canvas id="stepsChart" width="400" height="250"></canvas>
             </div>
           </div>
         </div>
@@ -177,6 +180,70 @@
         {{-- </div> --}}
       </main>
 
+
+    <script>
+        const sleep = JSON.parse(`{!! $sleep !!}`);
+        const steps = JSON.parse(`{!! $steps !!}`);
+        const dates = {
+            to: new Date(`{!! $dates['to'] !!}`),
+            from: new Date(`{!! $dates['from'] !!}`),
+        };
+
+        const dateList = genereateDateList(dates.from, dates.to);
+
+        function genereateDateList(from, to) {
+            const list = [];
+            for (let dt = new Date(from); dt <= to; dt.setDate(dt.getDate()  + 1)) {
+                list.push(new Date(dt));
+            }
+            return list;
+        }
+
+        console.log(sleep, dates);
+
+        window.addEventListener('DOMContentLoaded', (event)=> {
+            const sleepChartCtx = document
+                .getElementById("sleepChart")
+                .getContext("2d");
+            const stepsChartCtx = document
+                .getElementById("stepsChart")
+                .getContext("2d");
+            // const weekStepsCtx = document
+            //     .getElementById("weekChart")
+            //     .getContext("2d");
+            // const weightCtx = document.getElementById("weightChart").getContext("2d");
+
+            // console.log(dateList.map(date => date.getDate()));
+
+            const sleepChart = new Chart(sleepChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Sleep",
+                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+
+            const stepsChart = new Chart(stepsChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Steps",
+                    data: dateList.map(date => steps[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+        });
+    </script>
 
  @endsection
 

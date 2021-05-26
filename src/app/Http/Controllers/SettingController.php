@@ -39,7 +39,7 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $usr = User::find(Auth::user()->id);
-       
+
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -65,7 +65,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($_lang, $id)
     {
         //
     }
@@ -76,7 +76,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($_lang, $id)
     {
         //
     }
@@ -88,7 +88,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $_lang, $id)
     {
         //
     }
@@ -99,7 +99,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($_lang, $id)
     {
         //
     }

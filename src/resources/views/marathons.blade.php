@@ -65,7 +65,7 @@ crossorigin="anonymous"
                 <td>{{$mar->goal}}</td>
                 <td>{{$mar->startDate}}</td>
                 <td>{{$mar->endDate}}</td>
-                <td><a href="{{ route('marathons.show', ['lang' => App::getLocale(), 'marathon' => $mar->id]) }}">View</a></td>
+                <td><a href="{{ route('marathons.show', ['marathon' => $mar->id, 'lang' => App::getLocale()]) }}">View</a></td>
 
               </tr>
 

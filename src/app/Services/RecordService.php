@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Goal;
 use App\Models\Record;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Support\Facades\Http;
 
 class RecordService
@@ -94,13 +96,21 @@ class RecordService
         return $this->mapperService->mapper($record->json(), Record::class);
     }
 
-    public function getTimeline($userId, $fromDate, $toDate, $recordType = 'SLEEP')
+    public function getTimeline($userId, DateTime $fromDate, DateTime $toDate, $recordType = 'SLEEP')
     {
         $url = $this->constructUrl($userId) . '/timeline/' . $recordType;
 
+        $utc = new DateTimeZone("UTC");
+
+        $toDate->setTimezone($utc);
+        $fromDate->setTimezone($utc);
+
+        $toDate = $toDate->format('Y-m-d\TH:i:s.u') . 'Z';
+        $fromDate = $fromDate->format('Y-m-d\TH:i:s.u') . 'Z';
+
         $records = Http::get($url, compact('fromDate', 'toDate'));
 
-        return $this->mapperService->toModel($records->collect(), Record::class);
+        return $records->collect();
     }
 
     private function getGoalUrl($userId)
