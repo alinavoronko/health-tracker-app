@@ -1,5 +1,6 @@
 package org.xapik.records.database.model;
 
+import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
@@ -24,7 +25,7 @@ public class Goal {
     @CassandraType(type = CassandraType.Name.INT)
     private RecordType type;
 
-    @PrimaryKeyColumn(name = "created_at", ordinal = 4)
+    @PrimaryKeyColumn(name = "created_at", ordinal = 4, ordering = Ordering.DESCENDING)
     private LocalDateTime createdAt;
 
     @NotNull(message = "Time Period is mandatory")
