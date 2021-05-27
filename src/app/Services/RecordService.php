@@ -41,7 +41,7 @@ class RecordService
         return $this->mapperService->mapper($createdGoal->json(), Goal::class);
     }
 
-    public function getUserGoals($userId, $goalType, $creatorId = -1)
+    public function getUserGoals($userId, $goalType='STEPS', $creatorId = -1)
     {
         if ($creatorId == -1) $creatorId = $userId;
 

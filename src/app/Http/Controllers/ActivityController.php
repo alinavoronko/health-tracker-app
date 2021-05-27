@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\FriendService;
+use App\Services\MarathonService;
 use App\Services\RecordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,12 @@ class ActivityController extends Controller
             return($rec->friendId);
         })->all();
         $friends=User::whereIn('id', $friendIds)->get();
+
+        
+
+        $gls=$rec->getUserGoals(Auth::user()->id);
+        dd($rec);
+        //WIP
 
         // $gls=$rec->getGoalList();
         

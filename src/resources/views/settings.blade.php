@@ -63,17 +63,7 @@ crossorigin="anonymous"
             >
               Security
             </button>
-            <button
-              class="nav-link"
-              id="settings-menu-personalization-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#settings-menu-personalization"
-              role="tab"
-              aria-controls="settings-menu-personalization"
-              aria-selected="false"
-            >
-              Personalization
-            </button>
+            
             <button
               class="nav-link"
               id="settings-menu-gfit-tab"
@@ -305,14 +295,6 @@ crossorigin="anonymous"
                   </button>
                 </div>
               </form>
-            </div>
-            <div
-              class="tab-pane fade p-3"
-              id="settings-menu-personalization"
-              role="tabpanel"
-              aria-labelledby="settings-menu-personalization-tab"
-            >
-              Personalization settings
             </div>
             <div
               class="tab-pane fade p-3"
