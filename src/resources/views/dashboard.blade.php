@@ -26,7 +26,7 @@
       <main role="main" class="Main container bg-white px-4">
         <div class="d-flex Welcome w-100 justify-content-center mb-3">
           <img
-            src="./assets/images/Badge.png"
+          src="{{url('/images/neko_sensei.jpg')}}" alt="App logo"
             alt="Avatar for Name Surname"
             class="rounded-circle Welcome-Avatar me-3"
           />
@@ -56,13 +56,17 @@
                
                 {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
                   @csrf
+                  <h3 class="text-center mb-3">Add a friend</h3>
+
                 <div class="form-group">
              
-                  <label for="friendMail">Friend's e-mail address</label>
+                  <label for="friendMail">Friend's e-mail address: </label>
                   <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
-                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  <small id="emailHelp" class="form-text text-muted">Type your friend's e-mail address so send a friend request.</small>
                 </div>
+                <div class="text-center my-3">
                 <button type="submit" id="submitFReq" class="btn btn-primary">Submit</button>
+                </div>
                 <script>
                   document.addEventListener('DOMContentLoaded', () => {
                       let inp = document.getElementById('friendMail');
