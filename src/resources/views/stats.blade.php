@@ -33,6 +33,13 @@ crossorigin="anonymous"
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3 DashboardSection">
           <h1 class="display-4 text-center mb-3">Steps</h1>
+          <div class="w-80">
+              @foreach ($goals as $goal)
+              <div class="progress mb-3">
+                  <div class="progress-bar" role="progressbar" style="width: {{ 100 * ($todayTotal / ($goal->value === 0 ? $todayTotal : $goal->value)) }}%;">{{ $todayTotal }} / {{ $goal->value }}</div>
+              </div>
+              @endforeach
+          </div>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="weekStepsChart" width="400" height="250"></canvas>

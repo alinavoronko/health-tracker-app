@@ -58,7 +58,7 @@ class FriendService
         return $this->updateFriendRequest($userId, $friendId, 'DECLINED');
     }
 
-    public function getTrainer($userId)
+    public function getTrainers($userId)
     {
         $url = $this->constructTrainerUrl($userId);
 

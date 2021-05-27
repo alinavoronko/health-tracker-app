@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
     }
     /**
@@ -24,20 +25,20 @@ class ActivityController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $reqs=$friend->getFriendRequests($userId);
-        $ids=$reqs->map(function ($rec) {
+        $reqs = $friend->getFriendRequests($userId);
+        $ids = $reqs->map(function ($rec) {
             //friendID in camelCase as in the service
-            return($rec->friendId);
+            return ($rec->friendId);
         })->all();
         //all transforms laravel collection into an array
-        $users=User::whereIn('id', $ids)->get();
+        $users = User::whereIn('id', $ids)->get();
 
 
         $frs = $friend->getFriends($userId);
-        $friendIds=$frs->map(function ($rec) {
-            return($rec->friendId);
+        $friendIds = $frs->map(function ($rec) {
+            return ($rec->friendId);
         })->all();
-        $friends=User::whereIn('id', $friendIds)->get();
+        $friends = User::whereIn('id', $friendIds)->get();
 
         // $gls=$rec->getGoalList();
 
@@ -47,7 +48,8 @@ class ActivityController extends Controller
         return view('dashboard', array_merge(compact('users', 'friends'), $statistics));
     }
 
-    public function stats(RecordService $rec) {
+    public function stats(RecordService $rec, FriendService $friendService)
+    {
         $userId = Auth::user()->id;
 
         $statistics = [
@@ -56,12 +58,38 @@ class ActivityController extends Controller
             'month' => $this->getStatistics($rec, $userId, 'month'),
         ];
 
+        $goals = $friendService->getTrainers($userId)
+            ->map(function ($trainer) {
+                return $trainer->friendId;
+            })
+            ->map(function ($trainerId) use ($rec, $userId) {
+                $g = $rec->getUserGoals($userId, 'STEPS', $trainerId);
+
+                if ($g->count() === 0) return null;
+
+                return $g[0];
+            });
+
         $stepsGoal = $rec->getUserGoals($userId, 'STEPS');
 
-        return view('stats', compact('statistics', 'stepsGoal'));
+        $goals = $goals->merge($stepsGoal)
+            ->filter(function ($value, $key) {
+                return !!$value;
+            });
+
+        $interval = $this->getInterval('day');
+
+        $from = $interval['from'];
+        $to = $interval['to'];
+
+        $todayTotal = $rec->getTimeline($userId, $from, $to, 'STEPS')->reduce(function ($acc, $steps, $_key) {
+            return $acc + $steps;
+        }, 0);
+
+        return view('stats', compact('statistics', 'stepsGoal', 'goals', 'todayTotal'));
     }
 
-    private function getStatistics(RecordService $rec, $userId, $period = 'month') {
+    private function getInterval($period) {
         $unit = '1M';
 
         if ($period === 'day') $unit = '1D';
@@ -72,6 +100,16 @@ class ActivityController extends Controller
         $interval = new DateInterval('P' . $unit);
 
         $from->sub($interval);
+
+        return compact('to', 'from');
+    }
+
+    private function getStatistics(RecordService $rec, $userId, $period = 'month')
+    {
+        $interval = $this->getInterval($period);
+
+        $from = $interval['from'];
+        $to = $interval['to'];
 
         $dates = [
             'to' => $to->format('Y-m-d\TH:i:s.u') . 'Z',
@@ -151,12 +189,11 @@ class ActivityController extends Controller
         //
     }
 
-    public function createGoal(){
-
+    public function createGoal()
+    {
     }
 
-    public function storeGoal(){
-
+    public function storeGoal()
+    {
     }
-
 }
