@@ -72,7 +72,7 @@ class FriendService
     public function setTrainer($userId, $trainerId, $revoke = false)
     {
         $revokeRequest = $revoke ? 'true' : 'false';
-        $request = $this->constructRequestUrl($userId) . '?revoke=' . $revokeRequest . '&trainerId=' . $trainerId;
+        $request = $this->constructTrainerUrl($userId) . '?revoke=' . $revokeRequest . '&trainerId=' . $trainerId;
 
         $response = Http::put($request);
 

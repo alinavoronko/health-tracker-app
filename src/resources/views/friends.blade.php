@@ -1,4 +1,7 @@
-
+@php
+$periods = ['Day' => 'DAY', 'Week' => 'WEEK', 'Month' => 'MONTH'];
+$activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'];
+@endphp
 
 @extends('layout')
 @section('title', 'Friends')
@@ -37,26 +40,18 @@ crossorigin="anonymous"></script>
 
           <div class="d-flex justify-content-center">
             <ul class="nav nav-pills justify-content-center mb-3 border-end">
+              @foreach ($activities as $name => $param)
               <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">Steps</a>
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $param, 'period' => $period]) }}" class="nav-link {{ $activity === $param ? 'active': '' }}">{{ $name }}</a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Weight</a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Sleep time</a>
-              </li>
+              @endforeach
             </ul>
             <ul class="nav nav-pills justify-content-center ms-3 mb-3">
-              <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">Day</a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Week</a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Month</a>
-              </li>
+                @foreach ($periods as $name => $param)
+                <li class="nav-item">
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $activity, 'period' => $param]) }}" class="nav-link {{ $period === $param ? 'active': '' }}">{{ $name }}</a>
+                </li>
+                @endforeach
             </ul>
           </div>
         </div>
@@ -68,7 +63,6 @@ crossorigin="anonymous"></script>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Value</th>
-                <th scope="col">Updated at</th>
                 <th scope="col">Make a trainer</th>
                 <th scope="col">Remove</th>
               </tr>
@@ -76,46 +70,37 @@ crossorigin="anonymous"></script>
             <!--use blade for loop to loop over friends get a list of them from db-->
 
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Artjoms</td>
-                <td>10 000</td>
-                <td>24-06-2021</td>
-                <td><a href="#">Make a trainer</a></td>
-                <td><a href="#">Remove</a></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Artjoms</td>
-                <td>10 000</td>
-                <td>24-06-2021</td>
-                <td><a href="#">Make a trainer</a></td>
-                <td><a href="#">Remove</a></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Artjoms</td>
-                <td>10 000</td>
-                <td>24-06-2021</td>
-                <td><a href="#">Make a trainer</a></td>
-                <td><a href="#">Remove</a></td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Artjoms</td>
-                <td>10 000</td>
-                <td>24-06-2021</td>
-                <td><a href="#">Make a trainer</a></td>
-                <td><a href="#">Remove</a></td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>Artjoms</td>
-                <td>10 000</td>
-                <td>24-06-2021</td>
-                <td><a href="#">Make a trainer</a></td>
-                <td><a href="#">Remove</a></td>
-              </tr>
+                @foreach ($friends as $friend)
+                <tr>
+                  <th scope="row">{{ $loop->iteration }}</th>
+                  <td>{{ $friend->friend->getFullName() }}</td>
+                  <td>{{ $friend->value }}</td>
+                  <td>
+                      <form action="{{ route('friend.trainer', ['lang' => App::getLocale()]) }}" method="post">
+                          @csrf
+                          @method('PUT')
+
+                          <input type="hidden" name="friendId" value="{{ $friend->friendId }}" />
+
+                          @if ($friend->isTrainer)
+                          <input type="hidden" name="action" value="remove" />
+                          <input type="submit" class="btn btn-link p-0" value="Remove a trainer">
+                          @else
+                          <input type="hidden" name="action" value="make" />
+                          <input type="submit" class="btn btn-link p-0" value="Make a trainer">
+                          @endif
+                      </form>
+                  </td>
+                  <td>
+                    <form action="{{ route('friends.destroy', ['lang' => App::getLocale(), 'friend' => $friend->friendId]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+
+                        <input type="submit" class="btn btn-link p-0" value="Remove" />
+                    </form>
+                  </td>
+                </tr>
+                @endforeach
             </tbody>
           </table>
         </div>

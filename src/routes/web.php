@@ -37,8 +37,10 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::resource('settings', SettingController::class);
 
     Route::resource('friends', FriendController::class)->only([
-        'index', 'store'
+        'index', 'store', 'destroy'
     ]);
+
+    Route::put('/friends/trainer', [FriendController::class, 'setTrainer'])->name('friend.trainer');
 
     Route::get('/goal/create', [ActivityController::class, 'createGoal']);
     //store goal ADD ROUTE
@@ -73,47 +75,6 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::get('/', function () {
         if (Auth::check()) return redirect()->route('dashboard', ['lang' => App::getLocale()]);
         return redirect()->route('login', ['lang' => App::getLocale()]);
-    });
-
-
-    Route::get('/test/friends', function (FriendService $friendService) {
-        // Get user with id 0 friends
-        // $friends = Http::get('http://friends:8080/api/user/3/friend/request?requestState=RECEIVED');
-
-        // dd($friends->json());
-
-        //$addFriend = $friendService->addFriend(2, 4);
-
-        // $friendService->acceptFriendRequest(4, 2);
-
-        // $friendRequests = $friendService->getFriendRequests(4);
-        $friends = $friendService->getFriends(2);
-
-        dd($friends[0]->createdAt);
-
-        // dd([$friendRequests, $friends]);
-
-        return 'hi';
-    });
-
-    Route::get('/test/records', function (RecordService $recordService) {
-        // $records = Http::get('http://records:8080/api/goal-list');
-        // dd($records->json());
-
-        $goal = $recordService->addUserGoal(5, 1, 1000.0);
-
-        dd($goal);
-
-
-        return 'hi';
-    });
-
-    Route::get('/test/marathon', function (MarathonService $marathonService) {
-        $marathons = $marathonService->getMarathons();
-
-        dd($marathons);
-
-        return 'hi';
     });
 
     Route::get('/signup', function () {
