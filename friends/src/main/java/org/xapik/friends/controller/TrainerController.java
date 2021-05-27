@@ -19,8 +19,13 @@ public class TrainerController {
     }
 
     @GetMapping
-    public Optional<Friend> getTrainer(@PathVariable int userId) {
-        return friendService.getTrainer(userId);
+    public Iterable<Friend> getTrainer(@PathVariable int userId) {
+        return friendService.getTrainers(userId);
+    }
+
+    @GetMapping("/trainee")
+    public Iterable<Friend> getTrainee(@PathVariable int userId) {
+        return friendService.getTrainees(userId);
     }
 
     @PutMapping

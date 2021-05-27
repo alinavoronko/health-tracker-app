@@ -40,6 +40,7 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
         'index', 'store', 'destroy'
     ]);
 
+    Route::post('/friends/goal', [FriendController::class, 'addFriendGoal'])->name('friend.goal');
     Route::put('/friends/trainer', [FriendController::class, 'setTrainer'])->name('friend.trainer');
 
     Route::get('/goal/create', [ActivityController::class, 'createGoal']);

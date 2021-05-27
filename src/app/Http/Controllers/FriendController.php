@@ -38,7 +38,11 @@ class FriendController extends Controller
         $interval = new DateInterval('P' . $unit);
         $from->sub($interval);
 
-        $friends = $friendService->getFriends($userId)->map(function ($friend) use ($recordService, $from, $to, $activity) {
+        $trainees = $friendService->getTrainees($userId)->map(function ($trainee) {
+            return $trainee->userId;
+        })->toArray();
+
+        $friends = $friendService->getFriends($userId)->map(function ($friend) use ($recordService, $from, $to, $activity, $trainees) {
             $friend->friend = User::find($friend->friendId);
             $timeline = $recordService->getTimeline($friend->friendId, $from, $to, $activity);
 
@@ -53,10 +57,23 @@ class FriendController extends Controller
 
             $friend->value = $accumulated;
 
+            $friend->isTrainee = in_array($friend->friendId, $trainees);
+
             return $friend;
         });
 
         return view('friends', compact('friends', 'period', 'activity'));
+    }
+
+    public function addFriendGoal(Request $request, RecordService $recordService) {
+        $userId = Auth::id();
+
+        $traineeId = $request->traineeId;
+        $goal = $request->goal;
+
+        $recordService->addUserGoal($traineeId, $goal, 'STEPS', 'DAY', $userId);
+
+        return redirect()->back();
     }
 
     public function setTrainer(Request $request, FriendService $friends)

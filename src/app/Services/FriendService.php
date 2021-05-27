@@ -64,9 +64,16 @@ class FriendService
 
         $trainer = Http::get($url);
 
-        if ($trainer->body() == 'null') return null;
+        return $this->mapperService->toModel($trainer->collect(), Friend::class);
+    }
 
-        return $this->mapperService->mapper(Friend::class, $trainer->json());
+    public function getTrainees($userId)
+    {
+        $url = $this->constructTrainerUrl($userId) . '/trainee';
+
+        $trainee = Http::get($url);
+
+        return $this->mapperService->toModel($trainee->collect(), Friend::class);
     }
 
     public function setTrainer($userId, $trainerId, $revoke = false)

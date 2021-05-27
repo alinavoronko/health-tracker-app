@@ -63,6 +63,9 @@ crossorigin="anonymous"></script>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Value</th>
+                @if ($activity === 'STEPS')
+                <th scope="col">Set friend goal</th>
+                @endif
                 <th scope="col">Make a trainer</th>
                 <th scope="col">Remove</th>
               </tr>
@@ -75,6 +78,22 @@ crossorigin="anonymous"></script>
                   <th scope="row">{{ $loop->iteration }}</th>
                   <td>{{ $friend->friend->getFullName() }}</td>
                   <td>{{ $friend->value }}</td>
+                  @if ($activity === 'STEPS')
+                  <td>
+                    @if ($friend->isTrainee)
+                    <form action="{{ route('friend.goal', ['lang' => App::getLocale()]) }}" class="row" method="post">
+                        @csrf
+                        <input type="hidden" name="traineeId" value="{{ $friend->friendId }}" />
+                        <div class="col-auto">
+                            <input type="number" class="form-control form-control-sm" name="goal" />
+                        </div>
+                        <div class="col-auto">
+                            <input type="submit" class="btn btn-secondary btn-sm" value="Set goal" />
+                        </div>
+                    </form>
+                    @endif
+                  </td>
+                  @endif
                   <td>
                       <form action="{{ route('friend.trainer', ['lang' => App::getLocale()]) }}" method="post">
                           @csrf

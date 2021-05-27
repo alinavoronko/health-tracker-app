@@ -29,10 +29,12 @@ public class FriendService {
         return friendRepository.getFriendByUserIdAndIsApproved(userId, true);
     }
 
-    public Optional<Friend> getTrainer(int userId) {
-        var trainers = friendRepository.findFirstByUserIdAndIsTrainer(userId, true).iterator();
+    public Iterable<Friend> getTrainers(int userId) {
+        return friendRepository.findAllByUserIdAndIsTrainer(userId, true);
+    }
 
-        return trainers.hasNext() ? Optional.of(trainers.next()) : Optional.empty();
+    public Iterable<Friend> getTrainees(int userId) {
+        return friendRepository.findAllByFriendIdAndIsTrainer(userId, true);
     }
 
     public Friend addFriend(int userId, int friendId) {
@@ -76,10 +78,10 @@ public class FriendService {
 
         friend.setIsTrainer(isTrainer);
 
-        var previousTrainers = friendRepository.findFirstByUserIdAndIsTrainer(userId, true);
-        previousTrainers.forEach(trainer -> trainer.setIsTrainer(false));
+//        var previousTrainers = friendRepository.findFirstByUserIdAndIsTrainer(userId, true);
+//        previousTrainers.forEach(trainer -> trainer.setIsTrainer(false));
 
-        friendRepository.saveAll(previousTrainers);
+//        friendRepository.saveAll(previousTrainers);
 
         return friendRepository.save(friend);
     }

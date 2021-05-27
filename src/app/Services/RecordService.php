@@ -34,13 +34,13 @@ class RecordService
         return $records->json();
     }
 
-    public function addUserGoal($userId, $value, $type = 'SLEEP', $timePeriod = 'DAY', $creatorId = -1)
+    public function addUserGoal($userId, $value, $type = 'STEPS', $timePeriod = 'DAY', $creatorId = -1)
     {
         if ($creatorId == -1) $creatorId = $userId;
 
         $createdGoal = Http::post($this->getGoalUrl($userId), compact('userId', 'creatorId', 'timePeriod', 'type', 'value'));
 
-        return $this->mapperService->mapper($createdGoal->json(), Goal::class);
+        return $this->mapperService->mapper(Goal::class, $createdGoal->json());
     }
 
     public function getUserGoals($userId, $goalType, $creatorId = -1)
