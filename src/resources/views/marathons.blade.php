@@ -3,16 +3,16 @@
 @section('title', 'My Marathons')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -31,12 +31,12 @@ crossorigin="anonymous"
 
 @section('content')
 
- 
+
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="text-center">My Marathons</h1>
         </div>
- 
+
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -65,12 +65,12 @@ crossorigin="anonymous"
                 <td>{{$mar->goal}}</td>
                 <td>{{$mar->startDate}}</td>
                 <td>{{$mar->endDate}}</td>
-                <td><a href="{{ route('marathons.show', $mar->id) }}">View</a></td>
-              
+                <td><a href="{{ route('marathons.show', ['marathon' => $mar->id, 'lang' => App::getLocale()]) }}">View</a></td>
+
               </tr>
-             
+
               @endforeach
-              
+
               {{-- <tr>
                 <th scope="row">1</th>
                 <td>Test marathon 1</td>
@@ -81,7 +81,7 @@ crossorigin="anonymous"
               </tr>
               <tr>
 
-                
+
                 <th scope="row">2</th>
                 <td>Test marathon 2</td>
                 <td>Artjoms</td>
@@ -117,5 +117,5 @@ crossorigin="anonymous"
           </table>
         </div>
       </main>
-   
+
 @endsection

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\FriendService;
+use App\Services\RecordService;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,9 +20,71 @@ class FriendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FriendService $friendService, RecordService $recordService, Request $request)
     {
-        return view('friends');
+        $period = $request->period ?? 'DAY';
+        $activity = $request->activity ?? 'STEPS';
+
+        $userId = Auth::id();
+
+        $unit = '1D';
+
+        if ($period === 'WEEK') $unit = '7W';
+        if ($period === 'MONTH') $unit = '1M';
+
+        $to = new DateTime();
+        $from = new DateTime();
+
+        $interval = new DateInterval('P' . $unit);
+        $from->sub($interval);
+
+        $trainees = $friendService->getTrainees($userId)->map(function ($trainee) {
+            return $trainee->userId;
+        })->toArray();
+
+        $friends = $friendService->getFriends($userId)->map(function ($friend) use ($recordService, $from, $to, $activity, $trainees) {
+            $friend->friend = User::find($friend->friendId);
+            $timeline = $recordService->getTimeline($friend->friendId, $from, $to, $activity);
+
+            $accumulated = $timeline->reduce(function ($acc, $record, $_key) {
+                return $acc + $record;
+            }, 0);
+
+            if ($activity != 'STEPS') {
+                $count = $timeline->count() !== 0 ? $timeline->count() : 1;
+                $accumulated /= $count;
+            }
+
+            $friend->value = $accumulated;
+
+            $friend->isTrainee = in_array($friend->friendId, $trainees);
+
+            return $friend;
+        });
+
+        return view('friends', compact('friends', 'period', 'activity'));
+    }
+
+    public function addFriendGoal(Request $request, RecordService $recordService) {
+        $userId = Auth::id();
+
+        $traineeId = $request->traineeId;
+        $goal = $request->goal;
+
+        $recordService->addUserGoal($traineeId, $goal, 'STEPS', 'DAY', $userId);
+
+        return redirect()->back();
+    }
+
+    public function setTrainer(Request $request, FriendService $friends)
+    {
+        $userId = Auth::id();
+
+        // dd($userId, $request->friendId, $request->action === 'remove');
+
+        $friends->setTrainer($userId, $request->friendId, $request->action === 'remove');
+
+        return redirect()->back();
     }
 
     /**
@@ -44,7 +109,7 @@ class FriendController extends Controller
 
         $tba=User::where('email', '=', $isOK['email'])->firstOrFail();
         $friend->addFriend(Auth::user()->id, $tba->id);
-        return response('ok');  
+        return response('ok');
     }
 
     /**
@@ -53,7 +118,7 @@ class FriendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($_lang, $id)
     {
         //
     }
@@ -64,7 +129,7 @@ class FriendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($_lang, $id)
     {
         //
     }
@@ -76,7 +141,7 @@ class FriendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $_lang, $id)
     {
         //
     }
@@ -87,8 +152,12 @@ class FriendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(FriendService $friendService, $_lang, $id)
     {
-        //
+        $userId = Auth::id();
+
+        $friendService->removeFriend($userId, $id);
+
+        return redirect()->back();
     }
 }

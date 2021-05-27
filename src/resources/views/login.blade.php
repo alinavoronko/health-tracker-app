@@ -17,17 +17,17 @@
 
 
     <div class="Body-Wrapper">
-      
+
 
       <main role="main" class="Main container bg-white px-4">
-        
-        <div class="Login h-100"> <!--need to center the form vertically, 
-            as well as split the form into 2 parts: 
+
+        <div class="Login h-100"> <!--need to center the form vertically,
+            as well as split the form into 2 parts:
             *logo and our moto on the left side,
             *input fields on the right side-->
           <div class="Form mx-auto border rounded py-4 px-5 text-center vertical-center">
             <h3 class="mb-3">Login</h3>
-              <form method="POST" action="{{ route('login.post') }}">
+              <form method="POST" action="{{ route('login.post', ['lang' => App::getLocale()]) }}">
                 @csrf
               <div class="input-group mb-3">
                 <span class="input-group-text" id="at-addon">
@@ -88,10 +88,10 @@
               </div>
               <div class="mt-2 text-center">
                 <div>
-                  <span>{{__("Don't have an account?")}} <a href="{{ route('register') }}">{{__('Sign Up')}}</a></span>
+                  <span>{{__("Don't have an account?")}} <a href="{{ route('register', ['lang' => App::getLocale()]) }}">{{__('Sign Up')}}</a></span>
                 </div>
                 <div>
-                  <a href="{{ route('password.request') }}">{{__('Forgot password?')}}</a>
+                  <a href="{{ route('password.request', ['lang' => App::getLocale()]) }}">{{__('Forgot password?')}}</a>
                 </div>
               </div>
             </form>

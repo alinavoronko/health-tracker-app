@@ -2,16 +2,16 @@
 @section('title', 'Create Marathon')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -58,7 +58,7 @@ checkbox.addEventListener('change', (event) => {
       go.style.display = "block";
       rec.style.display = "none";
     // filter the RecordType table accordingly so that only record types that have isGoal==1 are displayed in the select
-  } 
+  }
   else{
       //show all
       rec.style.display = "block";
@@ -78,7 +78,7 @@ checkbox.addEventListener('change', (event) => {
                         {{-- @endif //
                     @endforeach --}}
 
-            </select> 
+            </select>
              {{-- </div>
             <div class="col-md-6 mb-3">
               <label for="goal" class="form-label">Goal:</label>
@@ -91,7 +91,7 @@ checkbox.addEventListener('change', (event) => {
             </div>
 
             <div class="col-md-6 mb-3" id="forRecords">
-                
+
               <label for="date" class="form-label">Date:</label>
               <input type="date" name="date" id="date" class="form-control" required />
             </div>

@@ -2,16 +2,16 @@
 @section('title', 'Settings')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 @section('additional_script')
@@ -89,8 +89,8 @@ crossorigin="anonymous"
                   <div>{{$error}}</div>
               @endforeach
           @endif
-              <form class="row" action="{{ route('settings.store') }}" method="post">
-                
+              <form class="row" action="{{ route('settings.store', ['lang' => App::getLocale()]) }}" method="post">
+
                 @csrf
                 <div class="col-md-12 mb-3">
                   <label for="inputName" class="form-label">Name</label>
@@ -306,6 +306,6 @@ crossorigin="anonymous"
             </div>
           </div>
         </div>
-        
+
       </main>
 @endsection

@@ -8,5 +8,7 @@ public interface FriendRepository extends CrudRepository<Friend, FriendIdentity>
 
     Iterable<Friend> getFriendByUserIdAndIsApproved(int userId, boolean isApproved);
 
-    Iterable<Friend> findFirstByUserIdAndIsTrainer(int userId, boolean isTrainer);
+    Iterable<Friend> findAllByUserIdAndIsTrainer(int userId, boolean isTrainer);
+
+    Iterable<Friend> findAllByFriendIdAndIsTrainer(int friendId, boolean isTrainer);
 }

@@ -68,4 +68,8 @@ class User extends Authenticatable
 
     }
 
+    public function getFullName() {
+        return $this->name . ' ' . $this->surname;
+    }
+
 }

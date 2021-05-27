@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Goal;
 use App\Models\Record;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Support\Facades\Http;
 
 class RecordService
@@ -32,13 +34,13 @@ class RecordService
         return $records->json();
     }
 
-    public function addUserGoal($userId, $value, $type = 'SLEEP', $timePeriod = 'DAY', $creatorId = -1)
+    public function addUserGoal($userId, $value, $type = 'STEPS', $timePeriod = 'DAY', $creatorId = -1)
     {
         if ($creatorId == -1) $creatorId = $userId;
 
         $createdGoal = Http::post($this->getGoalUrl($userId), compact('userId', 'creatorId', 'timePeriod', 'type', 'value'));
 
-        return $this->mapperService->mapper($createdGoal->json(), Goal::class);
+        return $this->mapperService->mapper(Goal::class, $createdGoal->json());
     }
 
     public function getUserGoals($userId, $goalType='STEPS', $creatorId = -1)
@@ -94,13 +96,21 @@ class RecordService
         return $this->mapperService->mapper($record->json(), Record::class);
     }
 
-    public function getTimeline($userId, $fromDate, $toDate, $recordType = 'SLEEP')
+    public function getTimeline($userId, DateTime $fromDate, DateTime $toDate, $recordType = 'SLEEP')
     {
         $url = $this->constructUrl($userId) . '/timeline/' . $recordType;
 
+        $utc = new DateTimeZone("UTC");
+
+        $toDate->setTimezone($utc);
+        $fromDate->setTimezone($utc);
+
+        $toDate = $toDate->format('Y-m-d\TH:i:s.u') . 'Z';
+        $fromDate = $fromDate->format('Y-m-d\TH:i:s.u') . 'Z';
+
         $records = Http::get($url, compact('fromDate', 'toDate'));
 
-        return $this->mapperService->toModel($records->collect(), Record::class);
+        return $records->collect();
     }
 
     private function getGoalUrl($userId)

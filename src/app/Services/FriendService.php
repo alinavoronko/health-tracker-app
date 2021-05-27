@@ -58,21 +58,28 @@ class FriendService
         return $this->updateFriendRequest($userId, $friendId, 'DECLINED');
     }
 
-    public function getTrainer($userId)
+    public function getTrainers($userId)
     {
         $url = $this->constructTrainerUrl($userId);
 
         $trainer = Http::get($url);
 
-        if ($trainer->body() == 'null') return null;
+        return $this->mapperService->toModel($trainer->collect(), Friend::class);
+    }
 
-        return $this->mapperService->mapper(Friend::class, $trainer->json());
+    public function getTrainees($userId)
+    {
+        $url = $this->constructTrainerUrl($userId) . '/trainee';
+
+        $trainee = Http::get($url);
+
+        return $this->mapperService->toModel($trainee->collect(), Friend::class);
     }
 
     public function setTrainer($userId, $trainerId, $revoke = false)
     {
         $revokeRequest = $revoke ? 'true' : 'false';
-        $request = $this->constructRequestUrl($userId) . '?revoke=' . $revokeRequest . '&trainerId=' . $trainerId;
+        $request = $this->constructTrainerUrl($userId) . '?revoke=' . $revokeRequest . '&trainerId=' . $trainerId;
 
         $response = Http::put($request);
 

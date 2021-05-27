@@ -1,17 +1,20 @@
 @extends('layout')
 @section('title', 'Dashboard')
+@section('additional_script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
+@endsection
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 {{-- @section('button-link', 'activity.create')
@@ -39,28 +42,31 @@
           <h1 class="display-4 text-center mb-3">Overview</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="todayChart" width="400" height="250"></canvas>
+              <canvas id="sleepChart" width="400" height="250"></canvas>
             </div>
             <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="weekChart" width="400" height="250"></canvas>
+              <canvas id="stepsChart" width="400" height="250"></canvas>
+            </div>
+            <div class="Chart p-2 border col-sm-5 mb-3">
+              <canvas id="weightChart" width="400" height="250"></canvas>
             </div>
           </div>
         </div>
 
         <div class="mb-3 DashboardSection">
-         
+
           {{-- <div class="row justify-content-between mx-5"> --}}
             <div class="row justify-content-around">
             {{-- <div class="col-sm-5 mb-3"> --}}
               <div class="Chart border p-2 col-sm-5 mb-3">
-               
+
                 {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
                   @csrf
                   <h3 class="text-center mb-3">Add a friend</h3>
 
                 <div class="form-group">
-             
-                  <label for="friendMail">Friend's e-mail address: </label>
+
+                  <label for="friendMail">Friend's e-mail address</label>
                   <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
                   <small id="emailHelp" class="form-text text-muted">Type your friend's e-mail address so send a friend request.</small>
                 </div>
@@ -76,7 +82,7 @@
                         e.preventDefault();
                         let email=inp.value;
                         //fetch() send a request to the server
-                        fetch("{{ route('friends.store') }}", {
+                        fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
                           method: "POST",
                           headers: {
                                 "Content-Type": "application/json",
@@ -91,20 +97,20 @@
                           if(response.status==200){
                           alert('Request to '+email+' has been sent!');
                         }
-                          else {alert('No user with this e-mail!');}  
-                         
-                     
+                          else {alert('No user with this e-mail!');}
+
+
                       }); //then
 
 
                   });//evList
                 });
 
-                 
+
                   </script>
                 {{-- </form> --}}
               </div>
-  
+
 
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
@@ -115,7 +121,7 @@
                   <li class="list-group-item d-flex justify-content-between">
                     <span>{{$friend->name}} {{$friend->surname}}</span>
                     <span>{{$friend->email}}</span>
-                 
+
                   </li>
                   @endforeach
                 </ul>
@@ -142,7 +148,7 @@
                 </ul>
               </div>
             {{-- </div> --}}
-{{-- 
+{{--
             <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 {{-- <h3 class="text-center mb-3">Marathons</h3>
@@ -163,7 +169,7 @@
                 </ul> --}}
 
                 <h3 class="text-center mb-3">Friend Requests</h3>
-                
+
                 <ul class="list-group">
                   @foreach($users as $user)
                   <li class="list-group-item d-flex justify-content-between">
@@ -180,8 +186,83 @@
           </div>
         {{-- </div> --}}
       </main>
-    
+
+
+    <script>
+        const sleep = JSON.parse(`{!! $sleep !!}`);
+        const steps = JSON.parse(`{!! $steps !!}`);
+        const weight = JSON.parse(`{!! $weight !!}`);
+        const dates = {
+            to: new Date(`{!! $dates['to'] !!}`),
+            from: new Date(`{!! $dates['from'] !!}`),
+        };
+
+        const dateList = genereateDateList(dates.from, dates.to);
+
+        function genereateDateList(from, to) {
+            const list = [];
+            for (let dt = new Date(from); dt <= to; dt.setDate(dt.getDate()  + 1)) {
+                list.push(new Date(dt));
+            }
+            return list;
+        }
+
+        console.log(sleep, dates);
+
+        window.addEventListener('DOMContentLoaded', (event)=> {
+            const sleepChartCtx = document
+                .getElementById("sleepChart")
+                .getContext("2d");
+            const stepsChartCtx = document
+                .getElementById("stepsChart")
+                .getContext("2d");
+            const weightChartCtx = document
+                .getElementById("weightChart")
+                .getContext("2d");
+
+            const sleepChart = new Chart(sleepChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Sleep",
+                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+
+            const stepsChart = new Chart(stepsChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Steps",
+                    data: dateList.map(date => steps[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+
+            const weightChart = new Chart(weightChartCtx, {
+                type: "bar",
+                data: {
+                labels: dateList.map(date => date.getDate()),
+                datasets: [
+                    {
+                    label: "Weight",
+                    data: dateList.map(date => weight[date.toISOString().split('T')[0]] || 0),
+                    borderWidth: 1,
+                    },
+                ],
+                },
+            });
+        });
+    </script>
 
  @endsection
 
- 

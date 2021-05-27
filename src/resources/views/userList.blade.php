@@ -2,16 +2,16 @@
 @section('title', 'Dashboard')
 @section('optional')
 <li class="nav-item">
-  <a href="{{ route('marathons.index') }}" class="nav-link">Marathons</a>
+  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('stats') }}" class="nav-link">Stats</a>
+  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
 </li>
 <li class="nav-item">
-  <a href="{{ route('friends.index') }}" class="nav-link">Friends</a>
-</li>  
+  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
+</li>
 <li class="nav-item">
-  <a href="{{ route('settings.index') }}" class="nav-link">Settings</a>
+  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
 </li>
 @endsection
 
@@ -47,27 +47,27 @@
                 <td>{{ $user->name }}  {{ $user->surname }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                 
+
                     {{-- Add an appropriate method that sets user's blocked property to 1 --}}
-                    <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked]) }}" method="post">
+                    <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked, 'lang' => App::getLocale()]) }}" method="post">
                         @csrf
-                        
+
                         {{-- <label for="block">{{ $user->isBlocked ? 'Unblock' : 'Block' }}</label> --}}
-     
+
                         <input type="submit" value="{{ $user->isBlocked ? 'Unblock' : 'Block' }}" id="block" />
                     </form>
                 </td>
             </tr>
 
-            
+
         @endforeach
-            
-      
+
+
         </tbody>
       </table>
     </div>
   </main>
- 
+
 @endif
 
 @endsection
