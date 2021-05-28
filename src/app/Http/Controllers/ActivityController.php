@@ -9,6 +9,7 @@ use App\Services\RecordService;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
@@ -44,7 +45,7 @@ class ActivityController extends Controller
         
 
         $gls=$rec->getUserGoals(Auth::user()->id);
-        dd($rec);
+        dd($gls);
         //WIP
 
         // $gls=$rec->getGoalList();
@@ -198,9 +199,24 @@ class ActivityController extends Controller
 
     public function createGoal()
     {
+        return view('setGoal');  
     }
 
-    public function storeGoal()
+    public function storeGoal(RecordService $rec, Request $request)
     {
+     
+        $userId = Auth::user()->id;
+        // dd($request);
+        //idea: use dd() to show the attached tokens
+        
+    //  addUserGoal($userId, $value, $type = 'STEPS', $timePeriod = 'DAY', $creatorId = -1)
+
+     $reqs=$rec->addUserGoal($userId, $request->value, 'STEPS',   $request->goalType);
+         //  $reqs = $rec->getFriendRequests($userId, $request->value);
+         return redirect()->route('stats', [ 'lang' =>App::getLocale()]);
     }
+
+  
+
+    
 }

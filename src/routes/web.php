@@ -43,7 +43,8 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::post('/friends/goal', [FriendController::class, 'addFriendGoal'])->name('friend.goal');
     Route::put('/friends/trainer', [FriendController::class, 'setTrainer'])->name('friend.trainer');
 
-    Route::get('/goal/create', [ActivityController::class, 'createGoal']);
+    Route::get('/goal/create', [ActivityController::class, 'createGoal'])->middleware(['auth'])->name('goal.create');
+    Route::post('/goal/store', [ActivityController::class, 'storeGoal'])->middleware(['auth'])->name('goal.store');
     //store goal ADD ROUTE
 
     Route::post('/block', [AdminController::class, 'block']);
@@ -55,13 +56,10 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 
     Route::get('/dashboard', [ActivityController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-    Route::get('/goals/create', function () {
-        return (view('setGoal'));
-    })->middleware(['auth'])->name('goals.create');
-    // Route::get('/dashboard', fun ction () {
-    //     //return view('dashboard');
-    //     return 'Hello friend!';
-    // })->middleware(['auth'])->name('dashboard');
+    // Route::get('/goals/create', function () {
+    //     return (view('setGoal'));
+    // })->middleware(['auth'])->name('goals.create');
+
 
     require __DIR__ . '/auth.php';
 

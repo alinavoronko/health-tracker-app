@@ -30,30 +30,30 @@ crossorigin="anonymous"
           <h1 class="display-4 text-center">Set a new goal</h1>
         </div>
 
-        <div class="Form Form__wide mx-auto px-5">
+<div class="Form Form__wide mx-auto px-5">
           {{-- SET THE ACTION! --}}
-          <form action="#" class="row" method="POST">
+          <form action="{{ route('goal.store', ['lang' => App::getLocale()]) }}" class="row" method="POST">
 
-
+            @csrf
 
 {{-- pass the category as a parameter (from the stats page), set it as "selected" --}}
 <div class="col-md-6 col-lg-12 mb-3" id="category">
-    <label for="value" class="form-label">Select goal category:</label>
+    {{-- <label for="value" class="form-label">Select goal category:</label>
 
     <select name="goalCategory" id="goalCategory"  required>
       <option value="steps">Steps</option>
       <option value="sleep">Sleep</option>
       <option value="weight">Weight</option>
-    </select>
+    </select> --}}
 </div>
 
-<div class="col-md-6 col-lg-12 mb-3" id="tyope">
-    <label for="value" class="form-label">Select goal type:</label>
+<div class="col-md-6 col-lg-12 mb-3" id="type">
+    <label for="goalType" class="form-label">Select goal type:</label>
 
     <select name="goalType" id="goalType"  required>
-      <option value="daily">Daily</option>
-      <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
+      <option value="DAY">Daily</option>
+      <option value="WEEK">Weekly</option>
+      <option value="MONTH">Monthly</option>
     </select>
 </div>
 
@@ -69,7 +69,7 @@ crossorigin="anonymous"
 
 
             <div class="col-md-12 text-center">
-              <button type="submit" class="btn btn-primary mb-3">Submit</button>
+              <input type="submit" class="btn btn-primary mb-3" value="Submit" />
             </div>
           </form>
         </div>

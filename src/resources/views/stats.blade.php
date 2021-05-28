@@ -49,7 +49,9 @@ crossorigin="anonymous"
             </div>
           </div>
           <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-warning">Set step goal</button>
+            <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
+              <button type="button" class="btn btn-warning">Set step goal</button>
+              </a>
         </div>
         </div>
 
@@ -62,9 +64,13 @@ crossorigin="anonymous"
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="monthSleepChart" width="400" height="250"></canvas>
             </div>
-            <div class="col-md-12 text-center">
+            {{-- <div class="col-md-12 text-center">
+              <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
               <button type="button" class="btn btn-primary">Set sleep goal</button>
-          </div>
+              </a>
+          </div> --}}
+
+      
 
           </div>
         </div>
@@ -80,9 +86,12 @@ crossorigin="anonymous"
               <canvas id="monthWeightChart" width="400" height="250"></canvas>
             </div>
           </div>
-          <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-danger">Set weight goal</button>
-        </div>
+          {{-- <div class="col-md-12 text-center">
+          
+            <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
+              <button type="button" class="btn btn-danger">Set weight goal</button>
+              </a>
+        </div> --}}
 
         </div>
       </main>
