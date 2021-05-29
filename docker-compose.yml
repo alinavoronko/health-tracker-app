@@ -81,6 +81,15 @@ services:
                         - friends
                         - mysql
 
+        googlefit:
+                build:
+                        context: ./fitnessapi
+                        dockerfile: Dockerfile
+                ports: 
+                        - "8085:3000"
+                networks: 
+                        - main
+
 
 volumes:
         mysql-data:

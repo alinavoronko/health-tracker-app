@@ -93,3 +93,5 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 
     Route::get('/stats', [ActivityController::class, 'stats'])->middleware(['auth'])->name('stats');
 });
+
+Route::get('/googleauth', [SettingController::class, 'googleAuth'])->middleware(['auth']);

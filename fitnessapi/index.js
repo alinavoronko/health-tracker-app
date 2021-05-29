@@ -10,14 +10,19 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
 
+// const CLIENT_ID =
+//   "474032726598-brlecrlhbf81ssai67r9ibthgasitrad.apps.googleusercontent.com";
+// const CLIENT_SECRET = "IuSAYYxc3oVRlokUbv4v1DBy";
+
 const CLIENT_ID =
-  "474032726598-brlecrlhbf81ssai67r9ibthgasitrad.apps.googleusercontent.com";
-const CLIENT_SECRET = "IuSAYYxc3oVRlokUbv4v1DBy";
+  "741475589490-i7nfrlunhs6m9t59q23bqai37ad7kfrr.apps.googleusercontent.com";
+const CLIENT_SECRET = "tJbUoBP2eBwb3UxEcqi6Pz6u";
 
 const oAuthParams = [
   CLIENT_ID,
   CLIENT_SECRET,
-  `http://localhost:${port}/googleauth`,
+  // TODO make dynamic
+  `http://localhost:8080/googleauth`,
 ];
 
 const scope = [
@@ -27,7 +32,7 @@ const scope = [
 ];
 
 // Storing codes that allow us to exchange tokens
-const authCodeList = {};
+// const authCodeList = {};
 // received tokens
 
 // {
@@ -38,14 +43,11 @@ const authCodeList = {};
 // }
 const tokenList = {};
 
-async function getAuthWithToken(userId) {
+async function getAuthWithToken(userId, authCode) {
   // Initialize a client
   const oauth2Client = new google.auth.OAuth2(...oAuthParams);
 
   if (!tokenList[userId]) {
-    if (!authCodeList[userId]) return null;
-
-    const authCode = authCodeList[userId];
     const { tokens } = await oauth2Client.getToken(authCode);
     //passing tokens to the client
     oauth2Client.setCredentials(tokens);
@@ -66,7 +68,7 @@ async function getAuthWithToken(userId) {
   return oauth2Client;
 }
 
-app.get("/google-url", (req, res) => {
+app.get("/google-url", (_req, res) => {
   const oauth2Client = new google.auth.OAuth2(...oAuthParams);
 
   const authUrl = oauth2Client.generateAuthUrl({
@@ -75,42 +77,42 @@ app.get("/google-url", (req, res) => {
   });
 
   //req.query - an object that consists of key-value pairs; get set constant user to the value of user (from the dictionary)
-  const { user } = req.query;
+  // const { user } = req.query;
 
-  if (!user) return res.sendStatus(403);
+  // if (!user) return res.sendStatus(403);
 
-  // add userID to the cookie
-  res.cookie("xk_user_id", user);
+  // // add userID to the cookie
+  // res.cookie("xk_user_id", user);
   res.json({ authUrl });
 });
 
 //redirect user to /googleauth after they have given consent o sharing data
 app.get("/googleauth", (req, res) => {
-  const { xk_user_id: user } = req.cookies;
-  const { code } = req.query;
+  // const { xk_user_id: user } = req.cookies;
+  // const { code } = req.query;
 
-  if (!user) {
-    console.log("User id cookie is not set");
-    return res.sendStatus(403);
-  }
+  // if (!user) {
+  //   console.log("User id cookie is not set");
+  //   return res.sendStatus(403);
+  // }
 
-  if (!code) {
-    console.log("Authorization code was not provided");
-    return res.sendStatus(400);
-  }
+  // if (!code) {
+  //   console.log("Authorization code was not provided");
+  //   return res.sendStatus(400);
+  // }
 
-  authCodeList[user] = code;
+  // authCodeList[user] = code;
   // console.log("Received code: ", code, req);
   res.redirect("/");
 });
 
 app.get("/steps", async (req, res) => {
-  const { xk_user_id: user } = req.cookies;
-  const { from, to } = req.query;
+  // const { xk_user_id: user } = req.cookies;
+  const { from, to, user, authCode } = req.query;
 
-  if (!(user && from && to)) return res.sendStatus(403);
+  if (!(user && from && to && authCode)) return res.sendStatus(403);
 
-  const client = await getAuthWithToken(user);
+  const client = await getAuthWithToken(user, authCode);
   if (!client) return res.sendStatus(404);
 
   // fitness through the client will be requesting user data from google
@@ -152,14 +154,14 @@ app.get("/steps", async (req, res) => {
 });
 
 app.get("/sleep", async (req, res) => {
-  const { xk_user_id: user } = req.cookies;
-  const { from, to } = req.query;
+  // const { xk_user_id: user } = req.cookies;
+  const { from, to, user, authCode } = req.query;
   //trigger type conversion with + instead of using ParseInt
   const [fromDate, toDate] = [new Date(+from), new Date(+to)];
   
   if (!(user && from && to)) return res.sendStatus(403);
 
-  const client = await getAuthWithToken(user);
+  const client = await getAuthWithToken(user, authCode);
   if (!client) return res.sendStatus(404);
 
   const fitness = google.fitness({
@@ -169,9 +171,9 @@ app.get("/sleep", async (req, res) => {
   try {
     const response = await fitness.users.sessions.list({
       activityType: "72",
-       endTime: toDate.toISOString(),
-       startTime: fromDate.toISOString(),
-       userId: "me",
+      endTime: toDate.toISOString(),
+      startTime: fromDate.toISOString(),
+      userId: "me",
     });
     if (response.status !== 200) {
       console.error("Session request resulted in error,", response);
