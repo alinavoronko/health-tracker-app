@@ -68,15 +68,8 @@ checkbox.addEventListener('change', (event) => {
     </script> --}}
 
 
-{{-- For goals only those with isGoal==1 should be --}}
             <div class="col-md-6 mb-3">
-                {{-- <label for="rtype" class="form-label">Type:</label>
-                <select name="rtype_id" id="rtype" required> --}}
-                    {{-- @foreach ($rtypes as $rtype)
-                        {{-- @if ($rtype->isGoal == true) //
-                        <option value="{{ $rtype->id }}">{{ $rtype->name }} </option>
-                        {{-- @endif //
-                    @endforeach --}}
+              
                     <label for="rtype" class="form-label">Type:</label>
                     <select class="form-select" aria-label="Default select example" name="rtype" id="rtype" required>
                       {{-- <option selected>Type: </option> --}}
@@ -86,11 +79,7 @@ checkbox.addEventListener('change', (event) => {
                     </select>
 
             </select>
-             {{-- </div>
-            <div class="col-md-6 mb-3">
-              <label for="goal" class="form-label">Goal:</label>
-              <input type="number" name="goal" id="goal" class="form-control" />
-            </div> --}}
+         
             <div class="col-md-6 mb-3 my-2">
                 {{-- check according constraints in the store method --}}
               <label for="value" class="form-label">Value:</label>

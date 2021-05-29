@@ -8,6 +8,7 @@ use App\Services\MarathonService;
 use App\Services\RecordService;
 use DateInterval;
 use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -221,10 +222,14 @@ class ActivityController extends Controller
     {
         //Date validation??
         $userId = Auth::user()->id;
+        $now = (new DateTime())->format('H:i:s.u') ;
         
-        
+        // $utc = new DateTimeZone("UTC");
+
         $start = new DateTime($request->date);
-        $date= $start->format('Y-m-d\TH:i:s.u') . 'Z';
+        // $start->setTimezone($utc);
+        $dat= $start->format('Y-m-d');
+        $date= $dat.'T'.$now . 'Z';
         // $end=$start;
         
         // $date2=$end->add(new DateInterval('PT23H59M59S'));
@@ -233,8 +238,8 @@ class ActivityController extends Controller
     
 
         // $r=$rec->addUserRecord($userId, $request->value, $date, $date2, $request->rtype);
-        $r=$rec->addUserRecord($userId, $request->value, $date, $date, $request->rtype);
-        //dd($r);
+         $r=$rec->addUserRecord($userId, $request->value, $date, $date, $request->rtype);
+        // dd($r);
         return redirect()->back();
     }
     
