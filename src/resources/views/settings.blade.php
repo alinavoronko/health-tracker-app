@@ -167,7 +167,9 @@ crossorigin="anonymous"
               aria-labelledby="settings-menu-security-tab"
             >
               <h4>Security settings</h4>
-              <form class="row" action="#" method="post">
+            
+              <form class="row" action="{{ route('user.store', ['lang' => App::getLocale()]) }}" method="post">
+                @csrf
                 <div class="col-md-12 mb-3">
                   <label for="email" class="form-label">Email</label>
                   <div class="input-group">
@@ -288,11 +290,14 @@ crossorigin="anonymous"
                 </div>
                 <div class="text-end mt-3 col-md-12">
                   <button type="submit" class="btn btn-lightblue mb-3">
+                    Update
+                  </button>
+                  {{-- <button type="submit" class="btn btn-lightblue mb-3">
                     Update Email
                   </button>
                   <button type="submit" class="btn btn-oceanblue mb-3">
                     Update Password
-                  </button>
+                  </button> --}}
                 </div>
               </form>
             </div>

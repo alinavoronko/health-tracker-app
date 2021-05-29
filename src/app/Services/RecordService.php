@@ -91,9 +91,9 @@ class RecordService
     {
         $dataSource = 'custom';
 
-        $record = Http::post($this->getRecordUrl($userId), compact($value, $fromTime, $untilTime, $type, $dataSource));
+        $record = Http::post($this->getRecordUrl($userId), compact('userId','value', 'fromTime', 'untilTime', 'type', 'dataSource'));
 
-        return $this->mapperService->mapper($record->json(), Record::class);
+        return $this->mapperService->mapper(Record::class, $record->json());
     }
 
     public function getTimeline($userId, DateTime $fromDate, DateTime $toDate, $recordType = 'SLEEP')

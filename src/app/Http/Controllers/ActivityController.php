@@ -216,7 +216,26 @@ class ActivityController extends Controller
          return redirect()->route('stats', [ 'lang' =>App::getLocale()]);
     }
 
-  
 
+  public function addRecord(RecordService $rec, Request $request)
+    {
+        //Date validation??
+        $userId = Auth::user()->id;
+        
+        
+        $start = new DateTime($request->date);
+        $date= $start->format('Y-m-d\TH:i:s.u') . 'Z';
+        // $end=$start;
+        
+        // $date2=$end->add(new DateInterval('PT23H59M59S'));
+        // $date2= $date2->format('Y-m-d\TH:i:s.u') . 'Z';
+        // dd($date, $date2);
+    
+
+        // $r=$rec->addUserRecord($userId, $request->value, $date, $date2, $request->rtype);
+        $r=$rec->addUserRecord($userId, $request->value, $date, $date, $request->rtype);
+        //dd($r);
+        return redirect()->back();
+    }
     
 }

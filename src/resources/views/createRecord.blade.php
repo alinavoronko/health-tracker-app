@@ -32,8 +32,8 @@ crossorigin="anonymous"
 
         <div class="Form Form__wide mx-auto px-5">
           {{-- SET THE ACCTION! --}}
-          <form action="#" class="row" method="POST">
-
+          <form action="{{ route('record.create', ['lang' => App::getLocale()]) }}" class="row" method="POST">
+@csrf
             {{-- <div class="col-md-12 mb-3">
             <label for="vehicle1"> Set as a goal</label>
             <input type="checkbox" id="isGoal" name="isGoal">
@@ -69,14 +69,21 @@ checkbox.addEventListener('change', (event) => {
 
 
 {{-- For goals only those with isGoal==1 should be --}}
-            <div class="col-md-12 mb-3">
-                <label for="rtype" class="form-label">Type:</label>
-                <select name="rtype_id" id="rtype" required>
+            <div class="col-md-6 mb-3">
+                {{-- <label for="rtype" class="form-label">Type:</label>
+                <select name="rtype_id" id="rtype" required> --}}
                     {{-- @foreach ($rtypes as $rtype)
                         {{-- @if ($rtype->isGoal == true) //
                         <option value="{{ $rtype->id }}">{{ $rtype->name }} </option>
                         {{-- @endif //
                     @endforeach --}}
+                    <label for="rtype" class="form-label">Type:</label>
+                    <select class="form-select" aria-label="Default select example" name="rtype" id="rtype" required>
+                      {{-- <option selected>Type: </option> --}}
+                      <option value="STEPS" selected>Steps</option>
+                      <option value="SLEEP">Sleep</option>
+                      <option value="WEIGHT">Weight</option>
+                    </select>
 
             </select>
              {{-- </div>
@@ -84,10 +91,10 @@ checkbox.addEventListener('change', (event) => {
               <label for="goal" class="form-label">Goal:</label>
               <input type="number" name="goal" id="goal" class="form-control" />
             </div> --}}
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-3 my-2">
                 {{-- check according constraints in the store method --}}
               <label for="value" class="form-label">Value:</label>
-              <input type="number" name="value" id="goal" class="form-control" placeholder="10000" required />
+              <input type="number" name="value" id="value" class="form-control" placeholder="10000" required />
             </div>
 
             <div class="col-md-6 mb-3" id="forRecords">
@@ -96,7 +103,7 @@ checkbox.addEventListener('change', (event) => {
               <input type="date" name="date" id="date" class="form-control" required />
             </div>
 
-            <div class="col-md-6 mb-3" id="forGoals" style="display:none;">
+            {{-- <div class="col-md-6 mb-3" id="forGoals" style="display:none;">
                 <label for="value" class="form-label">Select goal type:</label>
 
                 <select name="goalType" id="goalType"  required>
@@ -104,7 +111,7 @@ checkbox.addEventListener('change', (event) => {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                 </select>
-            </div>
+            </div> --}}
 
 
             <div class="col-md-12 text-center">

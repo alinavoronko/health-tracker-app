@@ -59,6 +59,17 @@ class SettingController extends Controller
 
     }
 
+
+    public function usrStore(Request $request)
+    {
+        $usr = User::find(Auth::user()->id);
+//
+
+        //TODO
+        return redirect()->back();
+
+    }
+
     /**
      * Display the specified resource.
      *
