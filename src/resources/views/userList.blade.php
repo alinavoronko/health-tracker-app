@@ -36,8 +36,8 @@
         <thead>
           <tr>
             <th scope="col">Name Surname</th>
-            <th scope="col">e-mail</th>
-            <th scope="col">Remove</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <!--use blade for loop to loop over friends get a list of them from db-->
@@ -49,7 +49,7 @@
                 <td>
 
                     {{-- Add an appropriate method that sets user's blocked property to 1 --}}
-                    <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked, 'lang' => App::getLocale()]) }}" method="post">
+                    <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked ? 'unblock' : 'block', 'lang' => App::getLocale()]) }}" method="post">
                         @csrf
 
                         {{-- <label for="block">{{ $user->isBlocked ? 'Unblock' : 'Block' }}</label> --}}

@@ -34,7 +34,7 @@
             class="rounded-circle Welcome-Avatar me-3"
           />
           <h1 class="display-4">
-            Welcome, {{ Auth::user()->name }} {{ Auth::user()->surname }}!
+            {{__('Welcome')}}, {{ Auth::user()->name }} {{ Auth::user()->surname }}!
           </h1>
         </div>
 

@@ -24,7 +24,7 @@ class AdminController extends Controller
             return redirect(route('dashboard', ["lang" => App::getLocale()]));
             // ->withErrors('Access denied');
             }
-        if ($req->blocked==1){
+        if ($req->blocked=='unblock'){
             $user=User::find($req->id);
             $user->unblockUser();
             $user->save();
