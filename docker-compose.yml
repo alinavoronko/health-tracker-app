@@ -5,18 +5,24 @@ networks:
 
 services:
         nginx:
-                image: nginx:1.20.0-alpine
+                #image: nginx:1.20.0-alpine
+                image: nginx
                 container_name: nginx
                 ports:
                         - "8080:80"
                 volumes:
                         - ./src:/var/www
-                        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+                        - ./nginx/default.conf:/etc/nginx/conf.d/default.template
+                        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
                 depends_on:
                         - php
                         - mysql
                 networks:
                         - main
+                environment:
+                        - NGINX_HOST=localhost
+                        - NGINX_PORT=8080
+                command: /bin/bash -c "envsubst '$${NGINX_HOST} $${NGINX_PORT}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
 
         mysql:
                 image: mysql:latest
