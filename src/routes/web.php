@@ -17,6 +17,7 @@ use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
+
 use App\Services\FriendService;
 use App\Services\MarathonService;
 use App\Services\RecordService;
@@ -81,9 +82,10 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
         return redirect()->route('login', ['lang' => App::getLocale()]);
     });
 
-    Route::get('/signup', function () {
-        return view('signup');
-    });
+    // Route::get('/signup', function () {
+    //     $countries=Country::all();
+    //     return view('signup', compact('countries'));
+    // });
 
     Route::get('/password/recover', function () {
         return view('recover');
@@ -98,3 +100,5 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 });
 
 Route::get('/googleauth', [SettingController::class, 'googleAuth'])->middleware(['auth']);
+Route::get('/country/{country}', [SettingController::class, 'getStates']);
+Route::get('/state/{state}', [SettingController::class, 'getCities']);

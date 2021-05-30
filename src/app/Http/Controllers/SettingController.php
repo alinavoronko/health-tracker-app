@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\State;
 use App\Models\User;
 use App\Services\GoogleFitService;
 use DateTime;
@@ -22,12 +24,28 @@ class SettingController extends Controller
     public function index(GoogleFitService $gf)
     {
         $user = Auth::user();
-
+        $countries=Country::all(); //tbp
         // dd($gf->getSleep($user, DateTime::createFromFormat('U', '1619470800'), DateTime::createFromFormat('U', '1621285200')));
-
+        $userCity=$user->city;//tbp
+        $userState=$userCity->state;//tbp
+        $userCountry=$userState->country; //tbp -selected
+        $states=$userCountry->states;//tbp
+        $cities=$userState->cities;//tbp
         $authUrl = $gf->getAuthUrl();
 
-        return view('settings', compact('user', 'authUrl'));
+        return view('settings', compact('user', 'authUrl', 'countries', 'states', 'cities', 'userCity', 'userState', 'userCountry'));
+    }
+
+    public function getStates($country){
+        $coun=Country::findOrFail($country);
+        $states=$coun->states;
+        return $states->toJson();
+    }
+
+    public function getCities($state){
+        $stat=State::findOrFail($state);
+        $cities=$stat->cities;
+        return $cities->toJson();
     }
 
     /**

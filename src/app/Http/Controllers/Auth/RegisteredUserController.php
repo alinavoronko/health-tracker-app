@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -19,7 +20,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('signup');
+        $countries=Country::all();
+        return view('signup', compact('countries'));
+        // return view('signup');
     }
 
     /**

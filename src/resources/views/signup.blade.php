@@ -174,7 +174,7 @@
                   <span class="input-group-text" id="cm-addon">cm</span>
                 </div>
               </div>
-              <div class="col-md-12 mb-3">
+              {{-- <div class="col-md-12 mb-3">
                 <label for="city" class="form-label">City</label>
                 <select name="city" id="city" class="form-select">
                   <option selected disabled>Choose city</option>
@@ -183,6 +183,34 @@
                     <option value="2">Daugavpils</option>
                     <!--Add blade variables - get data from the database-->
                   </optgroup>
+                </select>
+              </div> --}}
+              <div class="col-md-12 mb-3">
+                <label for="country" class="form-label">Country</label>
+                <select name="country" id="country" class="form-select">
+                  <option selected disabled>Choose country</option>
+                  {{-- <optgroup label="Latvia">
+                    <option value="1">Riga</option>
+                    <option value="2">Daugavpils</option>
+                  </optgroup> --}}
+                  @foreach ($countries as $country)
+                  <option value="{{$country->id}}">{{$country->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="col-md-12 mb-3">
+                <label for="state" class="form-label">State</label>
+                <select name="state" id="state" class="form-select">
+                  <option selected disabled>Choose State</option>
+                </select>
+              </div>
+
+
+              <div class="col-md-12 mb-3">
+                <label for="city" class="form-label">City</label>
+                <select name="city" id="city" class="form-select">
+                  <option selected disabled>Choose City</option>
+                 
                 </select>
               </div>
               <div class="d-grid mt-3 col-md-12">
@@ -206,7 +234,47 @@
       </main>
 
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', ()=>{
+      const counSel=document.getElementById('country');
+      const statSel=document.getElementById('state');
+      const citySel=document.getElementById('city');
+      counSel.addEventListener('change', async()=> {
+//delete children
+          statSel.innerHTML='';
+          citySel.innerHTML='';
+          let country=counSel.value;
+          let resp=await fetch(`/country/${country}`);
+          let statelist=await resp.json();
+         
+          let contents='';
+          statelist.forEach(state => {
+            contents+=`<option value="${state.id}" >${state.name}</option>`
+          });
+          statSel.innerHTML=contents;
+         
+      })//counSel
+      
+      
+      statSel.addEventListener('change', async()=> {
+//delete children
+          
+          citySel.innerHTML='';
+          let state=statSel.value;
+          let resp=await fetch(`/state/${state}`);
+          let citylist=await resp.json();
+          
+          let contents='';
+         citylist.forEach(city=> {
+            contents+=`<option value="${city.id}" >${city.name}</option>`
+          });
+          citySel.innerHTML=contents;
+         
+      })//counSel
 
+    })//DOMContentLoaded
+      </script>
+    
 
   </body>
 </html>

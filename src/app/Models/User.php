@@ -16,7 +16,9 @@ class User extends Authenticatable
 
     // public $incrementing = false;
   
-        
+        public function city(){
+            return $this->belongsTo(City::class);
+        }
     
     /**
      * The attributes that are mass assignable.
