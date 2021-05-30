@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css"/>
     <script src="/js/scripts.js"></script>
     @yield('additional_script', '')
     <title>@yield('title')</title>
@@ -32,12 +33,16 @@
               @yield('optional', '')
 
             </ul>
-<!--<div class="nav-item">
-            <i class="flag flag-uk"></i>
+<div class="nav-item mx-2">
+  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
+  <i class="flag-icon flag-icon-us"></i>
+  </a>
 </div>
-<div class="nav-item">
-  <i class="flag flag-lv"></i>
-</div>-->
+<div class="nav-item mx-2">
+  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
+  <i class="flag-icon flag-icon-lv"></i>
+  </a>
+</div>
 
             <form method="POST" action="{{ route('logout', ['lang' => App::getLocale()]) }}" >
               @csrf
