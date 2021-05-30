@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\FriendService;
+use App\Services\GoogleFitService;
 use App\Services\MapperService;
 use App\Services\MarathonService;
 use App\Services\RecordService;
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(MarathonService::class, function ($app) {
             return new MarathonService();
+        });
+
+        $this->app->singleton(GoogleFitService::class, function ($app) {
+            return new GoogleFitService();
         });
     }
 

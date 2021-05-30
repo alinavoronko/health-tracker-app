@@ -63,7 +63,7 @@ crossorigin="anonymous"
             >
               Security
             </button>
-            
+
             <button
               class="nav-link"
               id="settings-menu-gfit-tab"
@@ -167,7 +167,7 @@ crossorigin="anonymous"
               aria-labelledby="settings-menu-security-tab"
             >
               <h4>Security settings</h4>
-            
+
               <form class="row" action="{{ route('user.store', ['lang' => App::getLocale()]) }}" method="post">
                 @csrf
                 <div class="col-md-12 mb-3">
@@ -307,7 +307,11 @@ crossorigin="anonymous"
               role="tabpanel"
               aria-labelledby="settings-menu-gfit-tab"
             >
-              Google Fit settings
+            @if (!!$user->googleAuth)
+            Google Fit settings
+            @else
+            <a href="{{ $authUrl }}" class="btn btn-primary">Authorize</a>
+            @endif
             </div>
           </div>
         </div>

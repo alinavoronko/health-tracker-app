@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\GoogleFitService;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isNull;
@@ -15,9 +18,15 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(GoogleFitService $gf)
     {
-        return view('settings');
+        $user = Auth::user();
+
+        dd($gf->getSleep($user, DateTime::createFromFormat('U', '1619470800'), DateTime::createFromFormat('U', '1621285200')));
+
+        $authUrl = $gf->getAuthUrl();
+
+        return view('settings', compact('user', 'authUrl'));
     }
 
     /**
@@ -68,6 +77,16 @@ class SettingController extends Controller
         //TODO
         return redirect()->back();
 
+    }
+
+    public function googleAuth(Request $request)
+    {
+        $user = Auth::user();
+
+        $user->googleAuth = $request->code;
+        $user->save();
+
+        return redirect(route('settings.index', [ 'lang' => App::getLocale() ]));
     }
 
     /**
