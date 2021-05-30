@@ -1,0 +1,28 @@
+$btn-border-radius: 0;
+// $light: #D2D2D2;
+$navbar-light-color: rgba(0, 0, 0, 0.75);
+
+
+/*:root{
+--main-bg-light: #fbe8a6;
+--main-bg-medium: #f4976c;
+--main-bg-dark: #303c6c;
+--aux-outline: #b4dfe5;
+--aux-body: #d2fdff;
+}*/
+
+
+$theme-colors: (
+  "primary":    #b4dfe5,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    #fbe8a6,
+  "danger":     #f4976c,
+  "light":      $light,
+  "dark":       $dark,
+  "oceanblue":  #303c6c,
+  "lightblue":  #b4dfe5,
+);
+
+

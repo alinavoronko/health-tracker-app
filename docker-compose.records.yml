@@ -1,0 +1,31 @@
+version: "3"
+
+networks:
+  main:
+  records:
+
+services:
+  records:
+    image: public.ecr.aws/z6p0g0b4/hta-records:latest
+    ports:
+      - "8082:8080"
+    networks:
+      - main
+      - records
+    depends_on:
+      - cassandradb
+
+  cassandradb:
+    image: cassandra:3
+    expose:
+      - 9042
+    environment:
+      - HEAP_NEWSIZE=1M
+      - MAX_HEAP_SIZE=1024M
+    networks:
+      - records
+    volumes:
+      - cassy-data:/var/lib/cassandra
+
+volumes:
+  cassy-data:
