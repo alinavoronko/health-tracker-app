@@ -31,7 +31,7 @@ crossorigin="anonymous"
         </div>
 
         <div class="Form Form__wide mx-auto px-5">
-          {{-- SET THE ACCTION! --}}
+         
           <form action="{{ route('record.create', ['lang' => App::getLocale()]) }}" class="row" method="POST">
 @csrf
             {{-- <div class="col-md-12 mb-3">
@@ -47,28 +47,24 @@ crossorigin="anonymous"
 
               </div> --}}
 <script>
-  const sel = document.getElementById('rtype')
-  const inp = document.getElementById('value')
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const sel = document.getElementById('rtype');
+  const inp = document.getElementById('value');
 sel.addEventListener('change' , (event)=>
 {
   if(sel.value=='STEPS'){
     inp.step=1;
-//     if (inp.hasAttribute('step')){
-// inp.removeAttribute("step");
-// }
 
   }
   else{
     inp.step=0.1;
-    // inp.setAttribute("step", "0.1");
   }
 
 
 })
 
-
+  })
   </script>
-
 
 
             <div class="col-md-6 mb-3">

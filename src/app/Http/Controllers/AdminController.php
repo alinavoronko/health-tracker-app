@@ -5,22 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class AdminController extends Controller
 {
     public function index()
     {
         if (Gate::denies('is-admin')) {
-            return redirect('dashboard')
-            ->withErrors('Access denied');
+            return redirect(route('dashboard', ["lang" => App::getLocale()]));
+            // ->withErrors('Access denied');
             }
         $users = User::all();
         return view('userList', compact('users'));     
     }
     public function block( Request $req){
         if (Gate::denies('is-admin')) {
-            return redirect('dashboard')
-            ->withErrors('Access denied');
+            //get user language preference: in nginx
+            return redirect(route('dashboard', ["lang" => App::getLocale()]));
+            // ->withErrors('Access denied');
             }
         if ($req->blocked==1){
             $user=User::find($req->id);
