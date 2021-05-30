@@ -171,7 +171,7 @@ crossorigin="anonymous"
               <form class="row" action="{{ route('user.store', ['lang' => App::getLocale()]) }}" method="post">
                 @csrf
                 <div class="col-md-12 mb-3">
-                  <label for="email" class="form-label">Email</label>
+                  {{-- <label for="email" class="form-label">Email</label>
                   <div class="input-group">
                     <span class="input-group-text" id="at-addon">
                       <svg
@@ -197,8 +197,8 @@ crossorigin="anonymous"
                       aria-label="Email"
                       aria-describedby="at-addon"
                     />
-                  </div>
-                </div>
+                  </div> 
+                </div>--}}
                 <div class="col-md-12 mb-3">
                   <label for="oldPassword" class="form-label">Old Password</label>
                   <div class="input-group">

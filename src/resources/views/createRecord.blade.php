@@ -46,26 +46,29 @@ crossorigin="anonymous"
                 <input class="form-check-input" type="checkbox" id="isGoal" name="isGoal">
 
               </div> --}}
+<script>
+  const sel = document.getElementById('rtype')
+  const inp = document.getElementById('value')
+sel.addEventListener('change' , (event)=>
+{
+  if(sel.value=='STEPS'){
+    inp.step=1;
+//     if (inp.hasAttribute('step')){
+// inp.removeAttribute("step");
+// }
 
-
-{{-- <script>
-const checkbox = document.getElementById('isGoal')
-
-checkbox.addEventListener('change', (event) => {
-    var rec = document.getElementById("forRecords");
-    var go = document.getElementById("forGoals");
-  if (event.currentTarget.checked) {
-      go.style.display = "block";
-      rec.style.display = "none";
-    // filter the RecordType table accordingly so that only record types that have isGoal==1 are displayed in the select
   }
   else{
-      //show all
-      rec.style.display = "block";
-      go.style.display = "none";
+    inp.step=0.1;
+    // inp.setAttribute("step", "0.1");
   }
+
+
 })
-    </script> --}}
+
+
+  </script>
+
 
 
             <div class="col-md-6 mb-3">

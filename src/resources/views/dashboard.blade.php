@@ -131,21 +131,29 @@
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Goals</h3>
+               
 
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 1</span>
-                    <span>-2700</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 2</span>
-                    <span>+500</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 3</span>
-                    <span>+1000</span>
-                  </li>
-                </ul>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      
+                      <th scope="col">Time period</th>
+                      <th scope="col">Steps</th>
+                      <th scope="col">Creator</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($gls as $goal) 
+                  <tr>
+                
+                    <td>{{$goal->timePeriod}}</td>
+                    <td>{{$goal->value}}</td>
+                    <td>{{$goal->creatorId}}</td>
+                  </tr>
+                  @endforeach
+                    
+                  </tbody>
+                </table>
               </div>
             {{-- </div> --}}
 {{--
