@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\isNull;
 
@@ -22,7 +23,7 @@ class SettingController extends Controller
     {
         $user = Auth::user();
 
-        dd($gf->getSleep($user, DateTime::createFromFormat('U', '1619470800'), DateTime::createFromFormat('U', '1621285200')));
+        // dd($gf->getSleep($user, DateTime::createFromFormat('U', '1619470800'), DateTime::createFromFormat('U', '1621285200')));
 
         $authUrl = $gf->getAuthUrl();
 
@@ -68,14 +69,46 @@ class SettingController extends Controller
 
     }
 
+// public function test(){
 
-    public function usrStore(Request $request)
+//     dd('Hello!');
+// }
+    public function changePass(Request $request)
     {
-        $usr = User::find(Auth::user()->id);
-//
+     
+      
 
-        //TODO
-        return redirect()->back();
+//oldPassword, password, confirmPassword
+$request->validate([
+    'oldPassword' => 'required',
+    'password' => 'required|string|min:8',
+    'confirmPassword' => 'required|same:password',
+]);
+
+$user = Auth::user();
+
+// if (!Hash::check($request->oldPassword, $user->password)){
+   
+//     return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors('Entered password did not match the old one!');
+// }
+// $user->fill([
+//     'password' => Hash::make($request->password)
+// ])->save();
+
+
+if (! Auth::guard('web')->validate([
+    'email' => $request->user()->email,
+    'password' => $request->oldPassword,
+])) {
+    //print error message
+    return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors('Entered password did not match the old one!');
+}
+$user->fill([
+    'password' => Hash::make($request->password)
+])->save();
+
+
+        return redirect(route('settings.index', ['lang' => App::getLocale()]));
 
     }
 

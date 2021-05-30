@@ -45,7 +45,9 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 
     Route::get('/goal/create', [ActivityController::class, 'createGoal'])->middleware(['auth'])->name('goal.create');
     Route::post('/goal/store', [ActivityController::class, 'storeGoal'])->middleware(['auth'])->name('goal.store');
-    Route::post('/settings/usr', [SettingController::class, 'userStore'])->middleware(['auth'])->name('user.store');
+    Route::post('/settings/pass', [SettingController::class, 'changePass'])->middleware(['auth'])->name('pass.change');
+    // //TEST 
+    // Route::post('/settings/test', [SettingController::class, 'test'])->middleware(['auth'])->name('settings.test');
     Route::post('/record/create', [ActivityController::class, 'addRecord'])->middleware(['auth'])->name('record.create');
     Route::post('/friends/request', [FriendController::class, 'acceptReject'])->middleware(['auth'])->name('friends.request');
     

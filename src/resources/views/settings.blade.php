@@ -167,9 +167,22 @@ crossorigin="anonymous"
               aria-labelledby="settings-menu-security-tab"
             >
               <h4>Security settings</h4>
+              @if ($errors->any())
+              @foreach ($errors->all() as $error)
+                  <div>{{$error}}</div>
+              @endforeach
+          @endif
+              {{-- <form class="row" action="{{ route('settings.test', ['lang' => App::getLocale()]) }}" method="post">
+                @csrf  
+                <button type="submit" class="btn btn-lightblue mb-3">
+                  Update test
+                </button>
+              </form> --}}
 
-              <form class="row" action="{{ route('user.store', ['lang' => App::getLocale()]) }}" method="post">
-                @csrf
+                <form class="row" action="{{ route('pass.change', ['lang' => App::getLocale()]) }}" method="post">
+                  @csrf                
+
+              
                 <div class="col-md-12 mb-3">
                   {{-- <label for="email" class="form-label">Email</label>
                   <div class="input-group">
@@ -301,6 +314,7 @@ crossorigin="anonymous"
                 </div>
               </form>
             </div>
+          </div>
             <div
               class="tab-pane fade p-3"
               id="settings-menu-gfit"
