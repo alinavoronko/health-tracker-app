@@ -118,6 +118,16 @@ class FriendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+  
+
+    public function acceptReject(FriendService $fr, Request $request ){
+        $userId=Auth::id();
+        $friendId=$request->friendId;
+        if($request->type=='accept'){ $fr->acceptFriendRequest($userId, $friendId);}
+        elseif ($request->type=='reject'){$fr->declineFriendRequest($userId, $friendId);}
+        return redirect()->back();
+    }
     public function show($_lang, $id)
     {
         //

@@ -182,8 +182,17 @@
                   @foreach($users as $user)
                   <li class="list-group-item d-flex justify-content-between">
                     <span>{{$user->name}} {{$user->surname}}</span>
+                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
+                      @csrf
+                      <input type="hidden" name ='type' value="accept"/>
                     <span><button type="submit" id="acceptFReq" class="btn btn-primary">Accept</button></span>
+                    </form>
+
+                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
+                      @csrf
+                      <input type="hidden" name ='type' value="reject"/>
                     <span><button type="submit" id="rejectFReq" class="btn btn-primary">Reject</button></span>
+                    </form>
                   </li>
                   @endforeach
                 </ul>

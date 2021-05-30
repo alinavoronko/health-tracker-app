@@ -47,7 +47,8 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::post('/goal/store', [ActivityController::class, 'storeGoal'])->middleware(['auth'])->name('goal.store');
     Route::post('/settings/usr', [SettingController::class, 'userStore'])->middleware(['auth'])->name('user.store');
     Route::post('/record/create', [ActivityController::class, 'addRecord'])->middleware(['auth'])->name('record.create');
-    //store goal ADD ROUTE
+    Route::post('/friends/request', [FriendController::class, 'acceptReject'])->middleware(['auth'])->name('friends.request');
+    
 
     Route::post('/block', [AdminController::class, 'block']);
 

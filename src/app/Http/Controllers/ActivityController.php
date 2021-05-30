@@ -46,7 +46,6 @@ class ActivityController extends Controller
         
 
         $gls=$rec->getUserGoals(Auth::user()->id);
-        //replace id with Name + Surname
         foreach($gls as $goal){
            
             $creator = User::where('id',$goal->creatorId)->firstOrFail();
@@ -58,19 +57,10 @@ class ActivityController extends Controller
             elseif ($goal->timePeriod=='WEEK') $goal->timePeriod='Weekly';
             elseif ($goal->timePeriod=='MONTH') $goal->timePeriod='Monthly';
         }
-        // $creatorIds = $gls->map(function ($rec) {
-            
-        //     return ($rec->creatorId);
-        // })->all();
-        // $creators=User::whereIn('id', $creatorIds)->get();
-        // dd($creators);
-        //WIP
-//timePeriod, value, creatorId
-        // $gls=$rec->getGoalList();
+        
 
         $statistics = $this->getStatistics($rec, $userId);
-        // dd($gls);
-
+      
         //SQL: select <> from table where column_name in <>
         return view('dashboard', array_merge(compact('users', 'friends', 'gls'), $statistics));
     }
