@@ -68,7 +68,7 @@
 
                   <label for="friendMail">Friend's e-mail address</label>
                   <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
-                  <small id="emailHelp" class="form-text text-muted">Type your friend's e-mail address so send a friend request.</small>
+                  <small id="emailHelp" class="form-text text-muted">Type your friend's e-mail address to send a friend request.</small>
                 </div>
                 <div class="text-center my-3">
                 <button type="submit" id="submitFReq" class="btn btn-primary">Submit</button>
@@ -115,8 +115,11 @@
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Friends</h3>
-
+                @if (count($friends)==0)
+                <div class="text-center"> You have not added any friends yet!</div>
+               @endif
                 <ul class="list-group">
+                  
                   @foreach($friends as $friend)
                   <li class="list-group-item d-flex justify-content-between">
                     <span>{{$friend->name}} {{$friend->surname}}</span>
@@ -131,7 +134,9 @@
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">Goals</h3>
-               
+                @if (count($gls)==0)
+                <div class="text-center">You have not set any goals yet!</div>
+              @endif
 
                 <table class="table">
                   <thead>
@@ -143,6 +148,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                  
                     @foreach($gls as $goal) 
                   <tr>
                 
@@ -177,7 +183,9 @@
                 </ul> --}}
 
                 <h3 class="text-center mb-3">Friend Requests</h3>
-
+                @if (count($users)==0)
+                <div class="text-center">You do not have any incoming friend requests!</div>
+              @endif
                 <ul class="list-group">
                   @foreach($users as $user)
                   <li class="list-group-item d-flex justify-content-between">

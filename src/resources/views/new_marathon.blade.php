@@ -35,22 +35,33 @@ crossorigin="anonymous"
         </div>
 
         <div class="Form Form__wide mx-auto px-5">
-          <form action="#" class="row" method="POST">
-            <div class="col-md-12 mb-3">
+          @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+          <form action="{{ route('marathons.join', ['lang' => App::getLocale()]) }}" class="row" method="POST">
+            @csrf
+            {{-- <div class="col-md-12 mb-3">
               <label for="marathonName" class="form-label">Title</label>
               <input type="text" name="title" id="marathonName" class="form-control" placeholder="Title" />
-            </div>
+            </div> --}}
             <div class="col-md-6 mb-3">
               <label for="startDate" class="form-label">Start Date</label>
-              <input type="date" name="start_date" id="startDate" class="form-control" />
+              <input type="date" name="startDate" id="startDate" value="{{ old('startDate') }}" class="form-control" required />
             </div>
             <div class="col-md-6 mb-3">
               <label for="goal" class="form-label">Steps Goal</label>
-              <input type="number" name="goal" id="goal" class="form-control" placeholder="10000" />
+              <input type="number" name="goal" id="goal" class="form-control" value="{{ old('goal') }}" placeholder="10000" required />
             </div>
             <div class="col-md-12 text-end">
               <button type="submit" class="btn btn-primary mb-3">Create Marathon</button>
             </div>
+            
           </form>
         </div>
       </main>

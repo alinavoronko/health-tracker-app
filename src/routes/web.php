@@ -42,6 +42,7 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     ]);
 
     Route::post('/friends/goal', [FriendController::class, 'addFriendGoal'])->name('friend.goal');
+    Route::post('/marathons/join', [MarathonController::class, 'join'])->name('marathons.join');
     Route::put('/friends/trainer', [FriendController::class, 'setTrainer'])->name('friend.trainer');
 
     Route::get('/goal/create', [ActivityController::class, 'createGoal'])->middleware(['auth'])->name('goal.create');
