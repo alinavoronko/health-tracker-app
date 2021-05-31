@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\MarathonService;
+use App\Services\RecordService;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
@@ -21,7 +22,9 @@ class MarathonController extends Controller
      */
     public function index(MarathonService $mar)
     {
+     
         $usrMar=$mar->getUsersMarathons(Auth::user()->id);
+        // dd($usrMar, Auth::user()->id);
 
         foreach ($usrMar as $mar) {
             $author = User::findOrFail($mar->creatorId);
@@ -36,8 +39,8 @@ class MarathonController extends Controller
 
 
         return view('marathons',compact('usrMar'));
-    }
 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -54,9 +57,21 @@ class MarathonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+ 
+
+
+    public function store(Request $request, MarathonService $mar)
     {
-        //
+        $request->validate([
+            'startDate' => 'required|after:yesterday',
+            'goal' => 'required|numeric|min:500|max:1000000'
+        ]);
+        $userId = Auth::user()->id;
+        $date = new DateTime($request->startDate);
+        $r=$mar->createMarathon($userId, $request->goal, $date);
+        // dd($r);
+        $mar->joinMarathon($r->id, $userId);
+        return redirect()->back();
     }
 
     /**
@@ -65,11 +80,29 @@ class MarathonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($_lang, $id, MarathonService $mar)
+    public function show($_lang, $id, MarathonService $mar, RecordService $rec)
     {
         $marathon= $mar->getMarathon($id);
-        dd($marathon);
-        return view('marathon', compact('marathon'));
+        $from=new DateTime( $marathon->startDate);
+        $to=new DateTime( $marathon->startDate);
+        $to=$to->add(new DateInterval('P7D'));
+       
+        $user=Auth::user()->id;
+        // $marathon->participantInfo=[];
+       $participantInfo=[];
+        foreach($marathon->participants as $participant){
+            $part = User::findOrFail($participant);
+            $userResults=$rec->getUserRecordsByType($part->id, 'STEPS', $from, $to);
+            $sum=$userResults->reduce(function ($carry, $item) {
+                return $carry + $item->value;
+            }, 0);
+            $part->stepCount=$sum;
+            
+           $participantInfo[]=$part;
+        }
+        //usort works with integers, not boolean values
+        usort($participantInfo, function($a, $b) {return $b->stepCount - $a->stepCount;});
+        return view('marathon', compact('marathon', 'user', 'participantInfo'));
     }
 
     /**
@@ -82,6 +115,12 @@ class MarathonController extends Controller
     {
        return view('edit_marathon');
     }
+
+    public function join(Request $request, MarathonService $mar){
+        $mar->joinMarathon($request->marathon, $request->user);
+        return redirect()->back();
+    }
+
 
     /**
      * Update the specified resource in storage.

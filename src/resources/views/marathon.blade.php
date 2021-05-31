@@ -33,7 +33,7 @@ crossorigin="anonymous"
 
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
-          <h1 class="display-4 text-center">Test marathon by Artjoms</h1>
+          <h1 class="display-4 text-center">Information about marathon</h1>
           <h3 class="text-center">Goal: 10000 steps</h3>
         </div>
 
@@ -41,36 +41,29 @@ crossorigin="anonymous"
           <table class="table">
             <thead>
               <tr>
-                {{$marathon->id}}
-                <th>Name</th>
+                <th>Rank</th>
+                <th>Participant Name</th>
                 <th>Step Count</th>
               </tr>
             </thead>
             <tbody>
+              @foreach($participantInfo as $part)
               <tr>
-                <th>1</th>
-                <td>Artjoms</td>
-                <td>540</td>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$part->name}} {{$part->surname}}</td>
+                <td>{{$part->stepCount}}</td>
+                
               </tr>
-              <tr>
-                <th>2</th>
-                <td>Artjoms</td>
-                <td>540</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Artjoms</td>
-                <td>540</td>
-              </tr>
-              <tr>
-                <th>4</th>
-                <td>Artjoms</td>
-                <td>540</td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
-
+        @if (!in_array($user, $marathon->participants))
+        <form action="{{ route('marathons.join', ['lang' => App::getLocale(), 'user'=>$user, 'marathon'=>$marathon->id]) }}" method="POST">
+          @csrf
+        <input type="submit" class='btn btn-primary' value="Join"/>
+        </form>
+        @endif
       </main>
 
 @endsection

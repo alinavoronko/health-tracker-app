@@ -71,11 +71,20 @@ class RecordService
         return $this->mapperService->toModel($records->collect(), Record::class);
     }
 
-    public function getUserRecordsByType($userId, $recordType = 'SLEEP', $from = null, $to = null)
+    public function getUserRecordsByType($userId, $recordType = 'SLEEP',DateTime $from = null,DateTime $to = null)
     {
+
         $params = [];
 
         if ($from && $to) {
+            $utc = new DateTimeZone("UTC");
+               
+            $from->setTimezone($utc);
+            $to->setTimezone($utc);
+            $from = $from->format('Y-m-d\TH:i:s.u') . 'Z';
+            $to = $to->format('Y-m-d\TH:i:s.u') . 'Z';
+
+
             $params = [
                 'from' => $from,
                 'to' => $to,

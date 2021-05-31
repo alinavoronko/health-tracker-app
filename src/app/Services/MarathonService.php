@@ -33,8 +33,8 @@ class MarathonService
 
     public function createMarathon($creatorId, $goal, DateTime $startDate = null)
     {
+        $utc = new DateTimeZone("UTC");
         if ($startDate == null) {
-            $utc = new DateTimeZone("UTC");
             $date = new DateTime();
             $startDate = $date;
         }
