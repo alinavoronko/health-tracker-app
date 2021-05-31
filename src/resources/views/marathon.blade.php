@@ -59,7 +59,7 @@ crossorigin="anonymous"
           </table>
         </div>
         @if (!in_array($user, $marathon->participants))
-        <form action="{{ route('marathons.store', ['lang' => App::getLocale(), 'user'=>$user, 'marathon'=>$marathon->id]) }}" method="POST">
+        <form action="{{ route('marathons.join', ['lang' => App::getLocale(), 'user'=>$user, 'marathon'=>$marathon->id]) }}" method="POST">
           @csrf
         <input type="submit" class='btn btn-primary' value="Join"/>
         </form>

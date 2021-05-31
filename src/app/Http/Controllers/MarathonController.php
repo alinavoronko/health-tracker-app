@@ -116,8 +116,8 @@ class MarathonController extends Controller
        return view('edit_marathon');
     }
 
-    public function join(Request $request){
-        $request->joinMarathon($request->marathon, $request->id);
+    public function join(Request $request, MarathonService $mar){
+        $mar->joinMarathon($request->marathon, $request->user);
         return redirect()->back();
     }
 
