@@ -1,19 +1,6 @@
 @extends('layout')
 @section('title', 'Statistics')
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
-@endsection
+
 @section('additional_script')
 <script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"

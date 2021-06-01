@@ -1,20 +1,6 @@
 
 @extends('layout')
-@section('title', 'My Marathons')
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
-@endsection
+@section('title', "{{ __('My Marathons') }} ")
 @section('additional_script')
 <script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
@@ -25,7 +11,7 @@ crossorigin="anonymous"
 
 @section('button')
 <x-named-route route="marathons.create">
-  Create new
+  {{ __('Create new') }} 
 </x-named-route>
 @endsection
 
@@ -34,7 +20,7 @@ crossorigin="anonymous"
 
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
-          <h1 class="text-center">My Marathons</h1>
+          <h1 class="text-center">{{ __('My Marathons') }} </h1>
         </div>
        
         <div class="table-responsive">
@@ -42,11 +28,11 @@ crossorigin="anonymous"
             <thead>
               <tr>
 
-                <th scope="col">Author</th>
-                <th scope="col">Goal</th>
-                <th scope="col">Start date </th>
-                <th scope="col">Due date</th>
-                <th scope="col">Details</th>
+                <th scope="col">{{ __('Creator') }}</th>
+                <th scope="col">{{ __('Goal') }}</th>
+                <th scope="col">{{ __('Start date') }} </th>
+                <th scope="col">{{ __('End date') }}</th>
+                <th scope="col">{{ __('Details') }}</th>
               </tr>
             </thead>
             <tbody id='table'>
@@ -57,7 +43,7 @@ crossorigin="anonymous"
                 <td>{{$mar->goal}}</td>
                 <td>{{$mar->startDate}}</td>
                 <td>{{$mar->endDate}}</td>
-                <td><a href="{{ route('marathons.show', ['marathon' => $mar->id, 'lang' => App::getLocale()]) }}">View</a></td>
+                <td><a href="{{ route('marathons.show', ['marathon' => $mar->id, 'lang' => App::getLocale()]) }}">{{ __('View') }}</a></td>
 
               </tr>
 

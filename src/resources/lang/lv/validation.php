@@ -88,7 +88,45 @@ return [
             'required' => 'Pilsēta ir obligāts lauks.',
             'numeric' => '',
         ],
+        'rtype' => [
+            'required' => 'Ieraksta tips ir obligāts lauks.',
+         
+        ],
+        'date' => [
+            'before' => 'Datums nevar būt nākotnē.',
+            'required' => 'Datums ir obligāts lauks.',
+         
+        ],
+        'startDate' => [
+            'after' => 'Sākuma datums nevar būt pagātnē.',
+            'required' => 'Sākuma datums ir obligāts lauks.',
+         
+        ],
+
+        'value' => [
+            'required' => 'Vērtība ir obligāts lauks.',
+            'numeric' => '',
+            'min' => 'Vērtībai ir jābūt lielākai par :min.',
+            'max' => 'Vērtībai ir jābūt mazākai par :max.',
+            'gt' => 'Vērtībai nevar būt mazāka par :gt.',
+            'integer' => 'Vērtībai ir jābūt veselam skaitlim.',
+         
+        ],
+
         
+
+        'goal' => [
+            'required' => 'Mērķis ir obligāts lauks.',
+            'min' => 'Mērķa soļu skaitam ir jābūt lielākam par :min.',
+            'max' => 'Mērķa soļu skaitam ir jābūt mazākam par :max.',
+            'numeric' => '',
+            'integer' => 'Mērķa soļu skaitam ir jābūt veselam skaitlim.',
+         
+        ],
+        'goalType' => [
+            'required' => 'Mērķa tips ir obligāts lauks.',
+         
+        ],
     ],
 
     /*
