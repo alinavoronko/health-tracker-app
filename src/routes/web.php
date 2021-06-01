@@ -24,8 +24,8 @@ use App\Services\RecordService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-//Route::get('/dashboard', [ActivityController::class, 'index']);
-
+//Middleware for limiting the number of requests per minute
+Route::middleware(['throttle:global'])->group( function () {
 Route::get('/', function () {
     return redirect(App::getLocale());
 });
@@ -72,10 +72,6 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 
 
 
-    // Route::get('/oops', function () {
-    //     return view('oops');
-    // })->name['oops'];
-
 
 
     Route::get('/', function () {
@@ -103,3 +99,4 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
 Route::get('/googleauth', [SettingController::class, 'googleAuth'])->middleware(['auth']);
 Route::get('/country/{country}', [SettingController::class, 'getStates']);
 Route::get('/state/{state}', [SettingController::class, 'getCities']);
+});

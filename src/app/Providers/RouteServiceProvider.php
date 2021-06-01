@@ -60,5 +60,22 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+
+//TO-DO: Test this on the AWS server      
+//Pierasījumi tiek šķiroti un ierobežoti pēc lietotāja vai pēc ip adreses
+        RateLimiter::for('global', function (Request $request) {
+            return $request->user()
+                        ? Limit::perMinute(100)->by($request->user()->id)
+                        : Limit::perMinute(10)->by($request->ip());
+        });
+        
+
+        // RateLimiter::for('login', function (Request $request) {
+        //     return [
+        //         Limit::perMinute(500),
+        //         Limit::perMinute(3)->by($request->input('email')),
+        //     ];
+        // });
+
     }
 }
