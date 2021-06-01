@@ -36,13 +36,13 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
+            'name' => 'required|string|max:60',
+            'surname' => 'required|string|max:90',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-            'dob' => 'date_format:Y-m-d|before:today|required',
-            // "height"=> 'required|min:50|max:250'
-            //Add constraints!!!
+            'dob' => 'date_format:Y-m-d|before:-13years|required',
+            'height'=> 'required|numeric|min:50|max:250',
+            'city'=> 'required|numeric'
         ]);
 
         $user = User::create([

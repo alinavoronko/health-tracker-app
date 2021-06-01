@@ -1,7 +1,9 @@
 {
     "Login": "Pieslēgties",
+    "Log in to your account": "Pierakstīties savā kontā",
     "Don't have an account?": "Nav konta?",
     "Sign Up": "Reģistrēties",
+    "Create an Account": "Izveidot kontu",
     "Already have an account?": "Jau ir konts?",
     "Forgot password?": "Aizmirsi paroli?",
     "Log out": "Atslēgties",
@@ -13,5 +15,21 @@
     "Add records": "Pievienot ierakstu",
     "Welcome": "Sveiki",
     "Steps": "Soļi",
-    "Goals": "Mērķi"
+    "Goals": "Mērķi",
+    "Name": "Vārds",
+    "Surname": "Uzvārds",
+    "Height": "Augums",
+    "Email": "E-pasta adrese",
+    "Password": "Parole",
+    "Confirm Password": "Atkārtojiet paroli",
+    "Date of birth":"Dzimšanas datums",
+    "Country":"Valsts",
+    "Choose Country": "Izvēlaties valsti",
+    "State":"Novads",
+    "Choose State": "Izvēlaties novadu",
+    "City":"Pilsēta",
+    "Choose City": "Izvēlaties pilsētu",
+    "user@example.com": "lietotājs@epasts.lv",
+    "mm/dd/yyyy": "mm/dd/gggg",
+    "Whoops! Something went wrong.": "Kaut kas aizgāja greizi :(  Pārbaudiet ievadītos datus!"
 }
