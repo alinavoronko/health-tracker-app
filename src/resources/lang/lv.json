@@ -1,6 +1,10 @@
 {
     "Login": "Pieslēgties",
-    
+    "Authorize": "Autorizēties",
+    "Update": "Atjaunināt",    
+    "Action": "Darbība",    
+    "Block": "Bloķēt",    
+    "Unblock": "Atbloķēt",    
     "Health Tracker App": "Fitnesa lietotne",
     "Remove": "Izdzēst",
     "Remove trainer": "Dzēst treneri",
@@ -21,6 +25,7 @@
     "Friends": "Draugi",
     "Set friend goal": "Uzstādīt draugam mērķi",
     "Set goal": "Uzstādīt mērķi",
+    "Set step goal": "Uzstādīt soļu mērķi",
     "Settings": "Iestatījumi",
     "Marathons": "Maratoni",
     "My Marathons": "Mani Maratoni",
@@ -38,6 +43,10 @@
     "Add marathons": "Pievienot maratonus",
     "Friend's e-mail address": "Drauga e-pasta adrese",
     "Welcome": "Sveiki",
+    "Security": "Drošība",
+    "Security settings": "Drošības iestātījumi",
+    "Old Password": "Veca parole",
+    "New Password": "Jauna parole",
     "Rank": "Vieta",
     "Participant Name": "Dalībnieka vārds",
     "Steps": "Soļi",
@@ -49,6 +58,15 @@
     "Daily": "Katru dienu",
     "Weekly": "Katru nedēļu",
     "Monthly": "Katru mēnesi",
+
+    "Sunday": "Svētdiena",
+    "Monday": "Pirmdiena",
+    "Tuesday": "Otrdiena",
+    "Wednesday": "Trešdiena",
+    "Thursday": "Ceturtdiena",
+    "Friday": "Piektdiena",
+    "Saturday": "Sestdiena",
+
     "Set a new goal": "Uzstādīt jaunu mērķi",
     "Select goal type": "Izvēlieties mērķa tipu",
     "You have not set any goals yet!": "Jūs vēl neesat uzstādījuši nevienu mērķi!",
@@ -56,6 +74,8 @@
     "Sleep": "Miegs",
     "Weight": "Svars",
     "Value": "Vērtība",
+    "Profile": "Profils",
+    "Profile settings": "Profila iestatījumi",
     "Date": "Datums",
     "Start date": "Sākuma datums",
     "End date": "Beigu Datums",
@@ -67,7 +87,6 @@
     "Time period": "Laika periods",
     "Friend Requests": "Draugu pieprasījumi",
     "You do not have any incoming friend requests!": "Jums nav ienākošo draugu pieprasījumu!",
-
     "You have not added any friends yet!": "Jūs vēl neesat pievienojuši nevienu draugu!",
     "Name": "Vārds",
     "Surname": "Uzvārds",
@@ -83,9 +102,12 @@
     "City":"Pilsēta",
     "Choose City": "Izvēlaties pilsētu",
     "user@example.com": "lietotājs@epasts.lv",
+    "User list": "Lietotāju saraksts",
+    "All Users": "Visi lietotāji",
     "mm/dd/yyyy": "mm/dd/gggg",
     "Type your friend's e-mail address to send a friend request.": "Ievadiet drauga e-pasta adresi, lai atsūtītu pieprasījumu",
     "Recover Password": "Atgūt Paroli",
+    ">There are no users in the database!": "Datu bāzē nav neviena lietotāja",
 
     "Whoops! Something went wrong.": "Kaut kas aizgāja greizi :(  Pārbaudiet ievadītos datus!"
 }

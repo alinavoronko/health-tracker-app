@@ -56,7 +56,7 @@ return [
         'dob' => [
             'before' => 'Jūs neesat pietiekami vecs, lai izmantotu šo lietotni (Minimālais vecums ir 13 gadi).',
             'required' => 'Dzimšanas datums ir obligāts lauks.',
-            'date-format'=> '',
+            'date_format'=> '',
         ],
         'name' => [
             'required' => 'Vārds ir obligāts lauks.',
@@ -112,9 +112,6 @@ return [
             'integer' => 'Vērtībai ir jābūt veselam skaitlim.',
          
         ],
-
-        
-
         'goal' => [
             'required' => 'Mērķis ir obligāts lauks.',
             'min' => 'Mērķa soļu skaitam ir jābūt lielākam par :min.',
@@ -125,6 +122,19 @@ return [
         ],
         'goalType' => [
             'required' => 'Mērķa tips ir obligāts lauks.',
+         
+        ],
+        'oldPassword' => [
+            'required' => 'Veca parole ir obligāts lauks.',
+         
+        ],
+        'password' => [
+            'required' => 'Jauna parole ir obligāts lauks.',
+         
+        ],
+        'confirmPassword' => [
+            'required' => 'Jaunas paroles apstriprināšana ir obligāta.',
+            'same' => 'Jauna paroles apstiprinājums nesakrīt ar pašu paroli.',
          
         ],
     ],

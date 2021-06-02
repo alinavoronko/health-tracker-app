@@ -70,12 +70,11 @@ class SettingController extends Controller
 
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'dob' => 'date_format:Y-m-d|before:today|required',
-            "height"=> 'required|numeric|min:50|max:250',
-            // "city"=>??
-            //Add city constraint?
+            'name' => 'required|string|max:60',
+            'surname' => 'required|string|max:90',
+            'dob' => 'required|before:-13years|date_format:Y-m-d',
+            'height'=> 'required|numeric|min:50|max:250',
+            'city'=> 'required|numeric'
         ]);
         $usr->name=$request->name;
         $usr->surname=$request->surname;
@@ -118,8 +117,8 @@ if (! Auth::guard('web')->validate([
     'email' => $request->user()->email,
     'password' => $request->oldPassword,
 ])) {
-    //print error message
-    return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors('Entered password did not match the old one!');
+  
+    return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors(['notMatchingErr' =>'Entered password did not match the old one!']);
 }
 $user->fill([
     'password' => Hash::make($request->password)
