@@ -1,12 +1,7 @@
 @extends('layout')
-@section('title', "{{ __('Stats') }}")
+@section('title', 'Stats')
 
 @section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"
-></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
 @endsection
 
@@ -140,6 +135,9 @@ crossorigin="anonymous"
                                 label: period,
                                 data: dateList.map(date => value[category][date.toISOString().split('T')[0]] || 0),
                                 borderWidth: 1,
+                                backgroundColor: "rgba(66, 132, 237,0.8)",
+                                hoverBackgroundColor: "rgba(20, 95, 217, 1)",
+                                hoverBorderColor: "blue",
                             },
                         ];
 
@@ -148,6 +146,7 @@ crossorigin="anonymous"
                                 type: "line",
                                 label: '{{ __("Goal") }}',
                                 data: Array(labels.length).fill(stepsGoal),
+                                backgroundColor: "rgba(255, 205, 33, 0.8)",
                             });
                         }
 
@@ -155,6 +154,7 @@ crossorigin="anonymous"
                             data: {
                                 datasets,
                                 labels,
+                             
                             },
                         });
                     });
@@ -199,6 +199,10 @@ crossorigin="anonymous"
                                 {
                                     label: period,
                                     data,
+                                    backgroundColor: "rgba(255, 164, 84,0.8)",
+                                    hoverBackgroundColor: "rgba(209, 73, 10,0.8)",
+                                    hoverBorderColor: "orange",
+                                    borderWidth: 1,
                                 }
                             ]
                         }

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', '{{ __("User list") }}')
+@section('title', 'User list')
 
 {{-- @section('button')
 <x-named-route route="activities.create">
@@ -36,9 +36,9 @@
                     <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked ? 'unblock' : 'block', 'lang' => App::getLocale()]) }}" method="post">
                         @csrf
 
-                        {{-- TBD: Nested blade variables are not allowed. Leave action names in en? --}}
-                        {{-- <input type="submit" value="{{ $user->isBlocked ? '{{ __("Unblock") }}' : '{{ __("Block") }}' }}" id="block" /> --}}
-                        <input type="submit" value="{{ $user->isBlocked ? 'Unblock' : 'Block' }}" id="block" />
+                        
+                        <input type="submit" value="{{ $user->isBlocked ?  __("Unblock") :  __("Block")  }}" id="block" />
+                        {{-- <input type="submit" value="{{ $user->isBlocked ? 'Unblock' : 'Block' }}" id="block" /> --}}
                     </form>
                 </td>
             </tr>

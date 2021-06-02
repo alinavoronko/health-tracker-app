@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "{{ __('Dashboard') }}")
+@section('title', 'Dashboard')
 @section('additional_script')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
 @endsection
@@ -218,8 +218,12 @@
                 datasets: [
                     {
                     label: "{{ __('Sleep') }}",
-                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    backgroundColor: "rgba(66, 132, 237,0.8)",
                     borderWidth: 1,
+                    hoverBackgroundColor: "rgba(20, 95, 217, 1)",
+                    hoverBorderColor: "blue",
+                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    
                     },
                 ],
                 },
@@ -232,6 +236,9 @@
                 datasets: [
                     {
                     label: "{{ __('Steps') }}",
+                    backgroundColor: "rgba(255, 164, 84,0.8)",
+                    hoverBackgroundColor: "rgba(209, 73, 10,0.8)",
+                    hoverBorderColor: "orange",
                     data: dateList.map(date => steps[date.toISOString().split('T')[0]] || 0),
                     borderWidth: 1,
                     },
@@ -246,6 +253,9 @@
                 datasets: [
                     {
                     label: "{{ __('Weight') }}",
+                    backgroundColor: "rgba(180, 223, 229,0.8)",
+                    hoverBackgroundColor: "rgba(4, 166, 189,0.8)",
+                    hoverBorderColor: "rgba(4, 166, 189,1)",
                     data: dateList.map(date => weight[date.toISOString().split('T')[0]] || 0),
                     borderWidth: 1,
                     },

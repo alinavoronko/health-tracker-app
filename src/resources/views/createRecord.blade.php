@@ -1,13 +1,5 @@
 @extends('layout')
-@section('title', 'Create Marathon')
-
-@section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"
-></script>
-@endsection
+@section('title', 'Create Record')
 @section('button')
 <x-named-route route="dashboard">
  {{ __('Dashboard') }} 
@@ -69,7 +61,6 @@ sel.addEventListener('change' , (event)=>
             </select>
          
             <div class="col-md-6 mb-3 my-2">
-                {{-- check according constraints in the store method --}}
               <label for="value" class="form-label">{{__('Value') }}:</label>
               <input type="number" name="value" id="value" class="form-control" placeholder="10000"  />
             </div>

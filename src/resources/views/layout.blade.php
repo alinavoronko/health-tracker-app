@@ -44,16 +44,16 @@
               </li>
 
             </ul>
-<div class="nav-item mx-2">
-  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
-  <i class="flag-icon flag-icon-us"></i>
-  </a>
-</div>
-<div class="nav-item mx-2">
-  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
-  <i class="flag-icon flag-icon-lv"></i>
-  </a>
-</div>
+            <div class="nav-item mx-2">
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
+              <i class="flag-icon flag-icon-us"></i>
+              </a>
+            </div>
+            <div class="nav-item mx-2">
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
+              <i class="flag-icon flag-icon-lv"></i>
+              </a>
+            </div>
 
             <form method="POST" action="{{ route('logout', ['lang' => App::getLocale()]) }}" >
               @csrf
@@ -66,7 +66,7 @@
           </form>
 
 
-            <div class="text-end">
+            <div class="text-left text-lg-end">
               @yield('button')
 
 
