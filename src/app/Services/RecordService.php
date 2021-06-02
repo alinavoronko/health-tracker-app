@@ -78,7 +78,7 @@ class RecordService
 
         if ($from && $to) {
             $utc = new DateTimeZone("UTC");
-               
+
             $from->setTimezone($utc);
             $to->setTimezone($utc);
             $from = $from->format('Y-m-d\TH:i:s.u') . 'Z';
@@ -96,10 +96,8 @@ class RecordService
         return $this->mapperService->toModel($records->collect(), Record::class);
     }
 
-    public function addUserRecord($userId, $value, $fromTime, $untilTime, $type = 'SLEEP')
+    public function addUserRecord($userId, $value, $fromTime, $untilTime, $type = 'SLEEP', $dataSource = 'custom')
     {
-        $dataSource = 'custom';
-
         $record = Http::post($this->getRecordUrl($userId), compact('userId','value', 'fromTime', 'untilTime', 'type', 'dataSource'));
 
         return $this->mapperService->mapper(Record::class, $record->json());
