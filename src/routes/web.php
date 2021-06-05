@@ -24,8 +24,8 @@ use App\Services\RecordService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-//Route::get('/dashboard', [ActivityController::class, 'index']);
-
+//Middleware for limiting the number of requests per minute
+Route::middleware(['throttle:global'])->group( function () {
 Route::get('/', function () {
     return redirect(App::getLocale());
 });
@@ -48,11 +48,11 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::get('/goal/create', [ActivityController::class, 'createGoal'])->middleware(['auth'])->name('goal.create');
     Route::post('/goal/store', [ActivityController::class, 'storeGoal'])->middleware(['auth'])->name('goal.store');
     Route::post('/settings/pass', [SettingController::class, 'changePass'])->middleware(['auth'])->name('pass.change');
-    // //TEST 
+    // //TEST
     // Route::post('/settings/test', [SettingController::class, 'test'])->middleware(['auth'])->name('settings.test');
     Route::post('/record/create', [ActivityController::class, 'addRecord'])->middleware(['auth'])->name('record.create');
     Route::post('/friends/request', [FriendController::class, 'acceptReject'])->middleware(['auth'])->name('friends.request');
-    
+
 
     Route::post('/block', [AdminController::class, 'block']);
 
@@ -71,10 +71,6 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     require __DIR__ . '/auth.php';
 
 
-
-    // Route::get('/oops', function () {
-    //     return view('oops');
-    // })->name['oops'];
 
 
 
@@ -100,6 +96,8 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::get('/stats', [ActivityController::class, 'stats'])->middleware(['auth'])->name('stats');
 });
 
+Route::post('/google/update', [SettingController::class, 'updateGoogleData'])->middleware(['auth'])->name('google.update');
 Route::get('/googleauth', [SettingController::class, 'googleAuth'])->middleware(['auth']);
 Route::get('/country/{country}', [SettingController::class, 'getStates']);
 Route::get('/state/{state}', [SettingController::class, 'getCities']);
+});

@@ -5,38 +5,18 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
 
 @extends('layout')
 @section('title', 'Friends')
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
+@section('button')
+<x-named-route route="activities.create">
+  {{ __('Add records') }}
+</x-named-route>
 @endsection
-@section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"></script>
-@endsection
-  {{-- @section('button')
-  <x-named-route route="friends.create">
-    Add friends
-  </x-named-route>
-  @endsection  --}}
 @section('content')
 
 
 
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3">
-          <h1 class="text-center">Friends</h1>
+          <h1 class="text-center">{{ __('Friends') }}</h1>
 
           <div class="d-flex justify-content-center">
             <ul class="nav nav-pills justify-content-center mb-3 border-end">
@@ -61,17 +41,16 @@ crossorigin="anonymous"></script>
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Value</th>
+                <th scope="col">{{ __('Name') }}</th>
+                <th scope="col">{{ __('Value') }}</th>
                 @if ($activity === 'STEPS')
-                <th scope="col">Set friend goal</th>
+                <th scope="col">{{ __('Set friend goal') }}</th>
                 @endif
-                <th scope="col">Make a trainer</th>
-                <th scope="col">Remove</th>
+                <th scope="col">{{ __('Make a trainer') }}</th>
+                <th scope="col">{{__('Remove') }}</th>
               </tr>
             </thead>
-            <!--use blade for loop to loop over friends get a list of them from db-->
-
+          
             <tbody>
                 @foreach ($friends as $friend)
                 <tr>
@@ -88,7 +67,7 @@ crossorigin="anonymous"></script>
                             <input type="number" class="form-control form-control-sm" name="goal" />
                         </div>
                         <div class="col-auto">
-                            <input type="submit" class="btn btn-secondary btn-sm" value="Set goal" />
+                            <input type="submit" class="btn btn-secondary btn-sm" value="{{ __('Set goal') }}" />
                         </div>
                     </form>
                     @endif
@@ -103,10 +82,10 @@ crossorigin="anonymous"></script>
 
                           @if ($friend->isTrainer)
                           <input type="hidden" name="action" value="remove" />
-                          <input type="submit" class="btn btn-link p-0" value="Remove a trainer">
+                          <input type="submit" class="btn btn-link p-0" value="{{ __('Remove trainer') }}">
                           @else
                           <input type="hidden" name="action" value="make" />
-                          <input type="submit" class="btn btn-link p-0" value="Make a trainer">
+                          <input type="submit" class="btn btn-link p-0" value="{{ __('Make a trainer') }}">
                           @endif
                       </form>
                   </td>
@@ -115,7 +94,7 @@ crossorigin="anonymous"></script>
                         @csrf
                         @method('DELETE')
 
-                        <input type="submit" class="btn btn-link p-0" value="Remove" />
+                        <input type="submit" class="btn btn-link p-0" value="{{ __('Remove') }}" />
                     </form>
                   </td>
                 </tr>

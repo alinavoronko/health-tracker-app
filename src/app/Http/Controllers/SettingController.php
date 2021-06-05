@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
 use App\Services\GoogleFitService;
+use App\Services\RecordService;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -21,11 +22,10 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(GoogleFitService $gf)
+    public function index(GoogleFitService $gf, RecordService $recordService)
     {
         $user = Auth::user();
         $countries=Country::all(); //tbp
-        // dd($gf->getSleep($user, DateTime::createFromFormat('U', '1619470800'), DateTime::createFromFormat('U', '1621285200')));
         $userCity=$user->city;//tbp
         $userState=$userCity->state;//tbp
         $userCountry=$userState->country; //tbp -selected
@@ -34,6 +34,129 @@ class SettingController extends Controller
         $authUrl = $gf->getAuthUrl();
 
         return view('settings', compact('user', 'authUrl', 'countries', 'states', 'cities', 'userCity', 'userState', 'userCountry'));
+    }
+
+    public function updateGoogleData(RecordService $recordService, GoogleFitService $gf) {
+        $user = Auth::user();
+
+        if (!$user->googleAuth) {
+            return response('User is not google authorized', 403);
+        }
+
+        $userRecords = $recordService->getUserRecords($user->id);
+
+        $lastGoogleSleep = null;
+        $lastGoogleStep = null;
+
+        foreach($userRecords as $record) {
+            if ($record->dataSource === 'google') {
+                if ($record->type === 'SLEEP') {
+                    if (!$lastGoogleSleep) {
+                        $lastGoogleSleep = $record;
+                        continue;
+                    }
+
+                    if (new DateTime($lastGoogleSleep->untilTime) < new DateTime($record->untilTime)) {
+                        $lastGoogleSleep = $record;
+                        continue;
+                    }
+                }
+
+                if ($record->type === 'STEPS') {
+                    if (!$lastGoogleStep) {
+                        $lastGoogleStep = $record;
+                        continue;
+                    }
+
+                    if (new DateTime($lastGoogleStep->fromTime) < new DateTime($record->fromTime)) {
+                        $lastGoogleStep = $record;
+                        continue;
+                    }
+                }
+            }
+        }
+
+        $latestStepDate = new DateTime('2021-04-01T00:00:00.000000Z');
+        $latestSleepDate = new DateTime('2021-01-01T00:00:00.000000Z');
+
+        if ($lastGoogleSleep) {
+            $latestSleepDate = new DateTime($lastGoogleSleep->untilTime);
+        }
+
+        if ($lastGoogleStep) {
+            $latestStepDate = new DateTime($lastGoogleStep->untilTime);
+        }
+
+
+        $this->processGoogleSteps($latestStepDate, $gf, $recordService);
+        $this->processGoogleSleep($latestSleepDate, $gf, $recordService);
+
+        return redirect()->back();
+    }
+
+    private function processGoogleSteps($latestStepDate, $gf, $recordService) {
+        $user = Auth::user();
+
+        $stepData = $gf->getSteps($user, $latestStepDate, new DateTime());
+
+        $stepData = array_map(function ($data) {
+            $from = DateTime::createFromFormat('U', $data['startTimeMillis'] / 1000);
+            $to = DateTime::createFromFormat('U', $data['endTimeMillis'] / 1000);
+
+            $data['from'] = $from;
+            $data['to'] = $to;
+
+            $val = array_reduce($data['dataset'], function ($setCarry, $set) {
+                $pointSum = array_reduce($set['point'], function ($pointCarry, $point) {
+                    $value = array_reduce($point['value'], function ($valueCarry, $setValue) {
+                        $valueCarry += $setValue['intVal'] ?? 0;
+                        return $valueCarry;
+                    }, 0);
+
+                    $pointCarry += $value;
+
+                    return $pointCarry;
+                }, 0);
+
+                $setCarry += $pointSum;
+
+                return $setCarry;
+            }, 0);
+
+            $data['value'] = $val;
+
+            return $data;
+        }, $stepData);
+
+        foreach ($stepData as $data) {
+            $recordService->addUserRecord($user->id, $data['value'], $data['from']->format('Y-m-d\TH:i:s.u\Z'), $data['to']->format('Y-m-d\TH:i:s.u\Z'), 'STEPS', 'google');
+        }
+    }
+
+    private function processGoogleSleep($latestSleepDate, GoogleFitService $gf, RecordService $recordService) {
+        $user = Auth::user();
+
+        $sleepData = $gf->getSleep($user, $latestSleepDate, new DateTime());
+
+        $sleepData = array_map(function ($data) {
+
+
+            $from = DateTime::createFromFormat('U', $data['startTimeMillis'] / 1000);
+            $to = DateTime::createFromFormat('U', $data['endTimeMillis'] / 1000);
+
+            $diff = $to->getTimestamp() - $from->getTimestamp();
+            $hours = $diff / (60 * 60);
+
+            $data['from'] = $from;
+            $data['to'] = $to;
+            $data['hours'] = $hours;
+
+            return $data;
+        }, $sleepData);
+
+        foreach ($sleepData as $sleep) {
+            $recordService->addUserRecord($user->id, $sleep['hours'], $sleep['from']->format('Y-m-d\TH:i:s.u\Z'), $sleep['to']->format('Y-m-d\TH:i:s.u\Z'), 'SLEEP', 'google');
+        }
     }
 
     public function getStates($country){
@@ -70,12 +193,11 @@ class SettingController extends Controller
 
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'dob' => 'date_format:Y-m-d|before:today|required',
-            "height"=> 'required|numeric|min:50|max:250',
-            // "city"=>??
-            //Add city constraint?
+            'name' => 'required|string|max:60',
+            'surname' => 'required|string|max:90',
+            'dob' => 'required|before:-13years|date_format:Y-m-d',
+            'height'=> 'required|numeric|min:50|max:250',
+            'city'=> 'required|numeric'
         ]);
         $usr->name=$request->name;
         $usr->surname=$request->surname;
@@ -93,8 +215,8 @@ class SettingController extends Controller
 // }
     public function changePass(Request $request)
     {
-     
-      
+
+
 
 //oldPassword, password, confirmPassword
 $request->validate([
@@ -106,7 +228,7 @@ $request->validate([
 $user = Auth::user();
 
 // if (!Hash::check($request->oldPassword, $user->password)){
-   
+
 //     return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors('Entered password did not match the old one!');
 // }
 // $user->fill([
@@ -118,8 +240,8 @@ if (! Auth::guard('web')->validate([
     'email' => $request->user()->email,
     'password' => $request->oldPassword,
 ])) {
-    //print error message
-    return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors('Entered password did not match the old one!');
+
+    return redirect(route('settings.index', ['lang' => App::getLocale()]))->withErrors(['notMatchingErr' =>'Entered password did not match the old one!']);
 }
 $user->fill([
     'password' => Hash::make($request->password)

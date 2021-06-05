@@ -1,29 +1,8 @@
 @extends('layout')
 @section('title', 'Settings')
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
-@endsection
-@section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"
-></script>
-@endsection
 @section('button')
 <x-named-route route="activities.create">
-  Add records
+  {{ __('Add records') }}
 </x-named-route>
 @endsection
 @section('content')
@@ -31,7 +10,7 @@ crossorigin="anonymous"
 
       <main role="main" class="Main container bg-white px-4">
         <div>
-          <h1 class="display-4 text-center">Settings</h1>
+          <h1 class="display-4 text-center">{{ __('Settings') }}</h1>
         </div>
 
         <div class="d-flex align-items-start mx-5">
@@ -50,7 +29,7 @@ crossorigin="anonymous"
               aria-controls="settings-menu-profile"
               aria-selected="true"
             >
-              Profile
+            {{ __('Profile') }}
             </button>
             <button
               class="nav-link"
@@ -61,7 +40,7 @@ crossorigin="anonymous"
               aria-controls="settings-menu-security"
               aria-selected="false"
             >
-              Security
+            {{ __('Security') }}
             </button>
 
             <button
@@ -83,56 +62,59 @@ crossorigin="anonymous"
               role="tabpanel"
               aria-labelledby="settings-menu-profile-tab"
             >
-              <h4>Profile settings</h4>
-              @if ($errors->any())
-              @foreach ($errors->all() as $error)
-                  <div>{{$error}}</div>
-              @endforeach
-          @endif
-              <form class="row" action="{{ route('settings.store', ['lang' => App::getLocale()]) }}" method="post">
+              <h4>{{ __('Profile settings') }}</h4>
 
+              <form class="row" action="{{ route('settings.store', ['lang' => App::getLocale()]) }}" method="post">
                 @csrf
                 <div class="col-md-12 mb-3">
-                  <label for="inputName" class="form-label">Name</label>
+                  <label for="inputName" class="form-label">{{ __('Name') }}</label>
                   <input
-                    required
                     type="text"
                     name="name"
                     id="inputName"
                     class="form-control"
-                    placeholder="Name"
+                    placeholder="{{ __('Name') }}"
                   />
+                  @error('name')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-12 mb-3">
-                  <label for="inputSurname" class="form-label">Surname</label>
+                  <label for="inputSurname" class="form-label">{{ __('Surname') }}</label>
                   <input
-                    required
+                    {{-- required --}}
                     type="text"
                     name="surname"
                     id="inputSurname"
                     class="form-control"
-                    placeholder="Surname"
+                    placeholder="{{ __('Surname') }}"
                   />
+                  @error('surname')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="dateOfBirth" class="form-label"
-                    >Date of birth</label
+                    >{{ __('Date of birth') }}</label
                   >
                   <input
-                    required
+
                     type="date"
                     name="dob"
                     id="dateOfBirth"
                     class="form-control"
-                    placeholder="mm/dd/yyyy"
+                    placeholder="{{ __('mm/dd/yyyy') }}"
                     aria-label="Date of birth"
                   />
+                  @error('dob')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="height" class="form-label">Height</label>
+                  <label for="height" class="form-label">{{ __('Height') }}</label>
                   <div class="input-group">
                     <input
-                      required
+
                       type="number"
                       name="height"
                       id="Height"
@@ -142,16 +124,14 @@ crossorigin="anonymous"
                     />
                     <span class="input-group-text" id="cm-addon">cm</span>
                   </div>
+                  @error('height')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
 
                 <div class="col-md-12 mb-3">
-                  <label for="country" class="form-label">Country</label>
+                  <label for="country" class="form-label">{{ __('Country') }}</label>
                   <select name="country" id="country" class="form-select">
-                    {{-- <option selected disabled>Choose country</option> --}}
-                    {{-- <optgroup label="Latvia">
-                      <option value="1">Riga</option>
-                      <option value="2">Daugavpils</option>
-                    </optgroup> --}}
                     @foreach ($countries as $country)
                     <option value="{{$country->id}}" {{ ($country->id==$userCountry->id) ? 'selected' : '' }}>{{$country->name}}</option>
                     @endforeach
@@ -169,39 +149,39 @@ crossorigin="anonymous"
                       let country=counSel.value;
                       let resp=await fetch(`/country/${country}`);
                       let statelist=await resp.json();
-                     
+
                       let contents='';
                       statelist.forEach(state => {
                         contents+=`<option value="${state.id}" >${state.name}</option>`
                       });
                       statSel.innerHTML=contents;
-                     
+
                   })//counSel
-                  
-                  
+
+
                   statSel.addEventListener('change', async()=> {
 //delete children
-                      
+
                       citySel.innerHTML='';
                       let state=statSel.value;
                       let resp=await fetch(`/state/${state}`);
                       let citylist=await resp.json();
-                      
+
                       let contents='';
                      citylist.forEach(city=> {
                         contents+=`<option value="${city.id}" >${city.name}</option>`
                       });
                       citySel.innerHTML=contents;
-                     
+
                   })//counSel
 
                 })//DOMContentLoaded
                   </script>
                 <div class="col-md-12 mb-3">
-                  <label for="state" class="form-label">State</label>
+                  <label for="state" class="form-label">{{ __('State') }}</label>
                   <select name="state" id="state" class="form-select">
                     @foreach ($states as $state)
-                    
+
                     <option value="{{$state->id}}" {{ ($state->id==$userState->id) ? 'selected' : '' }}>{{$state->name}}</option>
                     @endforeach
                   </select>
@@ -209,17 +189,20 @@ crossorigin="anonymous"
 
 
                 <div class="col-md-12 mb-3">
-                  <label for="city" class="form-label">City</label>
+                  <label for="city" class="form-label">{{ __('City') }}</label>
                   <select name="city" id="city" class="form-select">
-                    <option selected disabled>Choose city</option>
+
                     @foreach ($cities as $city)
                     <option value="{{$city->id}}" {{ ($city->id==$userCity->id) ? 'selected' : '' }}>{{$city->name}}</option>
                     @endforeach
                   </select>
+                  @error('city')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="text-end mt-3 col-md-12">
                   <button type="submit" class="btn btn-danger mb-3">
-                    Update
+                    {{ __('Update') }}
                   </button>
                 </div>
               </form>
@@ -230,23 +213,19 @@ crossorigin="anonymous"
               role="tabpanel"
               aria-labelledby="settings-menu-security-tab"
             >
-              <h4>Security settings</h4>
-              @if ($errors->any())
-              @foreach ($errors->all() as $error)
-                  <div>{{$error}}</div>
-              @endforeach
+              <h4> {{ __('Security settings') }}</h4>
+               @if ($errors->any())
+               <div class="alert alert-danger mt-2">
+               {{session('errors')->first('notMatchingErr')}}
+               </div>
+
           @endif
-              {{-- <form class="row" action="{{ route('settings.test', ['lang' => App::getLocale()]) }}" method="post">
-                @csrf  
-                <button type="submit" class="btn btn-lightblue mb-3">
-                  Update test
-                </button>
-              </form> --}}
+
 
                 <form class="row" action="{{ route('pass.change', ['lang' => App::getLocale()]) }}" method="post">
-                  @csrf                
+                  @csrf
 
-              
+
                 <div class="col-md-12 mb-3">
                   {{-- <label for="email" class="form-label">Email</label>
                   <div class="input-group">
@@ -274,10 +253,10 @@ crossorigin="anonymous"
                       aria-label="Email"
                       aria-describedby="at-addon"
                     />
-                  </div> 
+                  </div>
                 </div>--}}
                 <div class="col-md-12 mb-3">
-                  <label for="oldPassword" class="form-label">Old Password</label>
+                  <label for="oldPassword" class="form-label">{{ __('Old Password') }}</label>
                   <div class="input-group">
                     <span class="input-group-text" id="key-addon">
                       <svg
@@ -294,19 +273,22 @@ crossorigin="anonymous"
                       </svg>
                     </span>
                     <input
-                      required
+
                       type="password"
                       name="oldPassword"
                       id="oldPassword"
                       class="form-control"
-                      placeholder="Password"
+                      placeholder="{{ __('Old Password') }}"
                       aria-label="Password"
                       aria-describedby="key-addon"
                     />
                   </div>
+                  @error('oldPassword')
+                  <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="col-md-12 mb-3">
-                  <label for="password" class="form-label">New Password</label>
+                  <label for="password" class="form-label">{{ __('New Password') }}</label>
                   <div class="input-group">
                     <span class="input-group-text" id="key-addon">
                       <svg
@@ -323,20 +305,23 @@ crossorigin="anonymous"
                       </svg>
                     </span>
                     <input
-                      required
+
                       type="password"
                       name="password"
                       id="password"
                       class="form-control"
-                      placeholder="Password"
+                      placeholder="{{ __('New Password') }}"
                       aria-label="Password"
                       aria-describedby="key-addon"
                     />
                   </div>
+                  @error('password')
+                  <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="col-md-12 mb-3">
                   <label for="confirmPassword" class="form-label">
-                    Confirm Password
+                    {{ __('Confirm Password') }}
                   </label>
                   <div class="input-group">
                     <span class="input-group-text" id="key-addon2">
@@ -354,20 +339,24 @@ crossorigin="anonymous"
                       </svg>
                     </span>
                     <input
-                      required
+
                       type="password"
                       name="confirmPassword"
                       id="confirmPassword"
                       class="form-control"
-                      placeholder="Confirm Password"
+                      placeholder="{{ __('New Password') }}"
                       aria-label="Confirm Password"
                       aria-describedby="key-addon2"
                     />
+
                   </div>
+                  @error('confirmPassword')
+                  <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="text-end mt-3 col-md-12">
                   <button type="submit" class="btn btn-lightblue mb-3">
-                    Update
+                    {{ __('Update') }}
                   </button>
                   {{-- <button type="submit" class="btn btn-lightblue mb-3">
                     Update Email
@@ -386,9 +375,13 @@ crossorigin="anonymous"
               aria-labelledby="settings-menu-gfit-tab"
             >
             @if (!!$user->googleAuth)
-            Google Fit settings
+            <h3>Google Fit {{ __('Settings') }}</h3>
+            <form action="{{ route('google.update') }}" method="POST">
+                @csrf
+                <input type="submit" class="btn btn-primary" value="{{ __('Synchronize') }}" />
+            </form>
             @else
-            <a href="{{ $authUrl }}" class="btn btn-primary">Authorize</a>
+            <a href="{{ $authUrl }}" class="btn btn-primary">{{ __('Authorize') }}</a>
             @endif
             </div>
           </div>

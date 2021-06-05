@@ -213,7 +213,10 @@ class ActivityController extends Controller
 
     public function storeGoal(RecordService $rec, Request $request)
     {
-     
+        $request->validate([
+            'goalType' => 'required',
+            'value' => 'required|numeric|integer|min:500|max:1000000'
+        ]);
         $userId = Auth::user()->id;
         // dd($request);
         //idea: use dd() to show the attached tokens
@@ -228,7 +231,30 @@ class ActivityController extends Controller
 
   public function addRecord(RecordService $rec, Request $request)
     {
-        //Date validation??
+        if ($request->rtype=='STEPS') {
+            $request->validate([
+                'rtype' => 'required',
+                'value' => 'required|numeric|integer|min:100|max:200000',
+                'date' => 'required|date|before:tomorrow'
+            ]);
+        }
+       
+     else if ($request->rtype=='SLEEP'){
+        $request->validate([
+            'rtype' => 'required',
+            'value' => 'required|numeric|max:24|gt:0',
+            'date' => 'required|date|before:tomorrow'
+        ]);
+
+     }
+     else if ($request->rtype=='WEIGHT'){
+        $request->validate([
+            'rtype' => 'required',
+            'value' => 'required|numeric|max:300|min:0.5',
+            'date' => 'required|date|before:tomorrow'
+        ]);
+
+     }
         $userId = Auth::user()->id;
         $now = (new DateTime())->format('H:i:s.u') ;
         

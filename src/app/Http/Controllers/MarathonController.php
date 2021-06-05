@@ -64,7 +64,7 @@ class MarathonController extends Controller
     {
         $request->validate([
             'startDate' => 'required|after:yesterday',
-            'goal' => 'required|numeric|min:500|max:1000000'
+            'goal' => 'required|numeric|integer|min:500|max:1000000'
         ]);
         $userId = Auth::user()->id;
         $date = new DateTime($request->startDate);

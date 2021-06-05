@@ -3,25 +3,10 @@
 @section('additional_script')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
 @endsection
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
-@endsection
-{{-- @section('button-link', 'activity.create')
-@section('button-text', 'Add records') --}}
+
 @section('button')
 <x-named-route route="activities.create">
-  Add records
+  {{ __('Add records') }}
 </x-named-route>
 @endsection
 @section('content')
@@ -39,7 +24,7 @@
         </div>
 
         <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Overview</h1>
+          <h1 class="display-4 text-center mb-3">{{ __('Overview') }}</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="sleepChart" width="400" height="250"></canvas>
@@ -62,16 +47,16 @@
 
                 {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
                   @csrf
-                  <h3 class="text-center mb-3">Add a friend</h3>
+                  <h3 class="text-center mb-3">{{ __('Add friends') }}</h3>
 
                 <div class="form-group">
 
-                  <label for="friendMail">Friend's e-mail address</label>
-                  <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="Enter email">
-                  <small id="emailHelp" class="form-text text-muted">Type your friend's e-mail address to send a friend request.</small>
+                  <label for="friendMail">{{ __("Friend's e-mail address") }}</label>
+                  <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="{{ __('user@example.com') }}">
+                  <small id="emailHelp" class="form-text text-muted"> {{ __("Type your friend's e-mail address to send a friend request.") }}</small>
                 </div>
                 <div class="text-center my-3">
-                <button type="submit" id="submitFReq" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submitFReq" class="btn btn-primary">{{ __("Submit") }}</button>
                 </div>
                 <script>
                   document.addEventListener('DOMContentLoaded', () => {
@@ -81,7 +66,7 @@
                       sub.addEventListener('click', (e)=>{
                         e.preventDefault();
                         let email=inp.value;
-                        //fetch() send a request to the server
+                        //fetch() sends a request to the server
                         fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
                           method: "POST",
                           headers: {
@@ -108,15 +93,15 @@
 
 
                   </script>
-                {{-- </form> --}}
+           
               </div>
 
 
-            {{-- <div class="col-lg-5 mb-3 p-2"> --}}
+          
               <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">Friends</h3>
+                <h3 class="text-center mb-3">{{ __('Friends') }}</h3>
                 @if (count($friends)==0)
-                <div class="text-center"> You have not added any friends yet!</div>
+                <div class="text-center"> {{ __('You have not added any friends yet!') }}</div>
                @endif
                 <ul class="list-group">
                   
@@ -133,18 +118,18 @@
 
             {{-- <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">Goals</h3>
+                <h3 class="text-center mb-3">{{ __('Goals') }}</h3>
                 @if (count($gls)==0)
-                <div class="text-center">You have not set any goals yet!</div>
+                <div class="text-center">{{ __('You have not set any goals yet!') }}</div>
               @endif
 
                 <table class="table">
                   <thead>
                     <tr>
                       
-                      <th scope="col">Time period</th>
-                      <th scope="col">Steps</th>
-                      <th scope="col">Creator</th>
+                      <th scope="col">{{ __('Time Period') }}</th>
+                      <th scope="col">{{ __('Steps') }}</th>
+                      <th scope="col">{{ __('Creator') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -161,30 +146,11 @@
                   </tbody>
                 </table>
               </div>
-            {{-- </div> --}}
-{{--
-            <div class="col-lg-5 mb-3 p-2"> --}}
               <div class="Chart col-lg-5 mb-3 p-2">
-                {{-- <h3 class="text-center mb-3">Marathons</h3>
 
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 1</span>
-                    <span>-2700</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 2</span>
-                    <span>+500</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>Goal 3</span>
-                    <span>+1000</span>
-                  </li>
-                </ul> --}}
-
-                <h3 class="text-center mb-3">Friend Requests</h3>
+                <h3 class="text-center mb-3">{{ __('Friend Requests') }}</h3>
                 @if (count($users)==0)
-                <div class="text-center">You do not have any incoming friend requests!</div>
+                <div class="text-center">{{ __('You do not have any incoming friend requests!') }}</div>
               @endif
                 <ul class="list-group">
                   @foreach($users as $user)
@@ -193,13 +159,13 @@
                     <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
                       @csrf
                       <input type="hidden" name ='type' value="accept"/>
-                    <span><button type="submit" id="acceptFReq" class="btn btn-primary">Accept</button></span>
+                    <span><button type="submit" id="acceptFReq" class="btn btn-primary">{{ __('Accept') }}</button></span>
                     </form>
 
                     <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
                       @csrf
                       <input type="hidden" name ='type' value="reject"/>
-                    <span><button type="submit" id="rejectFReq" class="btn btn-primary">Reject</button></span>
+                    <span><button type="submit" id="rejectFReq" class="btn btn-primary">{{ __('Reject') }}</button></span>
                     </form>
                   </li>
                   @endforeach
@@ -251,9 +217,13 @@
                 labels: dateList.map(date => date.getDate()),
                 datasets: [
                     {
-                    label: "Sleep",
-                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    label: "{{ __('Sleep') }}",
+                    backgroundColor: "rgba(66, 132, 237,0.8)",
                     borderWidth: 1,
+                    hoverBackgroundColor: "rgba(20, 95, 217, 1)",
+                    hoverBorderColor: "blue",
+                    data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
+                    
                     },
                 ],
                 },
@@ -265,7 +235,10 @@
                 labels: dateList.map(date => date.getDate()),
                 datasets: [
                     {
-                    label: "Steps",
+                    label: "{{ __('Steps') }}",
+                    backgroundColor: "rgba(255, 164, 84,0.8)",
+                    hoverBackgroundColor: "rgba(209, 73, 10,0.8)",
+                    hoverBorderColor: "orange",
                     data: dateList.map(date => steps[date.toISOString().split('T')[0]] || 0),
                     borderWidth: 1,
                     },
@@ -279,7 +252,10 @@
                 labels: dateList.map(date => date.getDate()),
                 datasets: [
                     {
-                    label: "Weight",
+                    label: "{{ __('Weight') }}",
+                    backgroundColor: "rgba(180, 223, 229,0.8)",
+                    hoverBackgroundColor: "rgba(4, 166, 189,0.8)",
+                    hoverBorderColor: "rgba(4, 166, 189,1)",
                     data: dateList.map(date => weight[date.toISOString().split('T')[0]] || 0),
                     borderWidth: 1,
                     },

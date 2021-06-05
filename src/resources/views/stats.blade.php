@@ -1,38 +1,20 @@
 @extends('layout')
-@section('title', 'Statistics')
-@section('optional')
-<li class="nav-item">
-  <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">Marathons</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">Stats</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">Friends</a>
-</li>
-<li class="nav-item">
-  <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link">Settings</a>
-</li>
-@endsection
+@section('title', 'Stats')
+
 @section('additional_script')
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-crossorigin="anonymous"
-></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js" integrity="sha256-KP9rTEikFk097YZVFmsYwZdAg4cdGdea8O/V7YZJUxw=" crossorigin="anonymous"></script>
 @endsection
-@section('button-text', 'Add records')
+
 @section('button')
 <x-named-route route="activities.create">
-  Add records
+  {{ __('Add records') }}
 </x-named-route>
 @endsection
 @section('content')
 
       <main role="main" class="Main container bg-white px-4">
         <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Steps</h1>
+          <h1 class="display-4 text-center mb-3">{{ __('Steps') }}</h1>
           <div class="w-80">
               @foreach ($goals as $goal)
               <div class="progress mb-3">
@@ -50,13 +32,13 @@ crossorigin="anonymous"
           </div>
           <div class="col-md-12 text-center">
             <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
-              <button type="button" class="btn btn-warning">Set step goal</button>
+              <button type="button" class="btn btn-warning">{{ __('Set step goal') }}</button>
               </a>
         </div>
         </div>
 
         <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Sleep</h1>
+          <h1 class="display-4 text-center mb-3">{{ __('Sleep') }}</h1>
           <div class="row justify-content-around">
             <div class="Chart p-2 border col-sm-5 mb-3">
               <canvas id="weekSleepChart" width="400" height="250"></canvas>
@@ -77,7 +59,7 @@ crossorigin="anonymous"
 
 
         <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">Weight</h1>
+          <h1 class="display-4 text-center mb-3">{{ __('Weight') }}</h1>
           <div class="row justify-content-around">
             <div class="col-sm-5 mb-3 Chart border p-2">
               <canvas id="weekWeightChart" width="400" height="250"></canvas>
@@ -97,6 +79,7 @@ crossorigin="anonymous"
       </main>
 
      <script>
+       //TO-DO: Add different colors for goals and regular data
         function genereateDateList(from, to) {
             const list = [];
             for (let dt = new Date(from); dt <= to; dt.setDate(dt.getDate()  + 1)) {
@@ -124,7 +107,9 @@ crossorigin="anonymous"
           },
         @endforeach
         };
-
+        //TO-DO: Translate days of the week & categories
+        // const cats = ['{{ __("Sleep") }}', '{{ __("Steps") }}'];
+        // const weekDays = ['{{ __("Sunday") }}', '{{ __("Monday") }}', '{{ __("Tuesday") }}', '{{ __("Wednesday") }}', '{{ __("Thursday") }}', '{{ __("Friday") }}', '{{ __("Saturday") }}'];
         const cats = ['Sleep', 'Steps'];
         const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -150,14 +135,18 @@ crossorigin="anonymous"
                                 label: period,
                                 data: dateList.map(date => value[category][date.toISOString().split('T')[0]] || 0),
                                 borderWidth: 1,
+                                backgroundColor: "rgba(66, 132, 237,0.8)",
+                                hoverBackgroundColor: "rgba(20, 95, 217, 1)",
+                                hoverBorderColor: "blue",
                             },
                         ];
 
                         if (category === 'Steps') {
                             datasets.push({
                                 type: "line",
-                                label: 'Goal',
+                                label: '{{ __("Goal") }}',
                                 data: Array(labels.length).fill(stepsGoal),
+                                backgroundColor: "rgba(255, 205, 33, 0.8)",
                             });
                         }
 
@@ -165,6 +154,7 @@ crossorigin="anonymous"
                             data: {
                                 datasets,
                                 labels,
+                             
                             },
                         });
                     });
@@ -209,6 +199,10 @@ crossorigin="anonymous"
                                 {
                                     label: period,
                                     data,
+                                    backgroundColor: "rgba(255, 164, 84,0.8)",
+                                    hoverBackgroundColor: "rgba(209, 73, 10,0.8)",
+                                    hoverBorderColor: "orange",
+                                    borderWidth: 1,
                                 }
                             ]
                         }

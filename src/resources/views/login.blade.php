@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>{{ __('Login') }}</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css"/>
     <script src="/js/scripts.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
@@ -19,14 +20,26 @@
     <div class="Body-Wrapper">
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main role="main" class="Main container bg-white px-4 d-flex justify-content-center align-items-center">
 
-        <div class="Login h-100"> <!--need to center the form vertically,
-            as well as split the form into 2 parts:
+        <div class="Login h-100"> 
+          <!--split the form into 2 parts:
             *logo and our moto on the left side,
             *input fields on the right side-->
-          <div class="Form mx-auto border rounded py-4 px-5 text-center vertical-center">
-            <h3 class="mb-3">Login</h3>
+          <div class="Form mx-auto my-auto border rounded py-4 px-5 text-center">
+            <h3 class="my-2 ">{{__('Log in to your account')}}</h3>
+            <div class="text-center my-2">
+            
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
+              <i class="flag-icon flag-icon-us px-2"></i>
+              </a>
+            
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
+              <i class="flag-icon flag-icon-lv px-2"></i>
+              </a>
+            
+          </div>
+            <x-auth-validation-errors class="mb-4 alert alert-danger" :errors="$errors"/>
               <form method="POST" action="{{ route('login.post', ['lang' => App::getLocale()]) }}">
                 @csrf
               <div class="input-group mb-3">
@@ -45,12 +58,12 @@
                   </svg>
                 </span>
                 <input
-                  required
+                  {{-- required --}}
                   type="email"
                   name="email"
                   id="email"
                   class="form-control"
-                  placeholder="user@example.com"
+                  placeholder="{{ __('user@example.com') }}"
                   aria-label="Email"
                   aria-describedby="at-addon"
                 />
@@ -71,12 +84,12 @@
                   </svg>
                 </span>
                 <input
-                  required
+                  {{-- required --}}
                   type="password"
                   name="password"
                   id="password"
                   class="form-control"
-                  placeholder="Password"
+                  placeholder="{{ __('Password') }}"
                   aria-label="Password"
                   aria-describedby="key-addon"
                 />

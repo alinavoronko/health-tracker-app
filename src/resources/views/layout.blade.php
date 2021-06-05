@@ -16,7 +16,7 @@
     <header class="Header">
       <nav class="Header-Navbar navbar navbar-expand-lg navbar-dark bg-oceanblue fixed-top">
         <div class="container">
-          <a href="#" class="navbar-brand">Health Tracker App</a>
+          <a href="#" class="navbar-brand">{{ __('Health Tracker App') }}</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -28,21 +28,32 @@
           <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a href="{{ route('dashboard', ['lang' => App::getLocale()]) }}" class="nav-link active">Home</a>
+                <a href="{{ route('dashboard', ['lang' => App::getLocale()]) }}" class="nav-link active">{{ __('Home') }}</a>
               </li>
-              @yield('optional', '')
+              <li class="nav-item">
+                <a href="{{ route('marathons.index', ['lang' => App::getLocale()]) }}" class="nav-link">{{ __('Marathons') }}</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('stats', ['lang' => App::getLocale()]) }}" class="nav-link">{{ __('Stats') }}</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('friends.index', ['lang' => App::getLocale()]) }}" class="nav-link">{{ __('Friends') }}</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('settings.index', ['lang' => App::getLocale()]) }}" class="nav-link"> {{ __('Settings') }}</a>
+              </li>
 
             </ul>
-<div class="nav-item mx-2">
-  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
-  <i class="flag-icon flag-icon-us"></i>
-  </a>
-</div>
-<div class="nav-item mx-2">
-  <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
-  <i class="flag-icon flag-icon-lv"></i>
-  </a>
-</div>
+            <div class="nav-item mx-2">
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
+              <i class="flag-icon flag-icon-us"></i>
+              </a>
+            </div>
+            <div class="nav-item mx-2">
+              <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
+              <i class="flag-icon flag-icon-lv"></i>
+              </a>
+            </div>
 
             <form method="POST" action="{{ route('logout', ['lang' => App::getLocale()]) }}" >
               @csrf
@@ -55,7 +66,7 @@
           </form>
 
 
-            <div class="text-end">
+            <div class="text-left text-lg-end">
               @yield('button')
 
 
