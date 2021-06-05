@@ -11,7 +11,7 @@
 @endsection
 @section('content')
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="d-flex Welcome w-100 justify-content-center mb-3">
           <img
           src="{{url('/images/neko_sensei.jpg')}}" alt="App logo"
@@ -93,18 +93,18 @@
 
 
                   </script>
-           
+
               </div>
 
 
-          
+
               <div class="Chart col-lg-5 mb-3 p-2">
                 <h3 class="text-center mb-3">{{ __('Friends') }}</h3>
                 @if (count($friends)==0)
                 <div class="text-center"> {{ __('You have not added any friends yet!') }}</div>
                @endif
                 <ul class="list-group">
-                  
+
                   @foreach($friends as $friend)
                   <li class="list-group-item d-flex justify-content-between">
                     <span>{{$friend->name}} {{$friend->surname}}</span>
@@ -126,23 +126,23 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      
+
                       <th scope="col">{{ __('Time Period') }}</th>
                       <th scope="col">{{ __('Steps') }}</th>
                       <th scope="col">{{ __('Creator') }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                  
-                    @foreach($gls as $goal) 
+
+                    @foreach($gls as $goal)
                   <tr>
-                
+
                     <td>{{$goal->timePeriod}}</td>
                     <td>{{$goal->value}}</td>
                     <td>{{$goal->creatorId}}</td>
                   </tr>
                   @endforeach
-                    
+
                   </tbody>
                 </table>
               </div>
@@ -223,7 +223,7 @@
                     hoverBackgroundColor: "rgba(20, 95, 217, 1)",
                     hoverBorderColor: "blue",
                     data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
-                    
+
                     },
                 ],
                 },

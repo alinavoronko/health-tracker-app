@@ -2,23 +2,23 @@
 @section('title', 'Create Record')
 @section('button')
 <x-named-route route="dashboard">
- {{ __('Dashboard') }} 
+ {{ __('Dashboard') }}
 </x-named-route>
 @endsection
 
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="display-4 text-center">{{ __('Add a record') }}</h1>
         </div>
 
         <div class="Form Form__wide mx-auto px-5">
-         
+
           <form action="{{ route('record.create', ['lang' => App::getLocale()]) }}" class="row" method="POST">
 @csrf
-          
+
 <script>
   document.addEventListener('DOMContentLoaded', ()=>{
     const sel = document.getElementById('rtype');
@@ -59,7 +59,7 @@ sel.addEventListener('change' , (event)=>
                     </select>
 
             </select>
-         
+
             <div class="col-md-6 mb-3 my-2">
               <label for="value" class="form-label">{{__('Value') }}:</label>
               <input type="number" name="value" id="value" class="form-control" placeholder="10000"  />

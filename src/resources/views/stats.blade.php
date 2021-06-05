@@ -12,7 +12,7 @@
 @endsection
 @section('content')
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3 DashboardSection">
           <h1 class="display-4 text-center mb-3">{{ __('Steps') }}</h1>
           <div class="w-80">
@@ -52,7 +52,7 @@
               </a>
           </div> --}}
 
-      
+
 
           </div>
         </div>
@@ -69,7 +69,7 @@
             </div>
           </div>
           {{-- <div class="col-md-12 text-center">
-          
+
             <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
               <button type="button" class="btn btn-danger">Set weight goal</button>
               </a>
@@ -154,7 +154,7 @@
                             data: {
                                 datasets,
                                 labels,
-                             
+
                             },
                         });
                     });
