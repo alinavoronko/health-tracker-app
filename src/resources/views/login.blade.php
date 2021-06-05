@@ -103,9 +103,9 @@
                 <div>
                   <span>{{__("Don't have an account?")}} <a href="{{ route('register', ['lang' => App::getLocale()]) }}">{{__('Sign Up')}}</a></span>
                 </div>
-                <div>
+                {{-- <div>
                   <a href="{{ route('password.request', ['lang' => App::getLocale()]) }}">{{__('Forgot password?')}}</a>
-                </div>
+                </div> --}}
               </div>
             </form>
           </div>
