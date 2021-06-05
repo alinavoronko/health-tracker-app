@@ -2,7 +2,7 @@ version: '3'
 
 networks:
         main:
-
+        records:
 services:
         nginx:
                 #image: nginx:1.20.0-alpine
@@ -20,7 +20,7 @@ services:
                 networks:
                         - main
                 environment:
-                        - NGINX_HOST=localhost:8080
+                        - NGINX_HOST=hta.xapik.org
                 command: /bin/bash -c "envsubst '$${NGINX_HOST}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
 
         mysql:
@@ -49,7 +49,7 @@ services:
                 networks:
                         - main
 
-        # PhpMyAdmin Service
+    
         phpmyadmin:
                 image: phpmyadmin/phpmyadmin:5
                 ports:
@@ -75,9 +75,7 @@ services:
                         - mysql
 
         marathon:
-                build:
-                        context: ./marathon
-                        dockerfile: Dockerfile
+                image: public.ecr.aws/z6p0g0b4/hta-marathon:latest
                 ports:
                         - "8084:80"
                 networks:
@@ -87,14 +85,33 @@ services:
                         - mysql
 
         googlefit:
-                build:
-                        context: ./fitnessapi
-                        dockerfile: Dockerfile
+                image: public.ecr.aws/z6p0g0b4/hta-googlefit
                 ports: 
                         - "8085:3000"
                 networks: 
                         - main
+        records:
+                image: public.ecr.aws/z6p0g0b4/hta-records:latest
+                ports:
+                    - "8082:8080"
+                networks:
+                    - main
+                    - records
+                depends_on:
+                    - cassandradb
 
+        cassandradb:
+                image: cassandra:3
+                expose:
+                    - 9042
+                environment:
+                    - HEAP_NEWSIZE=1M
+                    - MAX_HEAP_SIZE=1024M
+                networks:
+                    - records
+                volumes:
+                    - cassy-data:/var/lib/cassandra        
 
 volumes:
         mysql-data:
+        cassy-data:
