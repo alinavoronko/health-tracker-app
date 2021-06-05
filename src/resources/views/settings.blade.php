@@ -8,7 +8,7 @@
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div>
           <h1 class="display-4 text-center">{{ __('Settings') }}</h1>
         </div>

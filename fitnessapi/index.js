@@ -21,8 +21,7 @@ const CLIENT_SECRET = "IuSAYYxc3oVRlokUbv4v1DBy";
 const oAuthParams = [
   CLIENT_ID,
   CLIENT_SECRET,
-  // TODO make dynamic
-  `http://localhost:8080/googleauth`,
+  `https://hta.xapik.org/googleauth`,
 ];
 
 const scope = [

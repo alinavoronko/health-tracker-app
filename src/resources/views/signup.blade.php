@@ -19,20 +19,20 @@
 
     <div class="Body-Wrapper">
 <!--make the signup form fit to page-->
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="SignUp">
           <div class="Form Form__wide mx-auto border rounded py-4 px-5">
             <h3 class="mb-3 text-center">{{ __('Create an Account') }}</h3>
             <div class="text-center">
-            
+
               <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
               <i class="flag-icon flag-icon-us px-2"></i>
               </a>
-            
+
               <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
               <i class="flag-icon flag-icon-lv px-2"></i>
               </a>
-            
+
           </div>
             <x-auth-validation-errors class="mb-4 alert alert-danger" :errors="$errors"/>
             <form class="row"  method="POST" action="{{ route('register', ['lang' => App::getLocale()]) }}" >
@@ -40,7 +40,7 @@
               <div class="col-md-6 mb-3">
                 <label for="inputName" class="form-label">{{ __('Name') }}</label>
                 <input
-             
+
                   type="text"
                   name="name"
                   id="inputName"
@@ -50,14 +50,14 @@
                   placeholder="{{ __('Name') }}"
                   maxlength="60"
                 />
-              
-               
+
+
 
               </div>
               <div class="col-md-6 mb-3">
                 <label for="inputSurname" class="form-label">{{ __('Surname') }}</label>
                 <input
-                 
+
                   type="text"
                   name="surname"
                   id="inputSurname"
@@ -66,7 +66,7 @@
                   value="{{old('surname')}}"
                   maxlength="90"
                 />
-              
+
               </div>
               <div class="col-md-12 mb-3">
                 <label for="email" class="form-label">{{ __('Email') }}</label>
@@ -86,7 +86,7 @@
                     </svg>
                   </span>
                   <input
-                    
+
                     type="email"
                     name="email"
                     id="email"
@@ -95,7 +95,7 @@
                     aria-label="Email"
                     aria-describedby="at-addon"
                     value="{{old('email')}}"
-                    
+
                   />
                 </div>
               </div>
@@ -117,7 +117,7 @@
                     </svg>
                   </span>
                   <input
-                    
+
                     type="password"
                     name="password"
                     id="password"
@@ -150,7 +150,7 @@
                     </svg>
                   </span>
                   <input
-                    
+
                     type="password"
                     name="password_confirmation"
                     id="confirmPassword"
@@ -166,7 +166,7 @@
                   >{{ __('Date of birth') }}</label
                 >
                 <input
-                  
+
                   type="date"
                   name="dob"
                   id="dateOfBirth"
@@ -180,7 +180,7 @@
                 <label for="height" class="form-label">{{ __('Height') }}</label>
                 <div class="input-group">
                   <input
-                    
+
                     type="number"
                     id="height"
                     name="height"
@@ -213,7 +213,7 @@
                 <label for="city" class="form-label">{{ __('City') }}</label>
                 <select name="city" id="city" class="form-select">
                   <option selected disabled>{{ __('Choose City') }}</option>
-                 
+
                 </select>
               </div>
               <div class="d-grid mt-3 col-md-12">
@@ -227,9 +227,9 @@
 
                   <span> {{ __('Already have an account?') }} <a href="{{ route('login', ['lang' => App::getLocale()]) }}">{{__('Login')}}</a></span>
                 </div>
-                <div>
+                {{-- <div>
                   <a href="{{ route('password.request', ['lang' => App::getLocale()]) }}">{{__('Forgot password?')}}</a>
-                </div>
+                </div> --}}
               </div>
             </form>
           </div>
@@ -249,35 +249,35 @@
           let country=counSel.value;
           let resp=await fetch(`/country/${country}`);
           let statelist=await resp.json();
-         
+
           let contents='';
           statelist.forEach(state => {
             contents+=`<option value="${state.id}" >${state.name}</option>`
           });
           statSel.innerHTML=contents;
-         
+
       })//counSel
-      
-      
+
+
       statSel.addEventListener('change', async()=> {
 //delete children
-          
+
           citySel.innerHTML='';
           let state=statSel.value;
           let resp=await fetch(`/state/${state}`);
           let citylist=await resp.json();
-          
+
           let contents='';
          citylist.forEach(city=> {
             contents+=`<option value="${city.id}" >${city.name}</option>`
           });
           citySel.innerHTML=contents;
-         
+
       })//counSel
 
     })//DOMContentLoaded
       </script>
-    
+
 
   </body>
 </html>
