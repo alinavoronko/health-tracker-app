@@ -6,9 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css"/>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script src="/js/scripts.js"></script>
     @yield('additional_script', '')
     <title>@yield('title')</title>
+
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function () {
+          OneSignal.init({
+            appId: "320e3b02-1071-4111-952f-bac664433465",
+            notifyButton: {
+              enable: true,
+            },
+          });
+        });
+      </script>
 </head>
 <body class="bg-light">
 
