@@ -73,6 +73,7 @@
                     name="name"
                     id="inputName"
                     class="form-control"
+                    value="{{ $user->name }}"
                     placeholder="{{ __('Name') }}"
                   />
                   @error('name')
@@ -87,6 +88,7 @@
                     name="surname"
                     id="inputSurname"
                     class="form-control"
+                    value="{{ $user->surname }}"
                     placeholder="{{ __('Surname') }}"
                   />
                   @error('surname')
@@ -103,6 +105,7 @@
                     name="dob"
                     id="dateOfBirth"
                     class="form-control"
+                    value="{{ $user->dob }}"
                     placeholder="{{ __('mm/dd/yyyy') }}"
                     aria-label="Date of birth"
                   />
@@ -120,6 +123,7 @@
                       id="Height"
                       class="form-control"
                       placeholder="100"
+                      value="{{ $user->height }}"
                       aria-label="Height"
                     />
                     <span class="input-group-text" id="cm-addon">cm</span>
