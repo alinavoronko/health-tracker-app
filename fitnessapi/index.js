@@ -21,7 +21,7 @@ const CLIENT_SECRET = "tJbUoBP2eBwb3UxEcqi6Pz6u";
 const oAuthParams = [
   CLIENT_ID,
   CLIENT_SECRET,
-  `http://hta.xapik.org/googleauth`,
+  `https://hta.xapik.org/googleauth`,
 ];
 
 const scope = [
