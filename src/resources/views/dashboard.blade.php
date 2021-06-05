@@ -119,120 +119,34 @@
                     @endforeach
                     </ul>
                 </div>
+                {{-- </div> --}}
 
-                <script>
-                  document.addEventListener('DOMContentLoaded', () => {
-                      let inp = document.getElementById('friendMail');
-                      let sub = document.getElementById('submitFReq');
-                      let _csrf=document.querySelector('input[name="_token"]').value;
-                      sub.addEventListener('click', (e)=>{
-                        e.preventDefault();
-                        let email=inp.value;
-                        //fetch() sends a request to the server
-                        fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
-                          method: "POST",
-                          headers: {
-                                "Content-Type": "application/json",
-                                "Accept": "application/json",
-                                "X-Requested-With": "XMLHttpRequest",
-                                "X-CSRF-Token": _csrf
-                                   },
-                          body: JSON.stringify({email}),
-                          credentials: "same-origin"
-                          }) //fetch
-                        .then((response)=>{
-                          if(response.status==200){
-                          alert('Request to '+email+' has been sent!');
-                        }
-                          else {alert('No user with this e-mail!');}
+                {{-- <div class="col-lg-5 mb-3 p-2"> --}}
+                <div class="Chart col-lg-5 mb-3 p-2">
+                    <h3 class="text-center mb-3">{{ __('Goals') }}</h3>
+                    @if (count($gls)==0)
+                    <div class="text-center">{{ __('You have not set any goals yet!') }}</div>
+                @endif
 
+                    <table class="table">
+                    <thead>
+                        <tr>
 
-                      }); //then
+                        <th scope="col">{{ __('Time Period') }}</th>
+                        <th scope="col">{{ __('Steps') }}</th>
+                        <th scope="col">{{ __('Creator') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-
-                  });//evList
-                });
-
-
-                  </script>
-
-              </div>
-
-
-
-              <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">{{ __('Friends') }}</h3>
-                @if (count($friends)==0)
-                <div class="text-center"> {{ __('You have not added any friends yet!') }}</div>
-               @endif
-                <ul class="list-group">
-
-                  @foreach($friends as $friend)
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>{{$friend->name}} {{$friend->surname}}</span>
-                    <span>{{$friend->email}}</span>
-
-                  </li>
-                  @endforeach
-                </ul>
-              </div>
-            {{-- </div> --}}
-
-            {{-- <div class="col-lg-5 mb-3 p-2"> --}}
-              <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">{{ __('Goals') }}</h3>
-                @if (count($gls)==0)
-                <div class="text-center">{{ __('You have not set any goals yet!') }}</div>
-              @endif
-
-                <table class="table">
-                  <thead>
+                        @foreach($gls as $goal)
                     <tr>
 
-                      <th scope="col">{{ __('Time Period') }}</th>
-                      <th scope="col">{{ __('Steps') }}</th>
-                      <th scope="col">{{ __('Creator') }}</th>
+                        <td>{{$goal->timePeriod}}</td>
+                        <td>{{$goal->value}}</td>
+                        <td>{{$goal->creatorId}}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-
-                    @foreach($gls as $goal)
-                  <tr>
-
-                    <td>{{$goal->timePeriod}}</td>
-                    <td>{{$goal->value}}</td>
-                    <td>{{$goal->creatorId}}</td>
-                  </tr>
-                  @endforeach
-
-                  </tbody>
-                </table>
-              </div>
-              <div class="Chart col-lg-5 mb-3 p-2">
-
-                <h3 class="text-center mb-3">{{ __('Friend Requests') }}</h3>
-                @if (count($users)==0)
-                <div class="text-center">{{ __('You do not have any incoming friend requests!') }}</div>
-              @endif
-                <ul class="list-group">
-                  @foreach($users as $user)
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>{{$user->name}} {{$user->surname}}</span>
-                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
-                      @csrf
-                      <input type="hidden" name ='type' value="accept"/>
-                    <span><button type="submit" id="acceptFReq" class="btn btn-primary">{{ __('Accept') }}</button></span>
-                    </form>
-
-                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
-                      @csrf
-                      <input type="hidden" name ='type' value="reject"/>
-                    <span><button type="submit" id="rejectFReq" class="btn btn-primary">{{ __('Reject') }}</button></span>
-                    </form>
-                  </li>
-                  @endforeach
-                </ul>
-              </div>
+                    @endforeach
 
                     </tbody>
                     </table>
