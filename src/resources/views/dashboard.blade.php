@@ -14,168 +14,173 @@
       <main role="main" class="Main container bg-white px-4">
         <div class="d-flex Welcome w-100 justify-content-center mb-3">
           <img
-          src="{{url('/images/neko_sensei.jpg')}}" alt="App logo"
+            src="{{url('/images/neko_sensei.jpg')}}" alt="App logo"
             alt="Avatar for Name Surname"
             class="rounded-circle Welcome-Avatar me-3"
+            style="cursor: pointer;"
+            id="neko"
           />
           <h1 class="display-4">
             {{__('Welcome')}}, {{ Auth::user()->name }} {{ Auth::user()->surname }}!
           </h1>
         </div>
 
-        <div class="mb-3 DashboardSection">
-          <h1 class="display-4 text-center mb-3">{{ __('Overview') }}</h1>
-          <div class="row justify-content-around">
-            <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="sleepChart" width="400" height="250"></canvas>
-            </div>
-            <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="stepsChart" width="400" height="250"></canvas>
-            </div>
-            <div class="Chart p-2 border col-sm-5 mb-3">
-              <canvas id="weightChart" width="400" height="250"></canvas>
-            </div>
-          </div>
-        </div>
+        {{-- grid-template-areas: {{ $direction === 'down' ? '"graphs" "actions"' : '"actions" "graphs"' }}; --}}
 
-        <div class="mb-3 DashboardSection">
-
-          {{-- <div class="row justify-content-between mx-5"> --}}
-            <div class="row justify-content-around">
-            {{-- <div class="col-sm-5 mb-3"> --}}
-              <div class="Chart border p-2 col-sm-5 mb-3">
-
-                {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
-                  @csrf
-                  <h3 class="text-center mb-3">{{ __('Add friends') }}</h3>
-
-                <div class="form-group">
-
-                  <label for="friendMail">{{ __("Friend's e-mail address") }}</label>
-                  <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="{{ __('user@example.com') }}">
-                  <small id="emailHelp" class="form-text text-muted"> {{ __("Type your friend's e-mail address to send a friend request.") }}</small>
+        <div id="mcontainer" style="display: grid; grid-template-areas: 'graphs' 'actions';">
+            <div class="mb-3 DashboardSection" style="grid-area: graphs;">
+                <h1 class="display-4 text-center mb-3">{{ __('Overview') }}</h1>
+                <div class="row justify-content-around">
+                    <div class="Chart p-2 border col-sm-5 mb-3">
+                    <canvas id="sleepChart" width="400" height="250"></canvas>
+                    </div>
+                    <div class="Chart p-2 border col-sm-5 mb-3">
+                    <canvas id="stepsChart" width="400" height="250"></canvas>
+                    </div>
+                    <div class="Chart p-2 border col-sm-5 mb-3">
+                    <canvas id="weightChart" width="400" height="250"></canvas>
+                    </div>
                 </div>
-                <div class="text-center my-3">
-                <button type="submit" id="submitFReq" class="btn btn-primary">{{ __("Submit") }}</button>
+            </div>
+
+            <div class="mb-3 DashboardSection" style="grid-area: actions;">
+
+            {{-- <div class="row justify-content-between mx-5"> --}}
+                <div class="row justify-content-around">
+                {{-- <div class="col-sm-5 mb-3"> --}}
+                <div class="Chart border p-2 col-sm-5 mb-3">
+
+                    {{-- <form method="POST" action="{{ route('friends.store ') }}"> --}}
+                    @csrf
+                    <h3 class="text-center mb-3">{{ __('Add friends') }}</h3>
+
+                    <div class="form-group">
+
+                    <label for="friendMail">{{ __("Friend's e-mail address") }}</label>
+                    <input type="email" class="form-control" name ="friendMail" id="friendMail" aria-describedby="emailHelp" placeholder="{{ __('user@example.com') }}">
+                    <small id="emailHelp" class="form-text text-muted"> {{ __("Type your friend's e-mail address to send a friend request.") }}</small>
+                    </div>
+                    <div class="text-center my-3">
+                    <button type="submit" id="submitFReq" class="btn btn-primary">{{ __("Submit") }}</button>
+                    </div>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        let inp = document.getElementById('friendMail');
+                        let sub = document.getElementById('submitFReq');
+                        let _csrf=document.querySelector('input[name="_token"]').value;
+                        sub.addEventListener('click', (e)=>{
+                            e.preventDefault();
+                            let email=inp.value;
+                            //fetch() sends a request to the server
+                            fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
+                            method: "POST",
+                            headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json",
+                                    "X-Requested-With": "XMLHttpRequest",
+                                    "X-CSRF-Token": _csrf
+                                    },
+                            body: JSON.stringify({email}),
+                            credentials: "same-origin"
+                            }) //fetch
+                            .then((response)=>{
+                            if(response.status==200){
+                            alert('Request to '+email+' has been sent!');
+                            }
+                            else {alert('No user with this e-mail!');}
+
+
+                        }); //then
+
+
+                    });//evList
+                    });
+
+
+                    </script>
+
                 </div>
-                <script>
-                  document.addEventListener('DOMContentLoaded', () => {
-                      let inp = document.getElementById('friendMail');
-                      let sub = document.getElementById('submitFReq');
-                      let _csrf=document.querySelector('input[name="_token"]').value;
-                      sub.addEventListener('click', (e)=>{
-                        e.preventDefault();
-                        let email=inp.value;
-                        //fetch() sends a request to the server
-                        fetch("{{ route('friends.store', ['lang' => App::getLocale()]) }}", {
-                          method: "POST",
-                          headers: {
-                                "Content-Type": "application/json",
-                                "Accept": "application/json",
-                                "X-Requested-With": "XMLHttpRequest",
-                                "X-CSRF-Token": _csrf
-                                   },
-                          body: JSON.stringify({email}),
-                          credentials: "same-origin"
-                          }) //fetch
-                        .then((response)=>{
-                          if(response.status==200){
-                          alert('Request to '+email+' has been sent!');
-                        }
-                          else {alert('No user with this e-mail!');}
 
 
-                      }); //then
 
+                <div class="Chart col-lg-5 mb-3 p-2">
+                    <h3 class="text-center mb-3">{{ __('Friends') }}</h3>
+                    @if (count($friends)==0)
+                    <div class="text-center"> {{ __('You have not added any friends yet!') }}</div>
+                @endif
+                    <ul class="list-group">
 
-                  });//evList
-                });
+                    @foreach($friends as $friend)
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>{{$friend->name}} {{$friend->surname}}</span>
+                        <span>{{$friend->email}}</span>
 
+                    </li>
+                    @endforeach
+                    </ul>
+                </div>
+                {{-- </div> --}}
 
-                  </script>
-           
-              </div>
+                {{-- <div class="col-lg-5 mb-3 p-2"> --}}
+                <div class="Chart col-lg-5 mb-3 p-2">
+                    <h3 class="text-center mb-3">{{ __('Goals') }}</h3>
+                    @if (count($gls)==0)
+                    <div class="text-center">{{ __('You have not set any goals yet!') }}</div>
+                @endif
 
+                    <table class="table">
+                    <thead>
+                        <tr>
 
-          
-              <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">{{ __('Friends') }}</h3>
-                @if (count($friends)==0)
-                <div class="text-center"> {{ __('You have not added any friends yet!') }}</div>
-               @endif
-                <ul class="list-group">
-                  
-                  @foreach($friends as $friend)
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>{{$friend->name}} {{$friend->surname}}</span>
-                    <span>{{$friend->email}}</span>
+                        <th scope="col">{{ __('Time Period') }}</th>
+                        <th scope="col">{{ __('Steps') }}</th>
+                        <th scope="col">{{ __('Creator') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                  </li>
-                  @endforeach
-                </ul>
-              </div>
-            {{-- </div> --}}
-
-            {{-- <div class="col-lg-5 mb-3 p-2"> --}}
-              <div class="Chart col-lg-5 mb-3 p-2">
-                <h3 class="text-center mb-3">{{ __('Goals') }}</h3>
-                @if (count($gls)==0)
-                <div class="text-center">{{ __('You have not set any goals yet!') }}</div>
-              @endif
-
-                <table class="table">
-                  <thead>
+                        @foreach($gls as $goal)
                     <tr>
-                      
-                      <th scope="col">{{ __('Time Period') }}</th>
-                      <th scope="col">{{ __('Steps') }}</th>
-                      <th scope="col">{{ __('Creator') }}</th>
+
+                        <td>{{$goal->timePeriod}}</td>
+                        <td>{{$goal->value}}</td>
+                        <td>{{$goal->creatorId}}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                  
-                    @foreach($gls as $goal) 
-                  <tr>
-                
-                    <td>{{$goal->timePeriod}}</td>
-                    <td>{{$goal->value}}</td>
-                    <td>{{$goal->creatorId}}</td>
-                  </tr>
-                  @endforeach
-                    
-                  </tbody>
-                </table>
-              </div>
-              <div class="Chart col-lg-5 mb-3 p-2">
+                    @endforeach
 
-                <h3 class="text-center mb-3">{{ __('Friend Requests') }}</h3>
-                @if (count($users)==0)
-                <div class="text-center">{{ __('You do not have any incoming friend requests!') }}</div>
-              @endif
-                <ul class="list-group">
-                  @foreach($users as $user)
-                  <li class="list-group-item d-flex justify-content-between">
-                    <span>{{$user->name}} {{$user->surname}}</span>
-                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
-                      @csrf
-                      <input type="hidden" name ='type' value="accept"/>
-                    <span><button type="submit" id="acceptFReq" class="btn btn-primary">{{ __('Accept') }}</button></span>
-                    </form>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="Chart col-lg-5 mb-3 p-2">
 
-                    <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
-                      @csrf
-                      <input type="hidden" name ='type' value="reject"/>
-                    <span><button type="submit" id="rejectFReq" class="btn btn-primary">{{ __('Reject') }}</button></span>
-                    </form>
-                  </li>
-                  @endforeach
-                </ul>
-              </div>
+                    <h3 class="text-center mb-3">{{ __('Friend Requests') }}</h3>
+                    @if (count($users)==0)
+                    <div class="text-center">{{ __('You do not have any incoming friend requests!') }}</div>
+                @endif
+                    <ul class="list-group">
+                    @foreach($users as $user)
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>{{$user->name}} {{$user->surname}}</span>
+                        <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
+                        @csrf
+                        <input type="hidden" name ='type' value="accept"/>
+                        <span><button type="submit" id="acceptFReq" class="btn btn-primary">{{ __('Accept') }}</button></span>
+                        </form>
+
+                        <form action="{{route('friends.request', ['lang' =>App::getLocale(),'friendId' => $user->id])}}" method="POST">
+                        @csrf
+                        <input type="hidden" name ='type' value="reject"/>
+                        <span><button type="submit" id="rejectFReq" class="btn btn-primary">{{ __('Reject') }}</button></span>
+                        </form>
+                    </li>
+                    @endforeach
+                    </ul>
+                </div>
 
 
+                </div>
             </div>
-          </div>
-        {{-- </div> --}}
+        </div>
       </main>
 
 
@@ -201,6 +206,23 @@
         console.log(sleep, dates);
 
         window.addEventListener('DOMContentLoaded', (event)=> {
+            const neko = document.getElementById('neko');
+            const mcontainer = document.getElementById('mcontainer');
+
+            let mState = false;
+
+            neko.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                if (mState) {
+                    mcontainer.style.gridTemplateAreas = '"graphs" "actions"';
+                } else {
+                    mcontainer.style.gridTemplateAreas = '"actions" "graphs"';
+                }
+
+                mState = !mState;
+            });
+
             const sleepChartCtx = document
                 .getElementById("sleepChart")
                 .getContext("2d");
@@ -223,7 +245,7 @@
                     hoverBackgroundColor: "rgba(20, 95, 217, 1)",
                     hoverBorderColor: "blue",
                     data: dateList.map(date => sleep[date.toISOString().split('T')[0]] || 0),
-                    
+
                     },
                 ],
                 },
