@@ -146,7 +146,7 @@
                         <td>{{$goal->value}}</td>
                         <td>{{$goal->creatorId}}</td>
                     </tr>
-
+                        @endforeach
                     </tbody>
                     </table>
                 </div>
