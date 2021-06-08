@@ -12,7 +12,7 @@
     <p class="red">{{ __('There are no users in the database!') }}</p>
 @else
 
-<main role="main" class="Main container bg-white px-4">
+<main class="Main container bg-white px-4">
     <div class="mb-3">
       <h1 class="text-center">{{ __('All Users') }}</h1>
 
@@ -36,7 +36,7 @@
                     <form action="{{ action([App\Http\Controllers\AdminController::class, 'block'], ['id' =>$user->id, 'blocked'=>$user->isBlocked ? 'unblock' : 'block', 'lang' => App::getLocale()]) }}" method="post">
                         @csrf
 
-                        
+
                         <input type="submit" value="{{ $user->isBlocked ?  __("Unblock") :  __("Block")  }}" id="block" />
                         {{-- <input type="submit" value="{{ $user->isBlocked ? 'Unblock' : 'Block' }}" id="block" /> --}}
                     </form>

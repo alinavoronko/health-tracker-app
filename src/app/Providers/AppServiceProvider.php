@@ -7,6 +7,7 @@ use App\Services\GoogleFitService;
 use App\Services\MapperService;
 use App\Services\MarathonService;
 use App\Services\RecordService;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -47,8 +48,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
-        //
+        // if (env('APP_ENV') !== 'local') {
+            $url->forceScheme('https');
+        // }
     }
 }

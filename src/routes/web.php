@@ -32,15 +32,17 @@ Route::get('/', function () {
 
 Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}'])->group(function () {
 
-    Route::resource('marathons', MarathonController::class);
-    Route::resource('admin', AdminController::class);
-    Route::resource('activities', ActivityController::class);
-    Route::resource('settings', SettingController::class);
+    Route::resource('marathons', MarathonController::class)->middleware(['auth']);
+    Route::resource('admin', AdminController::class)->middleware(['auth']);
+    Route::resource('activities', ActivityController::class)->middleware(['auth']);
+    Route::resource('settings', SettingController::class)->middleware(['auth']);
 
     Route::resource('friends', FriendController::class)->only([
         'index', 'store', 'destroy'
-    ]);
-
+    ])->middleware(['auth']);
+ 
+    Route::get('/stats/download', [ActivityController::class, 'downloadStatistics'])->middleware(['auth'])->name('download.stats');
+    
     Route::post('/friends/goal', [FriendController::class, 'addFriendGoal'])->name('friend.goal');
     Route::post('/marathons/join', [MarathonController::class, 'join'])->name('marathons.join');
     Route::put('/friends/trainer', [FriendController::class, 'setTrainer'])->name('friend.trainer');
@@ -54,7 +56,7 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::post('/friends/request', [FriendController::class, 'acceptReject'])->middleware(['auth'])->name('friends.request');
 
 
-    Route::post('/block', [AdminController::class, 'block']);
+    Route::post('/block', [AdminController::class, 'block'])->middleware(['auth']);
 
 
     // Route::get('/', function () {
@@ -84,9 +86,9 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     //     return view('signup', compact('countries'));
     // });
 
-    Route::get('/password/recover', function () {
-        return view('recover');
-    });
+    // Route::get('/password/recover', function () {
+    //     return view('recover');
+    // });
 
 
     // Route::get('/settings', function () {

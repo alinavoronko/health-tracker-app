@@ -10,18 +10,18 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
 
-// const CLIENT_ID =
-//   "474032726598-brlecrlhbf81ssai67r9ibthgasitrad.apps.googleusercontent.com";
-// const CLIENT_SECRET = "IuSAYYxc3oVRlokUbv4v1DBy";
-
 const CLIENT_ID =
-  "741475589490-i7nfrlunhs6m9t59q23bqai37ad7kfrr.apps.googleusercontent.com";
-const CLIENT_SECRET = "tJbUoBP2eBwb3UxEcqi6Pz6u";
+  "474032726598-brlecrlhbf81ssai67r9ibthgasitrad.apps.googleusercontent.com";
+const CLIENT_SECRET = "IuSAYYxc3oVRlokUbv4v1DBy";
+
+// const CLIENT_ID =
+//   "741475589490-i7nfrlunhs6m9t59q23bqai37ad7kfrr.apps.googleusercontent.com";
+// const CLIENT_SECRET = "tJbUoBP2eBwb3UxEcqi6Pz6u";
 
 const oAuthParams = [
   CLIENT_ID,
   CLIENT_SECRET,
-  `http://hta.xapik.org/googleauth`,
+  `https://hta.xapik.org/googleauth`,
 ];
 
 const scope = [

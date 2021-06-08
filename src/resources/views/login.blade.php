@@ -20,24 +20,24 @@
     <div class="Body-Wrapper">
 
 
-      <main role="main" class="Main container bg-white px-4 d-flex justify-content-center align-items-center">
+      <main class="Main container bg-white px-4 d-flex justify-content-center align-items-center">
 
-        <div class="Login h-100"> 
+        <div class="Login h-100">
           <!--split the form into 2 parts:
             *logo and our moto on the left side,
             *input fields on the right side-->
           <div class="Form mx-auto my-auto border rounded py-4 px-5 text-center">
             <h3 class="my-2 ">{{__('Log in to your account')}}</h3>
             <div class="text-center my-2">
-            
+
               <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "en"]  ))}}">
               <i class="flag-icon flag-icon-us px-2"></i>
               </a>
-            
+
               <a href="{{route(Route::currentRouteName(), array_merge(Route::current()->parameters(), ['lang' => "lv"]  ))}}">
               <i class="flag-icon flag-icon-lv px-2"></i>
               </a>
-            
+
           </div>
             <x-auth-validation-errors class="mb-4 alert alert-danger" :errors="$errors"/>
               <form method="POST" action="{{ route('login.post', ['lang' => App::getLocale()]) }}">
@@ -103,9 +103,9 @@
                 <div>
                   <span>{{__("Don't have an account?")}} <a href="{{ route('register', ['lang' => App::getLocale()]) }}">{{__('Sign Up')}}</a></span>
                 </div>
-                <div>
+                {{-- <div>
                   <a href="{{ route('password.request', ['lang' => App::getLocale()]) }}">{{__('Forgot password?')}}</a>
-                </div>
+                </div> --}}
               </div>
             </form>
           </div>

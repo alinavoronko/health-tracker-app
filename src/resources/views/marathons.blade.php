@@ -3,18 +3,18 @@
 @section('title', 'My Marathons')
 @section('button')
 <x-named-route route="marathons.create">
-  {{ __('Create new') }} 
+  {{ __('Create new') }}
 </x-named-route>
 @endsection
 
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="text-center">{{ __('My Marathons') }} </h1>
         </div>
-       
+
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -28,7 +28,7 @@
               </tr>
             </thead>
             <tbody id='table'>
-             
+
               @foreach($usrMar as $mar)
               <tr>
                 <td>{{$mar->authName}} {{$mar->authSurname}}</td>
@@ -41,7 +41,7 @@
 
               @endforeach
 
-          
+
 
             </tbody>
           </table>

@@ -8,7 +8,7 @@
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="display-4 text-center">{{ __('Set a new goal') }}</h1>
         </div>
@@ -26,7 +26,7 @@
   </div>
 </div>
 <div class="Form Form__wide mx-auto px-5 ">
-         
+
           <form action="{{ route('goal.store', ['lang' => App::getLocale()]) }}" class="text-center" method="POST">
 
             @csrf
@@ -46,7 +46,7 @@
 </div>
 <div class="d-flex justify-content-center">
             <div class="col-sm-6 mb-3 mx-sm-0 mx-auto">
-                
+
               <label for="value" class="form-label">{{ __('Value') }}:</label>
               <input type="number" name="value" id="goal" class="form-control" placeholder="10000" />
             </div>

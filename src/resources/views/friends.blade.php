@@ -14,7 +14,7 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
 
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="text-center">{{ __('Friends') }}</h1>
 
@@ -22,14 +22,14 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
             <ul class="nav nav-pills justify-content-center mb-3 border-end">
               @foreach ($activities as $name => $param)
               <li class="nav-item">
-                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $param, 'period' => $period]) }}" class="nav-link {{ $activity === $param ? 'active': '' }}">{{ $name }}</a>
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $param, 'period' => $period]) }}" class="nav-link {{ $activity === $param ? 'active': '' }}">{{ __($name) }}</a>
               </li>
               @endforeach
             </ul>
             <ul class="nav nav-pills justify-content-center ms-3 mb-3">
                 @foreach ($periods as $name => $param)
                 <li class="nav-item">
-                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $activity, 'period' => $param]) }}" class="nav-link {{ $period === $param ? 'active': '' }}">{{ $name }}</a>
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $activity, 'period' => $param]) }}" class="nav-link {{ $period === $param ? 'active': '' }}">{{ __($name) }}</a>
                 </li>
                 @endforeach
             </ul>
@@ -50,7 +50,7 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
                 <th scope="col">{{__('Remove') }}</th>
               </tr>
             </thead>
-          
+
             <tbody>
                 @foreach ($friends as $friend)
                 <tr>
