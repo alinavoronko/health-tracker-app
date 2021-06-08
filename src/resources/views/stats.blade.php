@@ -31,9 +31,9 @@
             </div>
           </div>
           <div class="col-md-12 text-center">
-            <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
-              <button type="button" class="btn btn-warning">{{ __('Set step goal') }}</button>
-              </a>
+            <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}" class="btn btn-warning">
+              {{ __('Set step goal') }}
+            </a>
         </div>
         </div>
 
@@ -75,8 +75,8 @@
               </a>
         </div> --}}
         <div class="col-md-12 text-center">
-          <a href="{{ route('download.stats', ['lang' => App::getLocale()]) }}">
-            <button type="button" class="btn btn-danger">{{ __('Download Statistics') }}</button>
+          <a href="{{ route('download.stats', ['lang' => App::getLocale()]) }}" class="btn btn-danger">
+            {{ __('Download Statistics') }}
             </a>
       </div>
 
@@ -84,7 +84,6 @@
       </main>
 
      <script>
-       //TO-DO: Add different colors for goals and regular data
         function genereateDateList(from, to) {
             const list = [];
             for (let dt = new Date(from); dt <= to; dt.setDate(dt.getDate()  + 1)) {
@@ -217,7 +216,7 @@
                     });
                 });
         });
-    
+
     </script>
 
 @endsection

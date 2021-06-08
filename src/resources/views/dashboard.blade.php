@@ -14,8 +14,8 @@
       <main class="Main container bg-white px-4">
         <div class="d-flex Welcome w-100 justify-content-center mb-3">
           <img
-            src="{{url('/images/neko_sensei.jpg')}}" alt="App logo"
-            alt="Avatar for Name Surname"
+            src="{{url('/images/neko_sensei.jpg')}}"
+            alt="Avatar"
             class="rounded-circle Welcome-Avatar me-3"
             style="cursor: pointer;"
             id="neko"
@@ -85,7 +85,7 @@
                             }) //fetch
                             .then((response)=>{
                             if(response.status==200){
-                                
+
                             alert('Request to '+email+' has been sent!');
                             }
                             else {alert('{{ __("No user with this e-mail!") }}');}
