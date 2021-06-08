@@ -8,7 +8,7 @@
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="display-4 text-center">{{ __('Create Marathon') }}</h1>
         </div>
@@ -40,7 +40,7 @@
             <div class="col-md-12 text-center">
               <button type="submit" class="btn btn-primary mb-3">{{ __('Create Marathon') }}</button>
             </div>
-            
+
           </form>
         </div>
       </main>

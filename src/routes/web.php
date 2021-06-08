@@ -32,14 +32,15 @@ Route::get('/', function () {
 
 Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}'])->group(function () {
 
-    Route::resource('marathons', MarathonController::class);
-    Route::resource('admin', AdminController::class);
-    Route::resource('activities', ActivityController::class);
-    Route::resource('settings', SettingController::class);
+    Route::resource('marathons', MarathonController::class)->middleware(['auth']);
+    Route::resource('admin', AdminController::class)->middleware(['auth']);
+    Route::resource('activities', ActivityController::class)->middleware(['auth']);
+    Route::resource('settings', SettingController::class)->middleware(['auth']);
 
     Route::resource('friends', FriendController::class)->only([
         'index', 'store', 'destroy'
-    ]);
+    ])->middleware(['auth']);
+ 
     Route::get('/stats/download', [ActivityController::class, 'downloadStatistics'])->middleware(['auth'])->name('download.stats');
     
     Route::post('/friends/goal', [FriendController::class, 'addFriendGoal'])->name('friend.goal');
@@ -49,13 +50,13 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::get('/goal/create', [ActivityController::class, 'createGoal'])->middleware(['auth'])->name('goal.create');
     Route::post('/goal/store', [ActivityController::class, 'storeGoal'])->middleware(['auth'])->name('goal.store');
     Route::post('/settings/pass', [SettingController::class, 'changePass'])->middleware(['auth'])->name('pass.change');
-    // //TEST 
+    // //TEST
     // Route::post('/settings/test', [SettingController::class, 'test'])->middleware(['auth'])->name('settings.test');
     Route::post('/record/create', [ActivityController::class, 'addRecord'])->middleware(['auth'])->name('record.create');
     Route::post('/friends/request', [FriendController::class, 'acceptReject'])->middleware(['auth'])->name('friends.request');
-    
 
-    Route::post('/block', [AdminController::class, 'block']);
+
+    Route::post('/block', [AdminController::class, 'block'])->middleware(['auth']);
 
 
     // Route::get('/', function () {
@@ -85,9 +86,9 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     //     return view('signup', compact('countries'));
     // });
 
-    Route::get('/password/recover', function () {
-        return view('recover');
-    });
+    // Route::get('/password/recover', function () {
+    //     return view('recover');
+    // });
 
 
     // Route::get('/settings', function () {
@@ -97,6 +98,7 @@ Route::prefix('{lang}')->middleware(['setlocale'])->where(['lang' => '[a-z]{2}']
     Route::get('/stats', [ActivityController::class, 'stats'])->middleware(['auth'])->name('stats');
 });
 
+Route::post('/google/update', [SettingController::class, 'updateGoogleData'])->middleware(['auth'])->name('google.update');
 Route::get('/googleauth', [SettingController::class, 'googleAuth'])->middleware(['auth']);
 Route::get('/country/{country}', [SettingController::class, 'getStates']);
 Route::get('/state/{state}', [SettingController::class, 'getCities']);

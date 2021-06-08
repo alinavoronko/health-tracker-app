@@ -12,7 +12,7 @@
 @endsection
 @section('content')
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3 DashboardSection">
           <h1 class="display-4 text-center mb-3">{{ __('Steps') }}</h1>
           <div class="w-80">
@@ -52,7 +52,7 @@
               </a>
           </div> --}}
 
-      
+
 
           </div>
         </div>
@@ -69,7 +69,7 @@
             </div>
           </div>
           {{-- <div class="col-md-12 text-center">
-          
+
             <a href="{{ route('goal.create', ['lang' => App::getLocale()]) }}">
               <button type="button" class="btn btn-danger">Set weight goal</button>
               </a>
@@ -112,12 +112,14 @@
           },
         @endforeach
         };
+
         //TO-DO: Translate days of the week & categories
         // const cats = ['{{ __("Sleep") }}', '{{ __("Steps") }}'];
         const weekDays = ['{{ __("Sunday") }}', '{{ __("Monday") }}', '{{ __("Tuesday") }}', '{{ __("Wednesday") }}', '{{ __("Thursday") }}', '{{ __("Friday") }}', '{{ __("Saturday") }}'];
         const periodi= {"week":"{{ __('Week') }}", "month":"{{ __('Month') }}"};
         const cats = ['Sleep', 'Steps'];
         //const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
         const stepsGoal = {!! count($stepsGoal) > 0 ? $stepsGoal[0]->value : 6000 !!};
 
@@ -160,7 +162,7 @@
                             data: {
                                 datasets,
                                 labels,
-                             
+
                             },
                         });
                     });

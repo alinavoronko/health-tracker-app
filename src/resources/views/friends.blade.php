@@ -14,7 +14,7 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
 
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="mb-3">
           <h1 class="text-center">{{ __('Friends') }}</h1>
 
@@ -50,7 +50,7 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
                 <th scope="col">{{__('Remove') }}</th>
               </tr>
             </thead>
-          
+
             <tbody>
                 @foreach ($friends as $friend)
                 <tr>

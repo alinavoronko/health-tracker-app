@@ -8,7 +8,7 @@
 @section('content')
 
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div>
           <h1 class="display-4 text-center">{{ __('Settings') }}</h1>
         </div>
@@ -63,7 +63,7 @@
               aria-labelledby="settings-menu-profile-tab"
             >
               <h4>{{ __('Profile settings') }}</h4>
-              
+
               <form class="row" action="{{ route('settings.store', ['lang' => App::getLocale()]) }}" method="post">
                 @csrf
                 <div class="col-md-12 mb-3">
@@ -73,6 +73,7 @@
                     name="name"
                     id="inputName"
                     class="form-control"
+                    value="{{ $user->name }}"
                     placeholder="{{ __('Name') }}"
                   />
                   @error('name')
@@ -87,6 +88,7 @@
                     name="surname"
                     id="inputSurname"
                     class="form-control"
+                    value="{{ $user->surname }}"
                     placeholder="{{ __('Surname') }}"
                   />
                   @error('surname')
@@ -98,11 +100,12 @@
                     >{{ __('Date of birth') }}</label
                   >
                   <input
-                  
+
                     type="date"
                     name="dob"
                     id="dateOfBirth"
                     class="form-control"
+                    value="{{ $user->dob }}"
                     placeholder="{{ __('mm/dd/yyyy') }}"
                     aria-label="Date of birth"
                   />
@@ -114,12 +117,13 @@
                   <label for="height" class="form-label">{{ __('Height') }}</label>
                   <div class="input-group">
                     <input
-                      
+
                       type="number"
                       name="height"
                       id="Height"
                       class="form-control"
                       placeholder="100"
+                      value="{{ $user->height }}"
                       aria-label="Height"
                     />
                     <span class="input-group-text" id="cm-addon">cm</span>
@@ -149,30 +153,30 @@
                       let country=counSel.value;
                       let resp=await fetch(`/country/${country}`);
                       let statelist=await resp.json();
-                     
+
                       let contents='';
                       statelist.forEach(state => {
                         contents+=`<option value="${state.id}" >${state.name}</option>`
                       });
                       statSel.innerHTML=contents;
-                     
+
                   })//counSel
-                  
-                  
+
+
                   statSel.addEventListener('change', async()=> {
 //delete children
-                      
+
                       citySel.innerHTML='';
                       let state=statSel.value;
                       let resp=await fetch(`/state/${state}`);
                       let citylist=await resp.json();
-                      
+
                       let contents='';
                      citylist.forEach(city=> {
                         contents+=`<option value="${city.id}" >${city.name}</option>`
                       });
                       citySel.innerHTML=contents;
-                     
+
                   })//counSel
 
                 })//DOMContentLoaded
@@ -181,7 +185,7 @@
                   <label for="state" class="form-label">{{ __('State') }}</label>
                   <select name="state" id="state" class="form-select">
                     @foreach ($states as $state)
-                    
+
                     <option value="{{$state->id}}" {{ ($state->id==$userState->id) ? 'selected' : '' }}>{{$state->name}}</option>
                     @endforeach
                   </select>
@@ -191,7 +195,7 @@
                 <div class="col-md-12 mb-3">
                   <label for="city" class="form-label">{{ __('City') }}</label>
                   <select name="city" id="city" class="form-select">
-                  
+
                     @foreach ($cities as $city)
                     <option value="{{$city->id}}" {{ ($city->id==$userCity->id) ? 'selected' : '' }}>{{$city->name}}</option>
                     @endforeach
@@ -218,14 +222,14 @@
                <div class="alert alert-danger mt-2">
                {{session('errors')->first('notMatchingErr')}}
                </div>
-               
-          @endif 
-             
+
+          @endif
+
 
                 <form class="row" action="{{ route('pass.change', ['lang' => App::getLocale()]) }}" method="post">
-                  @csrf                
+                  @csrf
 
-              
+
                 <div class="col-md-12 mb-3">
                   {{-- <label for="email" class="form-label">Email</label>
                   <div class="input-group">
@@ -253,7 +257,7 @@
                       aria-label="Email"
                       aria-describedby="at-addon"
                     />
-                  </div> 
+                  </div>
                 </div>--}}
                 <div class="col-md-12 mb-3">
                   <label for="oldPassword" class="form-label">{{ __('Old Password') }}</label>
@@ -273,7 +277,7 @@
                       </svg>
                     </span>
                     <input
-                     
+
                       type="password"
                       name="oldPassword"
                       id="oldPassword"
@@ -305,7 +309,7 @@
                       </svg>
                     </span>
                     <input
-                     
+
                       type="password"
                       name="password"
                       id="password"
@@ -339,7 +343,7 @@
                       </svg>
                     </span>
                     <input
-                      
+
                       type="password"
                       name="confirmPassword"
                       id="confirmPassword"
@@ -348,7 +352,7 @@
                       aria-label="Confirm Password"
                       aria-describedby="key-addon2"
                     />
-                   
+
                   </div>
                   @error('confirmPassword')
                   <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -375,7 +379,11 @@
               aria-labelledby="settings-menu-gfit-tab"
             >
             @if (!!$user->googleAuth)
-            Google Fit {{ __('Settings') }}
+            <h3>Google Fit {{ __('Settings') }}</h3>
+            <form action="{{ route('google.update') }}" method="POST">
+                @csrf
+                <input type="submit" class="btn btn-primary" value="{{ __('Synchronize') }}" />
+            </form>
             @else
             <a href="{{ $authUrl }}" class="btn btn-primary">{{ __('Authorize') }}</a>
             @endif

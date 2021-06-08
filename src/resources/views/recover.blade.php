@@ -18,7 +18,7 @@
 
 <body>
 
-      <main role="main" class="Main container bg-white px-4">
+      <main class="Main container bg-white px-4">
         <div class="SignUp">
           <div class="Form Form__wide mx-auto border rounded py-4 px-5">
             <h3 class="mb-3">Password recovery</h3>
