@@ -277,4 +277,12 @@ class ActivityController extends Controller
         return redirect()->back();
     }
     
+
+    public function downloadStatistics(RecordService $rec){
+
+        $res=$this->getStatistics($rec, Auth::user()->id);
+        $response="{ \"sleep\":".$res['sleep'].", \"weight\":".$res['weight'].", \"steps\":".$res['steps']."}";
+        return response($response)->header('Content-Type','text/json')
+        ->header('Content-disposition','attachment; filename="statistics.json"');
+    }
 }

@@ -58,7 +58,8 @@
     "Daily": "Katru dienu",
     "Weekly": "Katru nedēļu",
     "Monthly": "Katru mēnesi",
-
+    "Week": "Nedēļa",
+    "Month": "Mēnesis",
     "Sunday": "Svētdiena",
     "Monday": "Pirmdiena",
     "Tuesday": "Otrdiena",
@@ -84,7 +85,7 @@
     "Submit": "Nosūtīt",
     "Accept": "Pieņemt",
     "Reject": "Atteikt",
-    "Time period": "Laika periods",
+    "Time Period": "Laika Periods",
     "Friend Requests": "Draugu pieprasījumi",
     "You do not have any incoming friend requests!": "Jums nav ienākošo draugu pieprasījumu!",
     "You have not added any friends yet!": "Jūs vēl neesat pievienojuši nevienu draugu!",
@@ -107,7 +108,8 @@
     "mm/dd/yyyy": "mm/dd/gggg",
     "Type your friend's e-mail address to send a friend request.": "Ievadiet drauga e-pasta adresi, lai atsūtītu pieprasījumu",
     "Recover Password": "Atgūt Paroli",
-    ">There are no users in the database!": "Datu bāzē nav neviena lietotāja",
+    "There are no users in the database!": "Datu bāzē nav neviena lietotāja",
+    "Download Statistics": "Lejupielādēt Statistiku",
 
     "Whoops! Something went wrong.": "Kaut kas aizgāja greizi :(  Pārbaudiet ievadītos datus!"
 }

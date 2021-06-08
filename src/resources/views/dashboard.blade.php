@@ -137,7 +137,7 @@
                     @foreach($gls as $goal) 
                   <tr>
                 
-                    <td>{{$goal->timePeriod}}</td>
+                    <td>{{ __($goal->timePeriod) }}</td>
                     <td>{{$goal->value}}</td>
                     <td>{{$goal->creatorId}}</td>
                   </tr>
