@@ -22,14 +22,14 @@ $activities = ['Steps' => 'STEPS', 'Weight' => 'WEIGHT', 'Sleep time' => 'SLEEP'
             <ul class="nav nav-pills justify-content-center mb-3 border-end">
               @foreach ($activities as $name => $param)
               <li class="nav-item">
-                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $param, 'period' => $period]) }}" class="nav-link {{ $activity === $param ? 'active': '' }}">{{ $name }}</a>
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $param, 'period' => $period]) }}" class="nav-link {{ $activity === $param ? 'active': '' }}">{{ __($name) }}</a>
               </li>
               @endforeach
             </ul>
             <ul class="nav nav-pills justify-content-center ms-3 mb-3">
                 @foreach ($periods as $name => $param)
                 <li class="nav-item">
-                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $activity, 'period' => $param]) }}" class="nav-link {{ $period === $param ? 'active': '' }}">{{ $name }}</a>
+                  <a href="{{ route('friends.index', ['lang' => App::getLocale(), 'activity' => $activity, 'period' => $param]) }}" class="nav-link {{ $period === $param ? 'active': '' }}">{{ __($name) }}</a>
                 </li>
                 @endforeach
             </ul>
