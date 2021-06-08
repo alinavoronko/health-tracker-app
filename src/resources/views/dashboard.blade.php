@@ -82,7 +82,7 @@
                           if(response.status==200){
                           alert('Request to '+email+' has been sent!');
                         }
-                          else {alert('No user with this e-mail!');}
+                          else {alert('{{ __("No user with this e-mail!") }}');}
 
 
                       }); //then

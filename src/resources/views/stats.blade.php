@@ -107,11 +107,11 @@
           },
         @endforeach
         };
-        //TO-DO: Translate days of the week & categories
-        // const cats = ['{{ __("Sleep") }}', '{{ __("Steps") }}'];
-        // const weekDays = ['{{ __("Sunday") }}', '{{ __("Monday") }}', '{{ __("Tuesday") }}', '{{ __("Wednesday") }}', '{{ __("Thursday") }}', '{{ __("Friday") }}', '{{ __("Saturday") }}'];
+       
+        
+        const weekDays = ['{{ __("Sunday") }}', '{{ __("Monday") }}', '{{ __("Tuesday") }}', '{{ __("Wednesday") }}', '{{ __("Thursday") }}', '{{ __("Friday") }}', '{{ __("Saturday") }}'];
         const cats = ['Sleep', 'Steps'];
-        const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        // const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         const stepsGoal = {!! count($stepsGoal) > 0 ? $stepsGoal[0]->value : 6000 !!};
 
