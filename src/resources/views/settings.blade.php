@@ -218,12 +218,11 @@
               aria-labelledby="settings-menu-security-tab"
             >
               <h4> {{ __('Security settings') }}</h4>
-               @if ($errors->any())
+                @error('notMatchingErr')
                <div class="alert alert-danger mt-2">
-               {{session('errors')->first('notMatchingErr')}}
+               {{$message}}
                </div>
-
-          @endif
+                @enderror
 
 
                 <form class="row" action="{{ route('pass.change', ['lang' => App::getLocale()]) }}" method="post">
