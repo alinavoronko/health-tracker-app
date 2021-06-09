@@ -1,2 +1,2 @@
 
-    <a href="{{route($route??'', ['lang' => App::getLocale()])}}"><button class="btn btn-warning" type="submit">{{$slot}} </button></a>
+    <a class="btn btn-warning" href="{{route($route??'', ['lang' => App::getLocale()])}}">{{$slot}}</a>

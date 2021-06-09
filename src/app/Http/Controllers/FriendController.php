@@ -29,7 +29,7 @@ class FriendController extends Controller
 
         $unit = '1D';
 
-        if ($period === 'WEEK') $unit = '7W';
+        if ($period === 'WEEK') $unit = '7D';
         if ($period === 'MONTH') $unit = '1M';
 
         $to = new DateTime();

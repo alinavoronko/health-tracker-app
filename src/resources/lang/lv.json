@@ -70,6 +70,7 @@
     "Friday": "Piektdiena",
     "Saturday": "Sestdiena",
 
+    "Entered password did not match the old one!": "Ievadītā parole nesakrīt ar pašreizējo!",
     "Set a new goal": "Uzstādīt jaunu mērķi",
     "Select goal type": "Izvēlieties mērķa tipu",
     "You have not set any goals yet!": "Jūs vēl neesat uzstādījuši nevienu mērķi!",
