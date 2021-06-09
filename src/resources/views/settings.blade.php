@@ -220,7 +220,7 @@
               <h4> {{ __('Security settings') }}</h4>
                 @error('notMatchingErr')
                <div class="alert alert-danger mt-2">
-               {{$message}}
+               {{ __($message) }}
                </div>
                 @enderror
 
